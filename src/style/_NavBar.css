@@ -1,0 +1,49 @@
+.nav-bar {
+}
+
+.logo {
+  text-align: center;
+  /* margin: 1rem; */
+  border: 1px solid #e5e5e5;
+  border-right: 0;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 3rem;
+  height: auto;
+}
+.logo img {
+  width: 40%;
+}
+.menu {
+  text-align: center;
+  width: 100%;
+}
+.no {
+  list-style-type: none;
+}
+
+/* ul 
+{
+    border: 1px solid green;
+    width: 80%;
+    margin: 0 auto;
+   
+}
+
+.nav-bar ul li {
+    list-style: none;
+    padding: 1rem;
+}
+.nav-bar img {
+  
+    width: 121px;
+    height: 117px;
+}
+
+
+
+.nav-bar ul li 
+{
+    color: #30475E;
+} 
+ */
