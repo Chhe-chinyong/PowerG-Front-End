@@ -1,17 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-	font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
-.side-bar {
-	width: 18%;
-	border: 1px solid yellowgreen;
-}
-
-@import './_NavBar.css';
+@import "./_NavBar.css";
+@import "./_ContentUser.css";

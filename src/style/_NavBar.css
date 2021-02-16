@@ -1,25 +1,26 @@
-.nav-bar {
-}
-
 .logo {
   text-align: center;
-  /* margin: 1rem; */
   border: 1px solid #e5e5e5;
   border-right: 0;
   width: 100%;
   margin-top: 0;
   margin-bottom: 3rem;
-  height: auto;
+  height: 72px;
 }
 .logo img {
-  width: 40%;
+  max-width: 33%;
+  min-width: 60px;
+  /* max-width: 100px; */
+  height: auto;
 }
 .menu {
   text-align: center;
   width: 100%;
 }
-.no {
+.icon {
   list-style-type: none;
+  display: flex;
+  align-items: center;
 }
 
 /* ul 

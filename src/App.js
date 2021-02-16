@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Layout, Menu, Breadcrumb } from "antd";
@@ -9,32 +9,51 @@ import Products from "./components/Products";
 import Report from "./components/Report";
 import Users from "./components/Users";
 import Home from "./components/Home";
+import HeaderBar from "./components/HeaderBar";
+
 // Style
 import "./style/app.css";
 
 // Destructuring
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 const { SubMenu, Item } = Menu;
 
 function App() {
+  // State
+  const [collapsed, setCollapse] = useState(false);
+  const [title, setTitle] = useState("");
+  const handleCollapse = (collapsed) => {
+    console.log(collapsed);
+    setCollapse(collapsed);
+  };
+
   return (
     <Router>
       <div className="App">
         <Layout>
-          <Sider>
-            <div className="side-bar">
-              <NavBar />
-            </div>
+          <Sider
+            theme="light"
+            style={{ minHeight: "100vh" }}
+            collapsible
+            collapsed={collapsed}
+            onCollapse={handleCollapse}
+            breakpoint="lg"
+            theme="light"
+          >
+            <NavBar title={title} setTitle={setTitle} />
           </Sider>
+
           <Layout style={{ background: "F2F3F6" }}>
-            <Header style={{ background: "white", height: "80px" }}>
-              Hey header
-            </Header>
+            <HeaderBar title={title} />
             <Content>
               <Switch>
                 {/* anything under switch will stop if first path match in */}
                 <Route path="/" exact component={Home} />
-                <Route path="/dashboard" component={DashBoard} />
+                <Route
+                  path="/dashboard"
+                  render={() => <DashBoard title={title} />}
+                  title={title}
+                />
                 <Route path="/products" component={Products} />
                 <Route path="/report" component={Report} />
                 <Route path="/users" component={Users} />
