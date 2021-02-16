@@ -1,0 +1,45 @@
+.userAdd {
+  margin: 1rem;
+  background-color: #5cb85c;
+  float: right;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.userAdd:hover {
+  background-color: #73d13d;
+  color: white;
+  outline: none;
+  border: 1px solid white;
+}
+
+.noOutLine {
+  outline: none;
+  border: 0;
+  background-color: transparent;
+}
+
+.editUser:hover {
+  color: #40a9ff;
+  background-color: transparent;
+  outline: none;
+  border: 0;
+}
+.removeUser {
+  outline: none;
+  border: 0;
+  background-color: transparent;
+}
+
+.removeUser:hover {
+  color: red;
+  background-color: transparent;
+}
+
+.ant-btn:focus {
+  color: red;
+}
+/* .anticon {
+  color: black;
+} */
