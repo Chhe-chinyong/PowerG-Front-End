@@ -1,5 +1,5 @@
 .userContainer {
-  width: 80%;
+  width: 50%;
   margin: 0 auto;
 }
 
@@ -9,4 +9,32 @@
 .userLogo img {
   width: 20%;
   height: auto;
+}
+
+.userSubmit {
+  text-align: center;
+}
+
+.userSubmitButton {
+  border-radius: 50px;
+  width: 103px;
+  height: 41px;
+  background-color: #f05454;
+  color: white;
+  font-weight: 500;
+}
+
+.userSubmitButton:focus {
+  background-color: #f05454;
+  color: white;
+  font-weight: 500;
+}
+
+.userSubmitButton:hover {
+  background-color: #f36b6b;
+  color: white;
+  font-weight: 500;
+}
+.userInput {
+  border: 1px solid #686f75;
 }
