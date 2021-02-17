@@ -1,0 +1,125 @@
+import React, { useState } from "react";
+import { Table, Button, Space, Form, Input, InputNumber } from "antd";
+import { UserAddOutlined } from "@ant-design/icons";
+import axios from "axios";
+import "antd/dist/antd.css";
+const { Item } = Form;
+
+const layout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 16,
+  },
+};
+
+function ContentUserAdd() {
+  const onFinish = async (values) => {
+    console.log("this is " + values.username);
+    console.log("this is " + values.password);
+    const username = values.username;
+    const password = values.password;
+    const contact = values.contact;
+    try {
+      const result = await axios.post(
+        `http://165.22.252.116/api/user/register`,
+        {
+          username: username,
+          password: password,
+          contact: contact,
+        },
+        { headers: { "Access-Control-Allow-Origin": "*" } }
+      );
+      console.log(result);
+    } catch (error) {
+      console.log("this is error message" + error);
+    }
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed", errorInfo);
+  };
+  return (
+    <>
+      <Form
+        // onSubmit={handleSubmit}
+        {...layout}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+      >
+        {/* Username */}
+        <Item
+          name={"username"}
+          label="Username"
+          rules={[
+            {
+              required: true,
+              message: "Please input your username!",
+            },
+          ]}
+        >
+          <Input />
+        </Item>
+
+        {/* Password */}
+        <Item
+          name={"password"}
+          label="Password"
+          rules={[
+            {
+              required: true,
+              message: "please input your password!",
+            },
+          ]}
+        >
+          <Input.Password />
+        </Item>
+        {/* Contact */}
+        <Item
+          name={"contact"}
+          label="Contact"
+          rules={[
+            {
+              required: true,
+              message: "Please input your contact!",
+            },
+          ]}
+        >
+          <Input />
+        </Item>
+
+        {/* Submit */}
+        <Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Item>
+      </Form>
+    </>
+  );
+}
+
+export default ContentUserAdd;
+
+// const onFinishFailed = (values) => {
+//   console.log(values);
+// };
+// const handleSubmit = (e) => {
+//   e.preventDefault();
+
+//   const user = {
+//     name: this.state.name,
+//   };
+
+//   axios
+//     .post(`165.22.252.116/api/user/register`, { user })
+//     .then((res) => {
+//       console.log(res);
+//       console.log(res.data);
+//     })
+//     .catch(console.log("errro"));
+//   // action=""
+//   //     method="POST"
+//   console.log("hey");
+// };

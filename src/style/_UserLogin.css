@@ -1,0 +1,12 @@
+.userContainer {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.userLogo {
+  text-align: center;
+}
+.userLogo img {
+  width: 20%;
+  height: auto;
+}

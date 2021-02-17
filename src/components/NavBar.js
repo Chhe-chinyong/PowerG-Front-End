@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../images/favicon.ico";
 import "antd/dist/antd.css";
@@ -13,39 +13,46 @@ import {
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu, Item } = Menu;
 
-function NavBar() {
+function NavBar({ title, setTitle }) {
+  const handleClick = (e) => {
+    setTitle(e.target.innerHTML);
+  };
   return (
     <header>
       <nav className="nav-bar">
-        <Layout style={{ minHeight: "100vh" }}>
-          <Sider collapsible theme="light">
-            <Menu defaultSelectedKeys={["1"]} mode="inline">
-              {/* Logo */}
+        <Menu defaultSelectedKeys={["1"]} mode="inline">
+          {/* Logo */}
 
-              <div className="logo">
-                <Link to="/">
-                  <img src={logo} alt="Logo" />
-                </Link>
-              </div>
-              {/* Item */}
-              <Item key="1" className="no" icon={<DesktopOutlined />}>
-                <Link to="/dashboard">Dashboard</Link>
-              </Item>
+          <div className="logo">
+            <Link to="/">
+              <img src={logo} alt="Logo" />
+            </Link>
+          </div>
+          {/* Item */}
+          <Item key="1" className="icon" icon={<DesktopOutlined />}>
+            <Link to="/dashboard" onClick={handleClick}>
+              Dashboard
+            </Link>
+          </Item>
 
-              <Item key="2" className="no" icon={<CalendarOutlined />}>
-                <Link to="/products">Proudct</Link>
-              </Item>
+          <Item key="2" className="icon" icon={<CalendarOutlined />}>
+            <Link to="/products" onClick={handleClick}>
+              Proudct
+            </Link>
+          </Item>
 
-              <Item key="3" className="no" icon={<FileSearchOutlined />}>
-                <Link to="/report">Report</Link>
-              </Item>
+          <Item key="3" className="icon" icon={<FileSearchOutlined />}>
+            <Link to="/report" onClick={handleClick}>
+              Report
+            </Link>
+          </Item>
 
-              <Item key="4" className="no" icon={<UserOutlined />} title="User">
-                <Link to="/users">Users</Link>
-              </Item>
-            </Menu>
-          </Sider>
-        </Layout>
+          <Item key="4" className="icon" icon={<UserOutlined />} title="User">
+            <Link to="/users" onClick={handleClick}>
+              Users
+            </Link>
+          </Item>
+        </Menu>
       </nav>
     </header>
   );
