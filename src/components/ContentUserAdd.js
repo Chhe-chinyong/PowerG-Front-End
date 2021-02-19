@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Table, Button, Space, Form, Input, InputNumber, Modal } from "antd";
+import {
+  Table,
+  Button,
+  Space,
+  Form,
+  Input,
+  message,
+  InputNumber,
+  Modal,
+} from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
 import axios from "axios";
 import "antd/dist/antd.css";
@@ -36,9 +45,17 @@ function ContentUserAdd({ setVisible }) {
         },
         { headers: { "Access-Control-Allow-Origin": "*" } }
       );
-      console.log(result);
+      message.success({
+        content: result,
+        duration: "1000",
+        className: "custom-class",
+      });
     } catch (error) {
-      console.log("this is error message" + error);
+      message.error({
+        content: "this is Error " + error,
+        className: "UserErrorMessage",
+        duration: 5,
+      });
     }
   };
   // EventHandler

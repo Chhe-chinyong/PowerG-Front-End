@@ -5,3 +5,13 @@
 .btnSubmitUser {
   margin: 1rem;
 }
+
+.UserErrorMessage {
+  align-items: center;
+  justify-content: center;
+  color: red;
+}
+
+.ant-message-error svg {
+  margin-bottom: 0.4rem;
+}
