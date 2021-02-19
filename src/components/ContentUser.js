@@ -22,6 +22,7 @@ function ContentUser() {
     console.log(click);
     // <ContentUserAdd />;
   };
+
   const showModal = () => {
     setVisible(true);
   };
@@ -115,15 +116,19 @@ function ContentUser() {
       >
         ADD
       </Button>
+      {/* Table */}
       <Table columns={columns} dataSource={data} />
+
+      {/* Modal */}
       <Modal
         title="Add New User"
         visible={visible}
         onOk={handleOk}
         confirmLoading={confirmLoading}
+        footer={null}
         onCancel={handleCancel}
       >
-        <ContentUserAdd />
+        <ContentUserAdd setVisible={setVisible} />
       </Modal>
 
       {/* Condition */}

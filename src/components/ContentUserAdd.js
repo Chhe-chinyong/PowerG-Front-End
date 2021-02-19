@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, Button, Space, Form, Input, InputNumber } from "antd";
+import { Table, Button, Space, Form, Input, InputNumber, Modal } from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
 import axios from "axios";
 import "antd/dist/antd.css";
@@ -14,7 +14,12 @@ const layout = {
   },
 };
 
-function ContentUserAdd() {
+function ContentUserAdd({ setVisible }) {
+  // State
+  // const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState("Content of the modal");
+
   const onFinish = async (values) => {
     console.log("this is " + values.username);
     console.log("this is " + values.password);
@@ -25,9 +30,9 @@ function ContentUserAdd() {
       const result = await axios.post(
         `http://165.22.252.116/api/user/register`,
         {
-          username: username,
+          name: username,
           password: password,
-          contact: contact,
+          // contact: contact,
         },
         { headers: { "Access-Control-Allow-Origin": "*" } }
       );
@@ -36,10 +41,16 @@ function ContentUserAdd() {
       console.log("this is error message" + error);
     }
   };
-
+  // EventHandler
   const onFinishFailed = (errorInfo) => {
     console.log("Failed", errorInfo);
   };
+
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setVisible(false);
+  };
+
   return (
     <>
       <Form
@@ -47,6 +58,7 @@ function ContentUserAdd() {
         {...layout}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
+        style={{ textAlign: "center" }}
       >
         {/* Username */}
         <Item
@@ -90,9 +102,12 @@ function ContentUserAdd() {
         </Item>
 
         {/* Submit */}
-        <Item>
-          <Button type="primary" htmlType="submit">
+        <Item className="footerAddUser">
+          <Button className="btnSubmitUser" type="primary" htmlType="submit">
             Submit
+          </Button>
+          <Button type="default" onClick={handleCancel}>
+            Cancel
           </Button>
         </Item>
       </Form>

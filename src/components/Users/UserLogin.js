@@ -58,7 +58,7 @@ function UserLogin() {
               },
             ]}
           >
-            <Input
+            <Input.Password
               placeholder="default size"
               placeholder="Password"
               prefix={
