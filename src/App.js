@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu } from "antd";
 // Components
 import NavBar from "./components/NavBar";
 import DashBoard from "./components/DashBoard";
@@ -15,8 +15,7 @@ import HeaderBar from "./components/HeaderBar";
 import "./style/app.css";
 
 // Destructuring
-const { Content, Footer, Sider } = Layout;
-const { SubMenu, Item } = Menu;
+const { Content, Sider } = Layout;
 
 function App() {
   // State

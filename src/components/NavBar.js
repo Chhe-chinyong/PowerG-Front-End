@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../images/favicon.ico";
 import "antd/dist/antd.css";
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu } from "antd";
 import {
   DesktopOutlined,
   CalendarOutlined,
@@ -10,8 +10,7 @@ import {
   FileSearchOutlined,
 } from "@ant-design/icons";
 
-const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu, Item } = Menu;
+const { Item } = Menu;
 
 function NavBar({ title, setTitle }) {
   const handleClick = (e) => {

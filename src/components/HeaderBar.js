@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Layout, Menu, Breadcrumb } from "antd";
-const { Header, Content, Footer, Sider } = Layout;
+import { Layout } from "antd";
+const { Header } = Layout;
 function HeaderBar({ title }) {
-  const [head, setHead] = useState("");
   return (
     <Header
       style={{

@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import "antd/dist/antd.css";
 import logo from "../../images/favicon.ico";
-import { Table, Button, Space, Form, Input, InputNumber } from "antd";
+import { Button, Form, Input } from "antd";
 
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
@@ -54,7 +54,7 @@ function UserLogin() {
             rules={[
               {
                 required: true,
-                message: "Please input your username!",
+                message: "Please input your password!",
               },
             ]}
           >

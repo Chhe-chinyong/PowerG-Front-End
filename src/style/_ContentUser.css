@@ -18,6 +18,11 @@
   background-color: #5cb85c;
   color: white;
 }
+.userSearch {
+  width: 200px;
+  float: left;
+  margin: 1rem 0.5rem;
+}
 .noOutLine {
   outline: none;
   border: 0;

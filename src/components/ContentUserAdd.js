@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-  Table,
-  Button,
-  Space,
-  Form,
-  Input,
-  message,
-  InputNumber,
-  Modal,
-} from "antd";
+import { Button, Form, Input, message } from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
 import axios from "axios";
 import "antd/dist/antd.css";
@@ -45,14 +36,19 @@ function ContentUserAdd({ setVisible }) {
         },
         { headers: { "Access-Control-Allow-Origin": "*" } }
       );
+
+      console.log(result);
       message.success({
-        content: result,
-        duration: "1000",
-        className: "custom-class",
+        content: "" + result.data.message,
+        duration: 5,
+        className: "UserSuccessMessage",
       });
     } catch (error) {
+      const messageError = error.response.data.message;
+      console.log(error.response.data);
+      // console.log(messageError);
       message.error({
-        content: "this is Error " + error,
+        content: "" + messageError,
         className: "UserErrorMessage",
         duration: 5,
       });
@@ -60,7 +56,7 @@ function ContentUserAdd({ setVisible }) {
   };
   // EventHandler
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed", errorInfo);
+    console.log("Failed hey", errorInfo);
   };
 
   const handleCancel = () => {

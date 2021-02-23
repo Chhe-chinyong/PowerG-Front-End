@@ -12,6 +12,17 @@
   color: red;
 }
 
+.UserSuccessMessage {
+  align-items: center;
+  justify-content: center;
+}
 .ant-message-error svg {
   margin-bottom: 0.4rem;
+}
+.ant-message-success svg {
+  margin-bottom: 0.4rem;
+}
+
+.ant-form-item-explain-error div {
+  text-align: left;
 }
