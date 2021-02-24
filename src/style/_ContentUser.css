@@ -18,11 +18,15 @@
   background-color: #5cb85c;
   color: white;
 }
-.userSearch {
-  width: 200px;
+.userRefreshPage {
   float: left;
-  margin: 1rem 0.5rem;
+  margin: 1rem 0.2rem;
 }
+
+.userRefreshPage svg {
+  margin-bottom: 0.3rem;
+}
+
 .noOutLine {
   outline: none;
   border: 0;

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Table, Button, Space, Modal, Input } from "antd";
+import { Table, Button, Space, Modal, Input, Popconfirm, message } from "antd";
 import Highlighter from "react-highlight-words";
 import axios from "axios";
 import {
@@ -7,6 +7,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   SearchOutlined,
+  SyncOutlined,
 } from "@ant-design/icons";
 import "antd/dist/antd.css";
 
@@ -17,8 +18,32 @@ function ContentUser() {
   // useRef
   const searchRef = useRef(null);
 
+  const data = [
+    {
+      key: "1",
+      user_id: "000001",
+      user_name: "Kok dara",
+      user_password: "901294012940214",
+      user_contact: "0129928475",
+    },
+    {
+      key: "2",
+      user_id: "000002",
+      user_name: "Mingthean Lay",
+      user_password: "901294012940214",
+      user_contact: "0298844888",
+    },
+    {
+      key: "3",
+      user_id: "000003",
+      user_name: "Phal sokheng",
+      user_password: "901294012940214",
+      user_contact: "010928475",
+    },
+  ];
+
   // State
-  const [initialValue, setInitialValue] = useState([]);
+  const [initialValue, setInitialValue] = useState(data);
   const [searchText, setSearchText] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [searchedColumn, SetSearchedColumn] = useState("");
@@ -30,17 +55,18 @@ function ContentUser() {
 
   const [modalText, setModalText] = useState("Content of the modal");
 
-  useEffect(() => {
-    const fetchItem = async () => {
-      const result = await axios(`http://165.22.252.116/api/user/getallusers`);
-      const allData = result.data.data;
-      setInitialValue(allData);
-    };
-    fetchItem();
-    console.log(initialValue);
-  }, []);
+  // useEffect(() => {
+  //   const fetchItem = async () => {
+  //     const result = await axios(`http://165.22.252.116/api/user/getallusers`);
+  //     const allData = result.data.data;
+  //     // setInitialValue(allData);
+  //     setInitialValue(data);
+  //   };
+  //   fetchItem();
+  //   console.log(initialValue);
+  // }, []);
 
-  // Testing
+  // searchBar
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -118,7 +144,6 @@ function ContentUser() {
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText("");
-    // this.setState({ searchText: "" });
   };
 
   //   Event-handler
@@ -156,18 +181,41 @@ function ContentUser() {
     setVisible1(false);
   };
 
-  const handleSelect = () => {
-    console.log("handleSelect");
+  const handleDelete = (record) => {
+    console.log("record", record);
   };
-
-  const handleDelete = () => {};
-  const handleEdit = (text, record) => {
+  const handleEdit = (record) => {
     setVisible1(true);
-    setUser(text);
-    console.log(record.key);
-    console.log(text);
+    setUser(record);
+
+    console.log(record);
   };
 
+  const confirm = (record) => {
+    const id = record.user_id;
+    console.log(id);
+    // try {
+    //   // Delete Data
+    // } catch (error) {
+
+    // }
+    console.log(initialValue);
+    setInitialValue(initialValue.filter((value) => value.user_id != id));
+
+    console.log(initialValue);
+
+    // console.log(record);
+    message.success("Click on Yes");
+  };
+
+  const cancel = (e) => {
+    console.log(e);
+    message.error("Click on No");
+  };
+
+  function refreshPage() {
+    window.location.reload();
+  }
   // Data
   const columns = [
     {
@@ -176,7 +224,8 @@ function ContentUser() {
       title: <strong>ID</strong>,
       dataIndex: "user_id",
       key: "id",
-      defaultSortOrder: "descend",
+      // defaultSortOrder: "ascend",
+
       ...getColumnSearchProps("user_id"),
       sorter: (a, b) => a.user_id - b.user_id,
     },
@@ -202,16 +251,27 @@ function ContentUser() {
         return (
           // const editable = isEditing(record);
           <Space size="middle">
-            <Button
-              className="noOutLine removeUser"
-              icon={<DeleteOutlined />}
-            ></Button>
+            <Popconfirm
+              title="Are you sure to delete this user?"
+              onConfirm={() => {
+                confirm(record);
+              }}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button
+                className="noOutLine removeUser"
+                icon={<DeleteOutlined />}
+              ></Button>
+            </Popconfirm>
+
             <Button
               className="noOutLine editUser"
               icon={<EditOutlined />}
               // onClick={() => handleEdit(text, record)}
               onClick={() => {
-                handleEdit(text, record);
+                handleEdit(record);
               }}
             ></Button>
           </Space>
@@ -220,38 +280,17 @@ function ContentUser() {
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      user_id: "000001",
-      user_name: "Kok dara",
-      user_password: "901294012940214",
-      user_contact: "0129928475",
-    },
-    {
-      key: "2",
-      Id: "000002",
-      Username: "Mingthean Lay",
-      Password: "901294012940214",
-      Contact: "0298844888",
-    },
-    {
-      key: "3",
-      Id: "000003",
-      Username: "Phal sokheng",
-      Password: "901294012940214",
-      Contact: "010928475",
-    },
-  ];
+  //  Data
   return (
     <>
-      <Input.Search
-        className="userSearch"
-        placeholder="input search text"
-        onSearch={handleSearch}
-        loading={false}
-        ref={searchRef}
-      />
+      <Button
+        className="userRefreshPage"
+        icon={<SyncOutlined />}
+        onClick={refreshPage}
+        type="primary"
+      >
+        Refresh
+      </Button>
       <Button
         className="userAdd "
         icon={<UserAddOutlined />}
@@ -263,7 +302,8 @@ function ContentUser() {
       <Table
         columns={columns}
         dataSource={initialValue}
-        rowSelection={handleSelect}
+        // dataSource={initialValue}
+        // rowSelection={handleSelect}
       />
 
       {/* ADD*/}
