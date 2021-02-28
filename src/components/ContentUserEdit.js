@@ -15,10 +15,16 @@ const layout = {
 };
 const ContentUserEdit = ({ setVisible, user, visible1 }) => {
   // Object
-  const { user_name, user_password, user_contact } = user;
+  const { user_name, user_password, contact } = user;
+  console.log("user" + user);
+  const id = user.user_id;
 
   // State
-  // const [username, setUsername] = useState(Username);
+  // const [userValue, setUserValue] = useState({
+  //   name: user_name,
+  //   password: user_password,
+  //   contact: contact,
+  // });
 
   // EventHandler
   const handleCancel = () => {
@@ -26,14 +32,47 @@ const ContentUserEdit = ({ setVisible, user, visible1 }) => {
     setVisible(false);
   };
 
+  const onFinish = async (values) => {
+    try {
+      const username = values.username;
+      const password = values.password;
+      const contact = values.contact;
+
+      const result = await axios.put(
+        `http://165.22.252.116/api/user/updateinfo/${id}`,
+        {
+          name: username,
+          password: password,
+          contact: contact,
+        },
+
+        { headers: { "Access-Control-Allow-Origin": "*" } }
+      );
+
+      message.success({
+        content: "" + result.data.message,
+        duration: 5,
+        className: "UserSuccessMessage",
+      });
+    } catch (error) {
+      const messageError = error.response.data.message;
+      message.error({
+        content: "" + messageError,
+        className: "UserErrorMessage",
+        duration: 5,
+      });
+    }
+  };
+
   return (
     <>
       <Form
         // onSubmit={handleSubmit}
         {...layout}
-        // onFinish={onFinish}
+        onFinish={onFinish}
         // onFinishFailed={onFinishFailed}
         style={{ textAlign: "center" }}
+        // initialValues={{ username: user_name, contact: contact }}
       >
         {/* Username */}
         <Item
@@ -43,9 +82,19 @@ const ContentUserEdit = ({ setVisible, user, visible1 }) => {
             {
               required: true,
             },
+            {
+              min: 6,
+              message: "Username must contain 6 letters",
+            },
           ]}
         >
-          <Input defaultValue={user_name} key={user.key} />
+          <Input
+            defaultValue={user_name}
+            // value="sadsad"
+            // onChange={(e) => setUserValue({ username: e.target.value })}
+            key={id}
+            placeholder="username"
+          />
         </Item>
 
         {/* Password */}
@@ -58,7 +107,7 @@ const ContentUserEdit = ({ setVisible, user, visible1 }) => {
             },
           ]}
         >
-          <Input.Password defaultValue={user_password} key={user.key} />
+          <Input.Password key={id} placeholder="***********" />
         </Item>
         {/* Contact */}
         <Item
@@ -69,9 +118,17 @@ const ContentUserEdit = ({ setVisible, user, visible1 }) => {
               required: true,
               message: "Please input your contact!",
             },
+            {
+              max: 10,
+              message: "No exceed 10 digit",
+            },
+            {
+              min: 9,
+              message: "At least 9 digit",
+            },
           ]}
         >
-          <Input defaultValue={user_contact} key={user.key} />
+          <Input defaultValue={contact} key={id} placeholder="0123928472" />
         </Item>
 
         {/* Submit */}

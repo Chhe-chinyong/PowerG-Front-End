@@ -6,7 +6,6 @@ function Users() {
   return (
     <nav>
       <ContentUser />
-      <UserLogin />
     </nav>
   );
 }

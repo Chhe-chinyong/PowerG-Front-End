@@ -1,16 +1,14 @@
-import React from 'react';
-import { Button } from 'react-bootstrap';
-function Home() 
-{
-    return(
-        <nav>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, libero.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, libero.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, libero.</p>
+import React from "react";
+import { Button } from "react-bootstrap";
 
-            <Button>Home</Button>
-        </nav>
-    )
+// Component
+import UserLogin from "./Users/UserLogin";
+function Home() {
+  return (
+    <nav>
+      <UserLogin />
+    </nav>
+  );
 }
 
 export default Home;

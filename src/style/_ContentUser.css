@@ -53,3 +53,7 @@
 .removeUser:focus {
   color: red;
 }
+
+.col-username {
+  width: 25%;
+}

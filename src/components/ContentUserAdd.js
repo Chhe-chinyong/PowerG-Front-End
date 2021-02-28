@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Button, Form, Input, message } from "antd";
+import { Button, Form, Input, message, Col, Row, Select } from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
 import axios from "axios";
 import "antd/dist/antd.css";
 const { Item } = Form;
-
+const { Option } = Select;
 const layout = {
   labelCol: {
     span: 8,
@@ -14,7 +14,7 @@ const layout = {
   },
 };
 
-function ContentUserAdd({ setVisible }) {
+function ContentUserAdd({ setVisible, initialValue, setInitialValue }) {
   // State
   // const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -32,12 +32,11 @@ function ContentUserAdd({ setVisible }) {
         {
           name: username,
           password: password,
-          // contact: contact,
+          contact: contact,
         },
         { headers: { "Access-Control-Allow-Origin": "*" } }
       );
 
-      console.log(result);
       message.success({
         content: "" + result.data.message,
         duration: 5,
@@ -45,7 +44,7 @@ function ContentUserAdd({ setVisible }) {
       });
     } catch (error) {
       const messageError = error.response.data.message;
-      console.log(error.response.data);
+
       // console.log(messageError);
       message.error({
         content: "" + messageError,
@@ -78,9 +77,18 @@ function ContentUserAdd({ setVisible }) {
           name={"username"}
           label="Username"
           rules={[
+            { transform: (value) => value.trim() },
+            {
+              whitespace: true,
+              message: "No whitespace",
+            },
             {
               required: true,
               message: "Please input your username!",
+            },
+            {
+              min: 6,
+              message: "Username must contain 6 letters",
             },
           ]}
         >
@@ -91,25 +99,46 @@ function ContentUserAdd({ setVisible }) {
         <Item
           name={"password"}
           label="Password"
+          maxLength={20}
+          minLength={6}
           rules={[
             {
               required: true,
               message: "please input your password!",
+            },
+            {
+              whitespace: true,
+              message: "No whitespace",
             },
           ]}
         >
           <Input.Password />
         </Item>
         {/* Contact */}
+
         <Item
-          name={"contact"}
           label="Contact"
+          style={{ textAlign: "left" }}
           rules={[
             {
               required: true,
-              message: "Please input your contact!",
+              message: "please input your phone number!",
+            },
+            {
+              max: 10,
+              message: "No exceed 10 digit",
+            },
+            {
+              min: 9,
+              message: "At least 9 digit",
+            },
+            {
+              whitespace: true,
+              message: "No whitespace",
             },
           ]}
+          maxLength={10}
+          name={"contact"}
         >
           <Input />
         </Item>
@@ -151,3 +180,36 @@ export default ContentUserAdd;
 //   //     method="POST"
 //   console.log("hey");
 // };
+
+//   name={"contact"}
+//   label="Contact"
+//   rules={[
+//     {
+//       required: true,
+//       message: "Please input your contact!",
+//     },
+//   ]}
+// >
+//   <Input />
+
+// <Input
+//             addonBefore={prefixSelector}
+//             style={{
+//               width: "100%",
+//             }}
+//           />
+
+{
+  /* <Input.Group>
+<Input
+  style={{ width: "20%" }}
+  placeholder="012"
+  value={"23123123"}
+/>
+<Input
+  style={{ width: "40%" }}
+  placeholder="899388338"
+  value={"23123123"}
+/>
+</Input.Group> */
+}
