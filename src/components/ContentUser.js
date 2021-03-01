@@ -43,7 +43,7 @@ function ContentUser() {
   ];
 
   // State
-  const [initialValue, setInitialValue] = useState();
+  const [initialValue, setInitialValue] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [searchedColumn, SetSearchedColumn] = useState("");
@@ -52,7 +52,7 @@ function ContentUser() {
   const [visible, setVisible] = useState(false);
   const [visible1, setVisible1] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-
+  const [trigger, setTrigger] = useState(false);
   const [modalText, setModalText] = useState("Content of the modal");
 
   useEffect(() => {
@@ -73,6 +73,25 @@ function ContentUser() {
     fetchItem();
     console.log("first", initialValue);
   }, []);
+
+  useEffect(() => {
+    const fetchItem = async () => {
+      const result = await axios(`http://165.22.252.116/api/user/getallusers`);
+      const allData = result.data.data;
+      const datas = allData.map((data) => {
+        const contact = data.contact.split("");
+        contact.splice(3, 0, "  ");
+        contact.splice(7, 0, "  ");
+        const contact_result = contact.join("");
+        console.log(contact_result);
+        const object = Object.assign({}, data, { contact: contact_result });
+        return object;
+      });
+      setInitialValue(datas);
+    };
+    fetchItem();
+    console.log("first", initialValue);
+  }, [trigger]);
 
   // searchBar
   const getColumnSearchProps = (dataIndex) => ({
@@ -301,14 +320,15 @@ function ContentUser() {
   //  Data
   return (
     <>
-      <Button
+      {/* Refresh Button */}
+      {/* <Button
         className="userRefreshPage"
         icon={<SyncOutlined />}
         onClick={refreshPage}
         type="primary"
       >
         Refresh
-      </Button>
+      </Button> */}
       <Button
         className="userAdd "
         icon={<UserAddOutlined />}
@@ -332,6 +352,7 @@ function ContentUser() {
           setVisible={setVisible}
           initialValue={initialValue}
           setInitialValue={setInitialValue}
+          setTrigger={setTrigger}
         />
       </Modal>
 
@@ -348,6 +369,7 @@ function ContentUser() {
           setVisible={setVisible1}
           user={user}
           visible1={visible1}
+          setTrigger={setTrigger}
         />
       </Modal>
     </>

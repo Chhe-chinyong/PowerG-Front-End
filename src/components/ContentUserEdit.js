@@ -13,7 +13,7 @@ const layout = {
     span: 16,
   },
 };
-const ContentUserEdit = ({ setVisible, user, visible1 }) => {
+const ContentUserEdit = ({ setVisible, user, visible1, setTrigger }) => {
   // Object
   const { user_name, user_password, contact } = user;
   console.log("user" + user);
@@ -54,6 +54,8 @@ const ContentUserEdit = ({ setVisible, user, visible1 }) => {
         duration: 5,
         className: "UserSuccessMessage",
       });
+      setTrigger(true);
+      setTrigger(false);
     } catch (error) {
       const messageError = error.response.data.message;
       message.error({

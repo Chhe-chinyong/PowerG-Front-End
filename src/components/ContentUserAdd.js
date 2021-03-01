@@ -14,7 +14,12 @@ const layout = {
   },
 };
 
-function ContentUserAdd({ setVisible, initialValue, setInitialValue }) {
+function ContentUserAdd({
+  setVisible,
+  initialValue,
+  setInitialValue,
+  setTrigger,
+}) {
   // State
   // const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -36,12 +41,15 @@ function ContentUserAdd({ setVisible, initialValue, setInitialValue }) {
         },
         { headers: { "Access-Control-Allow-Origin": "*" } }
       );
+      console.log(result);
 
       message.success({
         content: "" + result.data.message,
         duration: 5,
         className: "UserSuccessMessage",
       });
+      setTrigger(true);
+      setTrigger(false);
     } catch (error) {
       const messageError = error.response.data.message;
 

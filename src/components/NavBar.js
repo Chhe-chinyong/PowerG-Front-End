@@ -19,9 +19,8 @@ function NavBar({ title, setTitle }) {
   return (
     <header>
       <nav className="nav-bar">
-        <Menu /*defaultSelectedKeys={["1"]}*/ mode="inline">
+        <Menu defaultSelectedKeys={["1"]} mode="inline">
           {/* Logo */}
-
           <div className="logo">
             <Link to="/">
               <img src={logo} alt="Logo" />

@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import "antd/dist/antd.css";
 import logo from "../../images/favicon.ico";
 import { Button, Form, Input, message } from "antd";
-
+import { AuthContext } from "../../context/AuthContext";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
+import { useHistory } from "react-router-dom";
+
 const { Item } = Form;
-function UserLogin() {
+
+export const UserLogin = () => {
+  // State
+  const { loginStatus, setLoginStatus } = useContext(AuthContext);
+  let history = useHistory();
   // EventHandler
   const onFinish = async (values) => {
     const { username, password } = values;
@@ -17,20 +23,21 @@ function UserLogin() {
         password: password,
       });
       console.log("result", result);
+      setLoginStatus(true);
+      history.push("/dashboard");
     } catch (error) {
+      console.log(error.response);
       const messageError = error.response.data.message;
       message.error({
         content: "" + messageError,
         className: "UserErrorMessage",
         duration: 5,
       });
+      setLoginStatus(false);
     }
   };
   return (
-    <div
-      className="cover"
-      //   #F2F3F6
-    >
+    <div className="cover">
       <div className="userContainer">
         {/* Logo */}
         <div className="userLogo">
@@ -39,10 +46,6 @@ function UserLogin() {
         {/* Form */}
 
         <Form
-          //   name="basic"
-          //   initialValues={{
-          //     remember: true,
-          //   }}
           onFinish={onFinish}
           //   onFinishFailed={onFinishFailed}
           className="FormCard"
@@ -69,7 +72,6 @@ function UserLogin() {
           {/*Password*/}
           <Item
             name={"password"}
-            // label="Username"
             rules={[
               {
                 required: true,
@@ -97,6 +99,6 @@ function UserLogin() {
       </div>
     </div>
   );
-}
+};
 
-export default UserLogin;
+// export default UserLogin;

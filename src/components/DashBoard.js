@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 function DashBoard({ title }) {
   return (
     <nav>
-      <Button>aa {title}</Button>
+      <Button>{title}</Button>
     </nav>
   );
 }
