@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,6 +17,7 @@ import Users from "./components/Users";
 import Home from "./components/Home";
 import HeaderBar from "./components/HeaderBar";
 import PrivateRoute from "./components/PrivateRoute";
+import PrivateLogin from "./components/PrivateLogin";
 import { AuthContext } from "./context/AuthContext";
 import Exception from "ant-design-pro/lib/Exception";
 
@@ -43,12 +44,23 @@ function App() {
     setCollapse(collapsed);
   };
   console.log("login status", loginStatus);
+
+  // UseEffect
+  useEffect(() => {
+    const user = localStorage.getItem("token");
+    console.log("token", user);
+    if (user) {
+      setLoginStatus(true);
+      console.log("token1", user);
+    }
+  }, []);
+
   return (
     <AuthContext.Provider value={{ loginStatus, setLoginStatus }}>
       <Router>
         <div className="App">
           <Switch>
-            <Route path="/" exact component={Home} />
+            <PrivateLogin path="/" exact component={Home} auth={loginStatus} />
             <Layout>
               <Sider
                 theme="light"

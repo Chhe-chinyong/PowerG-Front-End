@@ -23,7 +23,10 @@ export const UserLogin = () => {
         password: password,
       });
       console.log("result", result);
+      const token = result.data.token;
+      console.log(token);
       setLoginStatus(true);
+      localStorage.setItem("token", token);
       history.push("/dashboard");
     } catch (error) {
       console.log(error.response);
