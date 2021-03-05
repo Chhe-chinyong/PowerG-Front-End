@@ -20,6 +20,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import PrivateLogin from "./components/PrivateLogin";
 import { AuthContext, ProductContext } from "./context/AuthContext";
 import Exception from "ant-design-pro/lib/Exception";
+import DeliveryDashBoard from "./components/DeliveryMan/DeliveryDashBoard";
 
 // Style
 import "./style/app.css";
@@ -61,6 +62,7 @@ function App() {
         <div className="App">
           <Switch>
             <PrivateLogin path="/" exact component={Home} auth={loginStatus} />
+            <Route path="/delivery" component={DeliveryDashBoard} />
             <Layout>
               <Sider
                 theme="light"
