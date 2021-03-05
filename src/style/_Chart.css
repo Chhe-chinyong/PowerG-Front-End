@@ -1,0 +1,43 @@
+.container-box {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem 0.5rem;
+  height: 88px;
+}
+.container-box h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.container-box p {
+  font-weight: bold;
+}
+.box1 {
+  background: linear-gradient(180deg, #a1c4fd 0%, #c2e9fb 100%);
+  border-radius: 10px;
+  width: 23%;
+  height: auto;
+  padding: 1rem;
+}
+.box2 {
+  background: linear-gradient(180deg, #84fab0 0%, #8fd3f4 100%);
+  border-radius: 10px;
+  width: 23%;
+  height: auto;
+  padding: 1rem;
+}
+
+.box3 {
+  background: linear-gradient(180deg, #fbc2eb 0%, #a6c1ee 100%);
+  border-radius: 10px;
+  width: 23%;
+  height: auto;
+  padding: 1rem;
+}
+
+.box4 {
+  background: linear-gradient(180deg, #feada6 0%, #f5efef 100%);
+  border-radius: 10px;
+  width: 23%;
+  height: auto;
+  padding: 1rem;
+}

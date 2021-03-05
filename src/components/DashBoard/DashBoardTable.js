@@ -25,6 +25,7 @@ import moment from "moment";
 
 // Component
 import ContentProductAdd from "../Products/ContentProductAdd";
+import Chart from "../../components/DashBoard/Chart";
 import { ProductContext } from "../../context/AuthContext";
 function ContentProduct() {
   const data = [
@@ -35,36 +36,55 @@ function ContentProduct() {
       service_paid_by: "COD",
       cust_location: "AEON2",
       cust_name: "Yong",
-      pro_price: "10$",
+      status: "SUCCESS",
       date: "30-july-2021",
-      cust_contact: "029384811",
       DeliveryID: "0001",
     },
     {
       key: "2",
       product_id: "000002",
-      shop_owner: "Heng chanto",
+      shop_owner: "totot",
       service_paid_by: "COD",
-      cust_location: "Piphup tmey krang thnoung st7 #50 ",
+      cust_location: "borey penghout near AEON2",
       cust_name: "Yong",
-      pro_price: "1$",
+      status: "ON GOING",
       date: "30-july-2021",
-      cust_contact: "0293848112",
-      DeliveryID: "9999",
+      DeliveryID: "0001",
     },
     {
       key: "3",
       product_id: "000003",
-      shop_owner: "Kok dara",
+      shop_owner: "yong yong",
       service_paid_by: "COD",
-      cust_location: "borey penghout near AEON2",
+      cust_location: "borey penghout ",
       cust_name: "Yong",
-      pro_price: "10$",
+      status: "ON GOING",
       date: "30-july-2021",
-      cust_contact: "029384811",
-      DeliveryID: "094885717",
+      DeliveryID: "0008",
+    },
+    {
+      key: "4",
+      product_id: "000003",
+      shop_owner: "yong yong",
+      service_paid_by: "COD",
+      cust_location: "borey penghout ",
+      cust_name: "Yong",
+      status: "UNSUCCESS",
+      date: "30-july-2021",
+      DeliveryID: "0008",
     },
   ];
+  // const object = Object.assign({}, datas, () => {
+  //   datas.map((data) => {
+  //     if (data.status === "SUCCESS") {
+  //       data.status;
+  //     }
+  //   });
+  // });
+  // const result = datas.map((data) => {
+  //   return data.status;
+  // });
+
   const dateFormat = "YYYY/MM/DD";
   //State
   const [Trigger, setTrigger] = useState(false);
@@ -274,28 +294,21 @@ function ContentProduct() {
       key: "cust_name",
     },
     {
-      title: <strong>Price</strong>,
-      dataIndex: "pro_price",
-      key: "pro_price",
+      title: <strong>STATUS</strong>,
+      dataIndex: "status",
+      key: "status",
+      render: (status) => (
+        <>
+          {(() => {
+            if (status === "UNSUCCESS")
+              return <span style={{ color: "#ff4d4f" }}>UNSUCCESS</span>;
+            if (status === "ON GOING")
+              return <span style={{ color: "#1890ff" }}>ON GOING</span>;
+            return <span style={{ color: "#52c41a" }}>SUCCESS</span>;
+          })()}
+        </>
+      ),
     },
-
-    {
-      title: <strong> Contact</strong>,
-      dataIndex: "cust_contact",
-      key: "cust_contact",
-    },
-    {
-      title: <strong>Location</strong>,
-      dataIndex: "cust_location",
-      key: "cust_location",
-      className: "pro-location",
-    },
-    {
-      title: <strong>Delivery By</strong>,
-      dataIndex: "DeliveryID",
-      key: "DeliveryID",
-    },
-
     {
       title: <strong>Date</strong>,
       dataIndex: "date",
@@ -303,38 +316,9 @@ function ContentProduct() {
     },
 
     {
-      title: <strong>ACTION</strong>,
-      key: "action",
-      render: (text, record) => {
-        return (
-          // const editable = isEditing(record);
-          <Space size="middle">
-            <Popconfirm
-              title="Are you sure to delete this package?"
-              onConfirm={() => {
-                confirm(record);
-              }}
-              onCancel={cancel}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button
-                className="noOutLine removeUser"
-                icon={<DeleteOutlined />}
-              ></Button>
-            </Popconfirm>
-
-            <Button
-              className="noOutLine editUser"
-              icon={<EditOutlined />}
-              // onClick={() => handleEdit(text, record)}
-              onClick={() => {
-                handleEdit(record);
-              }}
-            ></Button>
-          </Space>
-        );
-      },
+      title: <strong>Delivery By</strong>,
+      dataIndex: "DeliveryID",
+      key: "DeliveryID",
     },
   ];
   return (
@@ -353,38 +337,8 @@ function ContentProduct() {
       }}
     >
       <div>
-        {/* ADD*/}
+        <Chart />
 
-        <Button
-          className="userAdd "
-          icon={<UserAddOutlined />}
-          onClick={showModal}
-        >
-          ADD
-        </Button>
-        <Modal
-          title="Add New User"
-          visible={visible}
-          onOk={handleOk}
-          confirmLoading={confirmLoading}
-          footer={null}
-          onCancel={handleCancel}
-          width={800}
-        >
-          <ContentProductAdd
-            setVisible={setVisible}
-            initialValue={initialValue}
-            setInitialValue={setInitialValue}
-            setTrigger={setTrigger}
-          />
-        </Modal>
-
-        <DatePicker
-          defaultValue={moment()}
-          format={dateFormat}
-          onChange={onChange}
-          className="date"
-        />
         {/* Table */}
         <Table
           columns={columns}

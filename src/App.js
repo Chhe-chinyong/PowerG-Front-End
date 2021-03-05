@@ -18,7 +18,7 @@ import Home from "./components/Home";
 import HeaderBar from "./components/HeaderBar";
 import PrivateRoute from "./components/PrivateRoute";
 import PrivateLogin from "./components/PrivateLogin";
-import { AuthContext } from "./context/AuthContext";
+import { AuthContext, ProductContext } from "./context/AuthContext";
 import Exception from "ant-design-pro/lib/Exception";
 
 // Style

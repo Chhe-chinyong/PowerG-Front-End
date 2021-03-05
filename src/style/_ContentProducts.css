@@ -1,0 +1,22 @@
+.ant-picker-suffix {
+  margin-bottom: 0.15rem;
+  color: rgba(0, 0, 0, 0.568);
+  font-weight: bold;
+}
+
+.date {
+  float: right;
+  margin: 1rem;
+}
+
+/* ContentProductAdd */
+
+.ContentProductAdd {
+  margin: 1rem;
+  float: right;
+}
+
+.pro-location {
+  width: 200px;
+  overflow: hidden;
+}
