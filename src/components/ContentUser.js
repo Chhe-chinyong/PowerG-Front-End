@@ -58,7 +58,11 @@ function ContentUser() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      const result = await axios(`http://165.22.252.116/api/user/getallusers`);
+      const result = await axios(`http://165.22.252.116/api/user/getallusers`, {
+        headers: {
+          "auth-token": localStorage.getItem("token"),
+        },
+      });
       const allData = result.data.data;
       const datas = allData.map((data) => {
         const contact = data.contact.split("");

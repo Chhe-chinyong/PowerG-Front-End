@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Tag, Space } from "antd";
+import { Table, Tag, Space, Button } from "antd";
 import DeliveryHeader from "../DeliveryMan/DeliveryHeader";
 
 const columns = [
@@ -196,6 +196,16 @@ function DeliveryDashBoard() {
           pagination={false}
           style={{ padding: "0 1rem" }}
         />
+      </div>
+      {/* Amount is dynamic value */}
+      <div className="total-container">
+        <p>
+          TOTAL AMOUNT: <span>$20 </span>{" "}
+        </p>
+        <Button type="primary" size="default" className="total-button">
+          Submit
+        </Button>
+        <Button>Cancel</Button>
       </div>
     </div>
   );

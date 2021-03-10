@@ -18,19 +18,21 @@ const layout = {
 function ContentProductAdd({ setTrigger, setVisible }) {
   //State
   const [redirect, setRedirect] = useState(false);
+  const [productData, setProductData] = useState({});
+  const [packageId, setPackageId] = useState();
   //useContext
-  const {
-    packageId,
-    date,
-    location,
-    shopPhone,
-    receiverPhone,
-    setPackageId,
-    setDate,
-    setLocation,
-    setShopPhone,
-    setReceiverPhone,
-  } = useContext(ProductContext);
+  // const {
+  //   packageId,
+  //   date,
+  //   location,
+  //   shopPhone,
+  //   receiverPhone,
+  //   setPackageId,
+  //   setDate,
+  //   setLocation,
+  //   setShopPhone,
+  //   setReceiverPhone,
+  // } = useContext(ProductContext);
 
   const handleCancel = () => {
     console.log("Clicked cancel button");
@@ -63,21 +65,31 @@ function ContentProductAdd({ setTrigger, setVisible }) {
         },
         { headers: { "Access-Control-Allow-Origin": "*" } }
       );
-      console.log(result);
 
       message.success({
         content: "" + result.data.message,
         duration: 5,
         className: "UserSuccessMessage",
       });
+      setPackageId(result.data.package_id);
       setTrigger(true);
       setTrigger(false);
       setRedirect(true);
+      setProductData({
+        shop_owner: shop_owner,
+        cust_name: cust_name,
+        cust_location: cust_location,
+        cust_phone: cust_phone,
+        pro_price: pro_price,
+        payment_method: payment_method,
+        service_fee: service_fee,
+        service_paid_by: service_paid_by,
+      });
       // setVisible(false);
     } catch (error) {
+      console.log(error);
       const messageError = error.response.data.message;
 
-      // console.log(messageError);
       message.error({
         content: "" + messageError,
         className: "UserErrorMessage",
@@ -241,7 +253,7 @@ function ContentProductAdd({ setTrigger, setVisible }) {
           </Item>
         </Form>
       ) : (
-        <PDF />
+        <PDF productData={productData} package_id={packageId} />
       )}
     </div>
   );

@@ -66,3 +66,16 @@
 .columns {
   font-size: 8px;
 }
+
+.total-container {
+  text-align: center;
+  padding: 1rem;
+}
+
+.total-button {
+  margin: 0 1.2rem;
+}
+
+.total-container span {
+  font-weight: bold;
+}

@@ -18,7 +18,12 @@ import Home from "./components/Home";
 import HeaderBar from "./components/HeaderBar";
 import PrivateRoute from "./components/PrivateRoute";
 import PrivateLogin from "./components/PrivateLogin";
-import { AuthContext, ProductContext } from "./context/AuthContext";
+import QrCode from "./components/QrCode";
+import {
+  AuthContext,
+  ProductContext,
+  RoleContext,
+} from "./context/AuthContext";
 import Exception from "ant-design-pro/lib/Exception";
 import DeliveryDashBoard from "./components/DeliveryMan/DeliveryDashBoard";
 
@@ -37,7 +42,8 @@ function App() {
   // State
   const [collapsed, setCollapse] = useState(false);
   const [loginStatus, setLoginStatus] = useState(false);
-
+  const [roleStatus, setRoleStatus] = useState("");
+  console.log("123213", roleStatus);
   // const [title, setTitle] = useState(path);
   const [title, setTitle] = useState("Dashboard");
   const handleCollapse = (collapsed) => {
@@ -49,77 +55,95 @@ function App() {
   // UseEffect
   useEffect(() => {
     const user = localStorage.getItem("token");
+    const role = localStorage.getItem("u_role");
     console.log("token", user);
+    console.log("role", role);
     if (user) {
       setLoginStatus(true);
-      console.log("token1", user);
+      setRoleStatus(role);
     }
   }, []);
 
   return (
     <AuthContext.Provider value={{ loginStatus, setLoginStatus }}>
-      <Router>
-        <div className="App">
-          <Switch>
-            <PrivateLogin path="/" exact component={Home} auth={loginStatus} />
-            <Route path="/delivery" component={DeliveryDashBoard} />
-            <Layout>
-              <Sider
-                theme="light"
-                style={{ minHeight: "100vh" }}
-                collapsible
-                collapsed={collapsed}
-                onCollapse={handleCollapse}
-                breakpoint="lg"
-                theme="light"
-              >
-                <NavBar title={title} setTitle={setTitle} />
-              </Sider>
+      <RoleContext.Provider value={{ roleStatus, setRoleStatus }}>
+        <Router>
+          <div className="App">
+            <Switch>
+              <PrivateLogin
+                path="/"
+                exact
+                component={Home}
+                auth={loginStatus}
+                role={roleStatus}
+              />
+              {/* Delivery man */}
+              <PrivateRoute
+                path="/delivery"
+                component={DeliveryDashBoard}
+                auth={loginStatus}
+              />
 
-              <Layout style={{ background: "F2F3F6" }}>
-                <HeaderBar title={title} />
+              <Route path="/qr/:pro_id" component={QrCode} />
 
-                <Content>
-                  {/* anything under switch will stop if first path match in */}
-                  {/* <Route path="/" exact component={Home} /> */}
-                  <Switch>
-                    <Route
-                      path="/dashboard"
-                      render={() => <DashBoard title={title} />}
-                      title={title}
-                      exact
-                    />
-                    <Route path="/products" component={Products} />
-                    <Route path="/report" component={Report} />
-                    {/* <Route path="/users" component={Users} /> */}
-                    <PrivateRoute
-                      path="/users"
-                      component={Users}
-                      auth={loginStatus}
-                    />
-                    <Route path="*" exact>
-                      <Exception
-                        type="404"
-                        title="Page not found"
-                        actions={
-                          <div>
-                            <Button type="primary" r>
-                              <a href="/">Home</a>
-                            </Button>
-                          </div>
-                        }
-                        desc="please click on button to redirect to homepage"
+              <Layout>
+                <Sider
+                  theme="light"
+                  style={{ minHeight: "100vh" }}
+                  collapsible
+                  collapsed={collapsed}
+                  onCollapse={handleCollapse}
+                  breakpoint="lg"
+                  theme="light"
+                >
+                  <NavBar title={title} setTitle={setTitle} />
+                </Sider>
+
+                <Layout style={{ background: "F2F3F6" }}>
+                  <HeaderBar title={title} />
+
+                  <Content>
+                    {/* anything under switch will stop if first path match in */}
+                    {/* <Route path="/" exact component={Home} /> */}
+                    <Switch>
+                      <Route
+                        path="/dashboard"
+                        render={() => <DashBoard title={title} />}
+                        title={title}
+                        exact
                       />
-                    </Route>
-                  </Switch>
-                </Content>
+                      <Route path="/products" component={Products} />
+                      <Route path="/report" component={Report} />
+                      {/* <Route path="/users" component={Users} /> */}
+                      <PrivateRoute
+                        path="/users"
+                        component={Users}
+                        auth={loginStatus}
+                      />
+                      <Route path="*" exact>
+                        <Exception
+                          type="404"
+                          title="Page not found"
+                          actions={
+                            <div>
+                              <Button type="primary" r>
+                                <a href="/">Home</a>
+                              </Button>
+                            </div>
+                          }
+                          desc="please click on button to redirect to homepage"
+                        />
+                      </Route>
+                    </Switch>
+                  </Content>
+                </Layout>
               </Layout>
-            </Layout>
 
-            {/* Error */}
-          </Switch>
-        </div>
-      </Router>
+              {/* Error */}
+            </Switch>
+          </div>
+        </Router>
+      </RoleContext.Provider>
     </AuthContext.Provider>
   );
 }

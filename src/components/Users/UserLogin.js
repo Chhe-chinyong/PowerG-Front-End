@@ -5,7 +5,7 @@ import logo from "../../images/favicon.ico";
 import { Button, Form, Input, message } from "antd";
 import { AuthContext } from "../../context/AuthContext";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-
+import { RoleContext } from "../../context/AuthContext";
 import { useHistory } from "react-router-dom";
 
 const { Item } = Form;
@@ -13,6 +13,7 @@ const { Item } = Form;
 export const UserLogin = () => {
   // State
   const { loginStatus, setLoginStatus } = useContext(AuthContext);
+  const { roleStatus, setRoleStatus } = useContext(RoleContext);
   let history = useHistory();
   // EventHandler
   const onFinish = async (values) => {
@@ -23,11 +24,17 @@ export const UserLogin = () => {
         password: password,
       });
       console.log("result", result);
+      const role = result.data.role;
+      console.log("role", role);
       const token = result.data.token;
+      const userId = result.data.user_log_id;
       console.log(token);
       setLoginStatus(true);
+      setRoleStatus(role);
       localStorage.setItem("token", token);
-      history.push("/dashboard");
+      localStorage.setItem("u_role", role);
+      localStorage.setItem("u_id", userId);
+      // history.push("/dashboard");
     } catch (error) {
       console.log(error.response);
       const messageError = error.response.data.message;

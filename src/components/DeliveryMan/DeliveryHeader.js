@@ -2,14 +2,17 @@ import React, { useContext } from "react";
 import logo from "../../images/favicon.ico";
 import { Avatar, Image, Menu, Dropdown, Button } from "antd";
 import { UserOutlined, DownOutlined, LogoutOutlined } from "@ant-design/icons";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext, RoleContext } from "../../context/AuthContext";
 
 function DeliveryHeader() {
   //State
   const { loginStatus, setLoginStatus } = useContext(AuthContext);
+  const { roleStatus, setRoleStatus } = useContext(RoleContext);
   const handleLogout = () => {
     setLoginStatus(false);
+    setRoleStatus("");
     localStorage.removeItem("token");
+    localStorage.removeItem("u_role");
   };
   // menu for dropdown avatar
   const menu = (
