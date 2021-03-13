@@ -1,0 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=Khmer&display=swap");
+.pdf-logo {
+  width: 67px;
+  height: 67px;
+}
+
+.pdf-container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.pdf-header {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  justify-content: space-between;
+}
+
+.pdf-information {
+  padding: 1rem;
+  width: 100%;
+  /* height: 150px; */
+  border: 1px solid rgb(199, 197, 197);
+}
+.pdf-date {
+  font-weight: bold;
+}
+
+.pdf-sender,
+.pdf-receiver {
+  display: flex;
+}
+
+.pdf-receiver {
+  margin-top: 0.5rem;
+}
+.pdf-sender img {
+  width: 26px;
+  height: 26px;
+  margin-right: 0.5rem;
+}
+
+.pdf-receiver img {
+  width: 26px;
+  height: 26px;
+  margin-right: 0.5rem;
+}
+
+.pdf-receiver span {
+  margin-left: 1rem;
+}
+
+.pdf-sender span {
+  margin-left: 1.4rem;
+}
+
+.pdf-price {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  font-size: 100%;
+}
+
+.pdf-priceTag {
+  width: 54%;
+  border: 1px solid rgb(199, 197, 197);
+  text-align: center;
+}
+.pdf-priceTag p {
+  margin-top: 0.5rem;
+  font-size: 100%;
+  font-family: "Khmer", cursive;
+}
+
+figure {
+  text-align: center;
+  margin-left: 2rem;
+  margin-top: 2.5rem;
+}
+figcaption {
+  margin-top: 0.2rem;
+  font-weight: lighter;
+}
+
+.price {
+  font-size: 46px;
+}
+
+.pdf-cod {
+  border: 1px solid rgb(196, 196, 196);
+  height: 63%;
+  width: 128px;
+  text-align: center;
+  font-weight: regular;
+  font-size: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pdf-website {
+  text-align: center;
+  margin: 1rem;
+  font-weight: lighter;
+}
+
+/* .btnPdf {
+  justify-content: center;
+  text-align: center;
+} */
+.pdf-date {
+  text-align: left;
+}
+
+.btnPdf-container {
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}

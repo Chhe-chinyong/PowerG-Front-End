@@ -64,7 +64,8 @@
   background: #f2f3f6;
 }
 .columns {
-  font-size: 8px;
+  font-size: 10px;
+  font-weight: bold;
 }
 
 .total-container {
@@ -78,4 +79,13 @@
 
 .total-container span {
   font-weight: bold;
+}
+.priceDelivery {
+  /* width: 20px; */
+}
+@media only screen and (orientation: landscape) {
+  .columns {
+    font-size: 12px;
+    font-weight: bold;
+  }
 }

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import axios from "axios";
 import Highlighter from "react-highlight-words";
@@ -13,6 +12,7 @@ import {
   Popconfirm,
   message,
   Tooltip,
+  Select,
 } from "antd";
 import {
   UserAddOutlined,
@@ -27,6 +27,9 @@ import moment from "moment";
 import ContentProductAdd from "../Products/ContentProductAdd";
 import Chart from "../../components/DashBoard/Chart";
 import { ProductContext } from "../../context/AuthContext";
+
+const { Option } = Select;
+
 function ContentProduct() {
   const data = [
     {

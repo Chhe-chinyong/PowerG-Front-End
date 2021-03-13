@@ -45,8 +45,13 @@ const ContentUserEdit = ({ setVisible, user, visible1, setTrigger }) => {
           password: password,
           contact: contact,
         },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
 
-        { headers: { "Access-Control-Allow-Origin": "*" } }
+        // { headers: { "Access-Control-Allow-Origin": "*" } }
       );
 
       message.success({

@@ -39,7 +39,11 @@ function ContentUserAdd({
           password: password,
           contact: contact,
         },
-        { headers: { "Access-Control-Allow-Origin": "*" } }
+        {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
       );
       console.log(result);
 

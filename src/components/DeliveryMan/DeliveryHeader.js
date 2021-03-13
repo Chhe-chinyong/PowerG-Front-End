@@ -2,12 +2,17 @@ import React, { useContext } from "react";
 import logo from "../../images/favicon.ico";
 import { Avatar, Image, Menu, Dropdown, Button } from "antd";
 import { UserOutlined, DownOutlined, LogoutOutlined } from "@ant-design/icons";
-import { AuthContext, RoleContext } from "../../context/AuthContext";
+import {
+  AuthContext,
+  RoleContext,
+  UsernameContext,
+} from "../../context/AuthContext";
 
 function DeliveryHeader() {
   //State
   const { loginStatus, setLoginStatus } = useContext(AuthContext);
   const { roleStatus, setRoleStatus } = useContext(RoleContext);
+  const { userNameStatus, setUsernameStatus } = useContext(UsernameContext);
   const handleLogout = () => {
     setLoginStatus(false);
     setRoleStatus("");
@@ -47,7 +52,7 @@ function DeliveryHeader() {
                 gap={30}
                 size="small"
               />
-              <span className="name">MonyNeath dara</span>
+              <span className="name">{userNameStatus}</span>
               <DownOutlined />
             </a>
           </Dropdown>

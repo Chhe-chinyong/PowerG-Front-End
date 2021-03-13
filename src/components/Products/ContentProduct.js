@@ -30,7 +30,7 @@ function ContentProduct() {
   const data = [
     {
       key: "1",
-      product_id: "000001",
+      package_id: "000001",
       shop_owner: "Kok dara",
       service_paid_by: "COD",
       cust_location: "AEON2",
@@ -75,6 +75,7 @@ function ContentProduct() {
   const [searchedColumn, SetSearchedColumn] = useState("");
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("Content of the modal");
+  const [redirect, setRedirect] = useState(false);
   //State for Product
   const [packageId, setPackageId] = useState();
   const [date, setDate] = useState();
@@ -86,22 +87,49 @@ function ContentProduct() {
   //Display all packages
   useEffect(() => {
     const fetchItem = async () => {
-      const result = await axios(`http://165.22.252.116/api/user/getallusers`);
-      const allData = result.data.data;
-      const datas = allData.map((data) => {
-        const contact = data.contact.split("");
-        contact.splice(3, 0, "  ");
-        contact.splice(7, 0, "  ");
-        const contact_result = contact.join("");
-        console.log(contact_result);
-        const object = Object.assign({}, data, { contact: contact_result });
-        return object;
-      });
+      const result = await axios(`http://165.22.252.116/package/getAllPackage`);
+      console.log("result" + result.data.data);
+      console.log(result.data);
+      const datas = result.data.data;
+
+      // const allData = result.data.data;
+      // const datas = allData.map((data) => {
+      //   const contact = data.contact.split("");
+      //   contact.splice(3, 0, "  ");
+      //   contact.splice(7, 0, "  ");
+      //   const contact_result = contact.join("");
+      //   console.log(contact_result);
+      //   const object = Object.assign({}, data, { contact: contact_result });
+      //   return object;
+      // });
       setInitialValue(datas);
     };
     fetchItem();
     console.log("first", initialValue);
   }, []);
+
+  useEffect(() => {
+    const fetchItem = async () => {
+      const result = await axios(`http://165.22.252.116/package/getAllPackage`);
+      console.log("result" + result.data.data);
+      console.log(result.data);
+      const datas = result.data.data;
+
+      // const allData = result.data.data;
+      // const datas = allData.map((data) => {
+      //   const contact = data.contact.split("");
+      //   contact.splice(3, 0, "  ");
+      //   contact.splice(7, 0, "  ");
+      //   const contact_result = contact.join("");
+      //   console.log(contact_result);
+      //   const object = Object.assign({}, data, { contact: contact_result });
+      //   return object;
+      // });
+      setInitialValue(datas);
+    };
+    fetchItem();
+    console.log("first", initialValue);
+  }, [Trigger]);
 
   // Event
   // get data after change date
@@ -147,12 +175,17 @@ function ContentProduct() {
 
   // Delete user
   const confirm = async (record) => {
-    const id = record.product_id;
+    const id = record.package_id;
     console.log(id);
     try {
       // Delete Data
       const result = await axios.delete(
-        `http://165.22.252.116/api/user/deleteuserbyid/${id}`
+        `http://165.22.252.116/api/package/deleteuserby/${id}`,
+        {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
       );
       console.log(initialValue);
       setInitialValue(initialValue.filter((value) => value.user_id != id));
@@ -241,6 +274,7 @@ function ContentProduct() {
   // showModal
   const showModal = () => {
     setVisible(true);
+    setRedirect(false);
   };
 
   // Data
@@ -249,12 +283,12 @@ function ContentProduct() {
       //title is display on coulmn
       //dataIndex to match with datasouce to display
       title: <strong>ID</strong>,
-      dataIndex: "product_id",
-      key: "id",
+      dataIndex: "package_id",
+      key: "package_id",
       // defaultSortOrder: "ascend",
 
-      ...getColumnSearchProps("product_id"),
-      sorter: (a, b) => a.product_id - b.product_id,
+      ...getColumnSearchProps("package_id"),
+      sorter: (a, b) => a.package_id - b.package_id,
     },
     {
       title: <strong>SHOP's Name</strong>,
@@ -281,8 +315,8 @@ function ContentProduct() {
 
     {
       title: <strong> Contact</strong>,
-      dataIndex: "cust_contact",
-      key: "cust_contact",
+      dataIndex: "cust_phone",
+      key: "cust_phone",
     },
     {
       title: <strong>Location</strong>,
@@ -290,15 +324,15 @@ function ContentProduct() {
       key: "cust_location",
       className: "pro-location",
     },
-    {
-      title: <strong>Delivery By</strong>,
-      dataIndex: "DeliveryID",
-      key: "DeliveryID",
-    },
+    // {
+    //   title: <strong>Delivery By</strong>,
+    //   dataIndex: "DeliveryID",
+    //   key: "DeliveryID",
+    // },
 
     {
       title: <strong>Date</strong>,
-      dataIndex: "date",
+      dataIndex: "created_at",
       key: "date",
     },
 
@@ -324,14 +358,14 @@ function ContentProduct() {
               ></Button>
             </Popconfirm>
 
-            <Button
+            {/* <Button
               className="noOutLine editUser"
               icon={<EditOutlined />}
               // onClick={() => handleEdit(text, record)}
               onClick={() => {
                 handleEdit(record);
               }}
-            ></Button>
+            ></Button> */}
           </Space>
         );
       },
@@ -363,7 +397,7 @@ function ContentProduct() {
           ADD
         </Button>
         <Modal
-          title="Add New User"
+          title="Add New Product"
           visible={visible}
           onOk={handleOk}
           confirmLoading={confirmLoading}
@@ -376,6 +410,8 @@ function ContentProduct() {
             initialValue={initialValue}
             setInitialValue={setInitialValue}
             setTrigger={setTrigger}
+            redirect={redirect}
+            setRedirect={setRedirect}
           />
         </Modal>
 
@@ -388,7 +424,7 @@ function ContentProduct() {
         {/* Table */}
         <Table
           columns={columns}
-          dataSource={data} /*dataSource={initialValue}*/
+          /* dataSource={data} */ dataSource={initialValue}
         />
       </div>
     </ProductContext.Provider>

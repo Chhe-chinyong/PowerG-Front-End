@@ -3,9 +3,12 @@ import axios from "axios";
 import "antd/dist/antd.css";
 import logo from "../../images/favicon.ico";
 import { Button, Form, Input, message } from "antd";
-import { AuthContext } from "../../context/AuthContext";
+import {
+  AuthContext,
+  RoleContext,
+  UsernameContext,
+} from "../../context/AuthContext";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { RoleContext } from "../../context/AuthContext";
 import { useHistory } from "react-router-dom";
 
 const { Item } = Form;
@@ -14,6 +17,7 @@ export const UserLogin = () => {
   // State
   const { loginStatus, setLoginStatus } = useContext(AuthContext);
   const { roleStatus, setRoleStatus } = useContext(RoleContext);
+  const { userNameStatus, setUsernameStatus } = useContext(UsernameContext);
   let history = useHistory();
   // EventHandler
   const onFinish = async (values) => {
@@ -31,9 +35,11 @@ export const UserLogin = () => {
       console.log(token);
       setLoginStatus(true);
       setRoleStatus(role);
+      setUsernameStatus(username);
       localStorage.setItem("token", token);
       localStorage.setItem("u_role", role);
       localStorage.setItem("u_id", userId);
+      localStorage.setItem("u_username", username);
       // history.push("/dashboard");
     } catch (error) {
       console.log(error.response);

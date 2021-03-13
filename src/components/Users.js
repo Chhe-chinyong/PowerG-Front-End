@@ -16,7 +16,7 @@ function Users() {
   return (
     <nav>
       <ContentUser />
-      <Button onClick={handleLogout}>Logout1</Button>
+      {/* <Button onClick={handleLogout}>Logout1</Button> */}
     </nav>
   );
 }

@@ -15,9 +15,9 @@ const layout = {
     span: 16,
   },
 };
-function ContentProductAdd({ setTrigger, setVisible }) {
+function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
   //State
-  const [redirect, setRedirect] = useState(false);
+  // const [redirect, setRedirect] = useState(false);
   const [productData, setProductData] = useState({});
   const [packageId, setPackageId] = useState();
   //useContext
@@ -34,22 +34,35 @@ function ContentProductAdd({ setTrigger, setVisible }) {
   //   setReceiverPhone,
   // } = useContext(ProductContext);
 
+  function handleChange(value) {
+    console.log(`selected ${value}`);
+  }
+
   const handleCancel = () => {
     console.log("Clicked cancel button");
     setVisible(false);
   };
   //Event
   const onFinish = async (values) => {
-    console.log("this is " + values.username);
-    console.log("this is " + values.password);
     const shop_owner = values.shop_owner;
     const cust_name = values.cust_name;
     const cust_location = values.cust_location;
     const cust_phone = values.cust_phone;
     const pro_price = values.pro_price;
-    const payment_method = values.payment_method;
-    const service_fee = values.service_fee;
-    const service_paid_by = values.service_paid_by;
+    var payment_method = values.payment_method;
+    var service_fee = values.service_fee;
+    var service_paid_by = values.service_paid_by;
+    console.log(values);
+    if (values.service_fee === undefined) {
+      service_fee = 4000;
+    }
+    if (values.service_paid_by === undefined) {
+      service_paid_by = "Transferer";
+    }
+    if (values.payment_method === undefined) {
+      payment_method = "COD";
+    }
+
     try {
       const result = await axios.post(
         `http://165.22.252.116/package/addpackage`,
@@ -65,6 +78,7 @@ function ContentProductAdd({ setTrigger, setVisible }) {
         },
         { headers: { "Access-Control-Allow-Origin": "*" } }
       );
+      console.log(result);
 
       message.success({
         content: "" + result.data.message,
@@ -88,6 +102,7 @@ function ContentProductAdd({ setTrigger, setVisible }) {
       // setVisible(false);
     } catch (error) {
       console.log(error);
+      // console.log("error", error.response);
       const messageError = error.response.data.message;
 
       message.error({
@@ -163,7 +178,7 @@ function ContentProductAdd({ setTrigger, setVisible }) {
 
           <Item
             name={"pro_price"}
-            label="Pro_Price"
+            label="Pro_Price ($)"
             rules={[
               {
                 required: true,
@@ -179,53 +194,69 @@ function ContentProductAdd({ setTrigger, setVisible }) {
           </Item>
 
           <Item
+            name={"service_fee"}
+            label="service_fee (៛)"
+            rules={[
+              // {
+              //   message: "please input your servie_fee!",
+              // },
+              {
+                whitespace: true,
+                message: "No whitespace",
+              },
+            ]}
+          >
+            <Input defaultValue={4000} />
+          </Item>
+
+          <Item
+            name={"service_paid_by"}
+            label="service_paid_by"
+            rules={[
+              // {
+              //   required: true,
+              //   message: "please input your servie_fee!",
+              // },
+              {
+                whitespace: true,
+                message: "No whitespace",
+              },
+            ]}
+            style={{ textAlign: "left" }}
+          >
+            <Select
+              defaultValue="Transferer"
+              style={{ width: 116 }}
+              onChange={handleChange}
+            >
+              <Option value="Transferer">Transferer</Option>
+              <Option value="Receiver">Receiver</Option>
+            </Select>
+          </Item>
+          <Item
+            style={{ textAlign: "left" }}
             name={"payment_method"}
             label="payment_method"
             rules={[
-              {
-                required: true,
-                message: "please input your payment_method!",
-              },
-              {
-                whitespace: true,
-                message: "No whitespace",
-              },
-            ]}
-          >
-            <Input />
-          </Item>
-
-          <Item
-            name={"servie_fee"}
-            label="servie_fee"
-            rules={[
-              {
-                message: "please input your servie_fee!",
-              },
+              // {
+              //   required: true,
+              //   message: "please input your payment_method!",
+              // },
               {
                 whitespace: true,
                 message: "No whitespace",
               },
             ]}
           >
-            <Input defaultValue="1$" value="1" />
-          </Item>
-
-          <Item
-            name={"serviec_paid_by"}
-            label="serviec_paid_by"
-            rules={[
-              {
-                required: true,
-                message: "please input your servie_fee!",
-              },
-              {
-                whitespace: true,
-                message: "No whitespace",
-              },
-            ]}
-          >
-            <Input />
+            {/* <Input /> */}
+            <Select
+              defaultValue="COD"
+              style={{ width: 116 }}
+              onChange={handleChange}
+            >
+              <Option value="COD">COD</Option>
+              <Option value="Paid">Paid</Option>
+            </Select>
           </Item>
 
           <Item

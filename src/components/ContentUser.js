@@ -7,7 +7,6 @@ import {
   DeleteOutlined,
   EditOutlined,
   SearchOutlined,
-  SyncOutlined,
 } from "@ant-design/icons";
 import "antd/dist/antd.css";
 
@@ -46,7 +45,7 @@ function ContentUser() {
   // State
   const [initialValue, setInitialValue] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [searchInput, setSearchInput] = useState("");
+  // const [searchInput, setSearchInput] = useState("");
   const [searchedColumn, SetSearchedColumn] = useState("");
   const [user, setUser] = useState("");
   const [click, setClick] = useState(false);
@@ -79,9 +78,14 @@ function ContentUser() {
     console.log("first", initialValue);
   }, []);
 
+  // Fetch data again we anything change
   useEffect(() => {
     const fetchItem = async () => {
-      const result = await axios(`http://165.22.252.116/api/user/getallusers`);
+      const result = await axios(`http://165.22.252.116/api/user/getallusers`, {
+        headers: {
+          "auth-token": localStorage.getItem("token"),
+        },
+      });
       const allData = result.data.data;
       const datas = allData.map((data) => {
         const contact = data.contact.split("");
@@ -213,9 +217,9 @@ function ContentUser() {
     setVisible1(false);
   };
 
-  const handleDelete = (record) => {
-    console.log("record", record);
-  };
+  // const handleDelete = (record) => {
+  //   console.log("record", record);
+  // };
   const handleEdit = (record) => {
     setVisible1(true);
     setUser(record);
@@ -230,7 +234,12 @@ function ContentUser() {
     try {
       // Delete Data
       const result = await axios.delete(
-        `http://165.22.252.116/api/user/deleteuserbyid/${id}`
+        `http://165.22.252.116/api/user/deleteuserbyid/${id}`,
+        {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
       );
       console.log(initialValue);
       setInitialValue(initialValue.filter((value) => value.user_id != id));
@@ -275,6 +284,7 @@ function ContentUser() {
       dataIndex: "user_name",
       key: "user_name",
       className: "col-username",
+      ...getColumnSearchProps("user_name"),
     },
     // {
     //   title: <strong>PASSWORD</strong>,
