@@ -83,6 +83,15 @@
 .priceDelivery {
   /* width: 20px; */
 }
+
+/* .SUCCESS {
+  color: #52c41a;
+  font-weight: "bold";
+  font-size: "0.6rem";
+} */
+.UNSUCCESS {
+  color: #f05454;
+}
 @media only screen and (orientation: landscape) {
   .columns {
     font-size: 12px;

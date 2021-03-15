@@ -1,6 +1,8 @@
-import React, { useState, useRef } from "react";
-import { Table, Tag, Space, Select, Button } from "antd";
+import React, { useState, useRef, useEffect } from "react";
+import { Form, Table, Tag, Space, Select, Button, message } from "antd";
 import DeliveryHeader from "../DeliveryMan/DeliveryHeader";
+import axios from "axios";
+import { getAllByDisplayValue } from "@testing-library/dom";
 const { Option } = Select;
 // const columns = [
 //   {
@@ -288,8 +290,13 @@ function DeliveryDashBoard() {
   const [total, setTotal] = useState(0);
   const [colorStatus, setColorStatus] = useState("#1890ff");
   const [initialValue, setInitialValue] = useState(data);
+  const [trigger, setTrigger] = useState(false);
   // useRef
-  const statusRef = useRef("");
+  // const statusRef = useRef(null);
+  //UseEffect
+  useEffect(() => {
+    console.log("initialValue", initialValue);
+  }, []);
 
   function handleChange(text, record, value) {
     // console.log(`selected ${value.productId}`);
@@ -323,6 +330,61 @@ function DeliveryDashBoard() {
     // setColorStatus("#52c41a");
   }
 
+  function checkStatus(values) {
+    values.forEach((value) => {
+      if (value.status === "ON GOING") {
+        console.log("please change all status whether success or unsuccess");
+
+        throw {
+          response: {
+            data: {
+              message: "please change all status whether success or unsuccess",
+            },
+          },
+        };
+      }
+    });
+  }
+  const onFinish = async () => {
+    try {
+      console.log("data", initialValue);
+      checkStatus(initialValue);
+      const result = await axios.post(
+        `http://165.22.252.116/list`,
+        {
+          data: initialValue,
+        },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(result);
+
+      message.success({
+        content: "" + result.data.message,
+        duration: 5,
+        className: "UserSuccessMessage",
+      });
+    } catch (error) {
+      console.log("error:", error);
+      // console.log("error", error.response);
+      const messageError = error.response.data.message;
+
+      message.error({
+        content: "" + messageError,
+        className: "UserErrorMessage",
+        duration: 5,
+      });
+    }
+  };
+
+  const onFinishFailed = () => {
+    message.error({
+      content: "" + "failed",
+    });
+  };
   const columns = [
     {
       title: "PRODUCT ID",
@@ -367,7 +429,7 @@ function DeliveryDashBoard() {
               // color: colorStatus,
               fontSize: "0.6rem",
             }}
-            ref={statusRef}
+            // ref={statusRef}
             onChange={(value) => {
               // handleChange(text, record);
               console.log("value", value);
@@ -386,6 +448,7 @@ function DeliveryDashBoard() {
               }
 
               console.log(record);
+              // Change status to data
               record.status = value;
             }}
           >
@@ -400,6 +463,7 @@ function DeliveryDashBoard() {
             </Option>
             <Option
               value="SUCCESS"
+              // className="SUCCESS"
               style={{
                 color: "#52c41a",
                 fontWeight: "bold",
@@ -450,10 +514,17 @@ function DeliveryDashBoard() {
             ${total}{" "}
           </span>{" "}
         </p>
-        <Button type="primary" size="default" className="total-button">
-          Submit
-        </Button>
-        <Button>Cancel</Button>
+        <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
+          <Button
+            type="primary"
+            size="default"
+            htmlType="submit"
+            className="total-button"
+          >
+            Submit
+          </Button>
+          <Button>Cancel</Button>
+        </Form>
       </div>
     </div>
   );

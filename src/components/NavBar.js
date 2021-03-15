@@ -8,6 +8,7 @@ import {
   CalendarOutlined,
   UserOutlined,
   FileSearchOutlined,
+  CarOutlined,
 } from "@ant-design/icons";
 
 const { Item } = Menu;
@@ -40,12 +41,18 @@ function NavBar({ title, setTitle }) {
           </Item>
 
           <Item key="3" className="icon" icon={<FileSearchOutlined />}>
-            <Link to="/report" onClick={handleClick}>
-              Report
+            <Link to="/reportShop" onClick={handleClick}>
+              Report for shop
             </Link>
           </Item>
 
-          <Item key="4" className="icon" icon={<UserOutlined />} title="User">
+          <Item key="4" className="icon" icon={<CarOutlined />}>
+            <Link to="/reportDelivery" onClick={handleClick}>
+              Report for delivery
+            </Link>
+          </Item>
+
+          <Item key="5" className="icon" icon={<UserOutlined />} title="User">
             <Link to="/users" onClick={handleClick}>
               Users
             </Link>

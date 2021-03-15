@@ -21,9 +21,11 @@ import {
 } from "./context/AuthContext";
 import Exception from "ant-design-pro/lib/Exception";
 import DeliveryDashBoard from "./components/DeliveryMan/DeliveryDashBoard";
-
+import ReportDelivery from "./components/Reports/ReportDelivery";
+import ReportShop from "./components/Reports/ReportShop";
 // Style
 import "./style/app.css";
+// import ReportDelivery from "./components/Reports/ReportDelivery";
 // import { UserLogin } from "./components/Users/UserLogin";
 
 // Destructuring
@@ -115,8 +117,14 @@ function App() {
                         />
                         <Route path="/products" component={Products} />
                         <PrivateRoute
-                          path="/report"
-                          component={Report}
+                          path="/reportDelivery"
+                          component={ReportDelivery}
+                          auth={loginStatus}
+                        />
+
+                        <PrivateRoute
+                          path="/reportShop"
+                          component={ReportShop}
                           auth={loginStatus}
                         />
                         {/* <Route path="/users" component={Users} /> */}
