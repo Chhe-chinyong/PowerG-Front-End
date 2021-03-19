@@ -23,6 +23,7 @@ import Exception from "ant-design-pro/lib/Exception";
 import DeliveryDashBoard from "./components/DeliveryMan/DeliveryDashBoard";
 import ReportDelivery from "./components/Reports/ReportDelivery";
 import ReportShop from "./components/Reports/ReportShop";
+import HomePage from "./components/HomePage";
 // Style
 import "./style/app.css";
 // import ReportDelivery from "./components/Reports/ReportDelivery";
@@ -71,20 +72,28 @@ function App() {
           <Router>
             <div className="App">
               <Switch>
+                <Route path="/" exact component={HomePage} />
+
+                {/* Login */}
                 <PrivateLogin
-                  path="/"
+                  path="/login"
                   exact
                   component={Home}
                   auth={loginStatus}
                   role={roleStatus}
                 />
                 {/* Delivery man */}
-                <PrivateRoute
+                {/* <PrivateRoute
+                  path="/delivery"
+                  component={DeliveryDashBoard}
+                  auth={loginStatus}
+                /> */}
+                {/* Delivery man */}
+                <Route
                   path="/delivery"
                   component={DeliveryDashBoard}
                   auth={loginStatus}
                 />
-
                 <Route path="/qr/:pro_id" component={QrCode} />
 
                 <Layout>

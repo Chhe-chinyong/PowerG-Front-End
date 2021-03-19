@@ -1,5 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Form, Table, Tag, Space, Select, Button, message } from "antd";
+import {
+  Form,
+  Table,
+  Tag,
+  Space,
+  Select,
+  Button,
+  message,
+  Popover,
+  Tooltip,
+} from "antd";
 import DeliveryHeader from "../DeliveryMan/DeliveryHeader";
 import axios from "axios";
 import { getAllByDisplayValue } from "@testing-library/dom";
@@ -240,7 +250,7 @@ function DeliveryDashBoard() {
     {
       key: "1",
       productId: "000001",
-      // location: "New York No. 1 Lake Park",
+      location: "New York No. 1 Lake Park",
       contact: "012394858",
       price: "3.5",
       status: "ON GOING",
@@ -248,7 +258,7 @@ function DeliveryDashBoard() {
     {
       key: "2",
       productId: "000002",
-      // location: "New York No. 1 Lake Park",
+      location: "New York No. 1 Lake Park",
       contact: "099384757",
       price: "3.5",
       status: "ON GOING",
@@ -256,7 +266,7 @@ function DeliveryDashBoard() {
     {
       key: "3",
       productId: "000003",
-      // location: "New York No. 1 Lake Park",
+      location: "New York No. 1 Lake Park",
       contact: "012394858",
       price: "3.5",
       status: "ON GOING",
@@ -264,26 +274,26 @@ function DeliveryDashBoard() {
     {
       key: "4",
       productId: "000002",
-      // location: "New York No. 1 Lake Park",
+      location: "New York No. 1 Lake Park",
       contact: "099384757",
       price: "3",
-      status: "UNSUCCESS",
+      status: "ON GOING",
     },
     {
       key: "5",
       productId: "000002",
-      // location: "New York No. 1 Lake Park",
+      location: "New York No. 1 Lake Park",
       contact: "099384757",
       price: "3",
-      status: "UNSUCCESS",
+      status: "ON GOING",
     },
     {
       key: "6",
       productId: "000001",
-      // location: "New York No. 1 Lake Park",
+      location: "New York No. 1 Lake Park",
       contact: "012394858",
       price: "3.5",
-      status: "SUCCESS",
+      status: "ON GOING",
     },
   ];
   // state
@@ -291,6 +301,7 @@ function DeliveryDashBoard() {
   const [colorStatus, setColorStatus] = useState("#1890ff");
   const [initialValue, setInitialValue] = useState(data);
   const [trigger, setTrigger] = useState(false);
+  const [visible, setVisible] = useState(false);
   // useRef
   // const statusRef = useRef(null);
   //UseEffect
@@ -298,6 +309,14 @@ function DeliveryDashBoard() {
     console.log("initialValue", initialValue);
   }, []);
 
+  const hide = () => {
+    setVisible(false);
+  };
+  const handleVisibleChange = (visible) => {
+    console.log(visible);
+    setVisible(visible);
+    console.log(visible);
+  };
   function handleChange(text, record, value) {
     // console.log(`selected ${value.productId}`);
     console.log("text", text);
@@ -394,10 +413,18 @@ function DeliveryDashBoard() {
       render: (text) => <a>{text}</a>,
     },
     // {
-    //   // title: "LOCATION",
-    //   // dataIndex: "location",
-    //   // key: "location",
-    //   // className: "columns",
+    //   title: "LOCATION",
+    //   dataIndex: "location",
+    //   key: "location",
+    //   className: "columns",
+    //   ellipsis: {
+    //     showTitle: false,
+    //   },
+    //   render: (address) => (
+    //     <Tooltip placement="topLeft" title={address}>
+    //       {address}
+    //     </Tooltip>
+    //   ),
     // },
     {
       title: "CONTACT",
@@ -422,13 +449,13 @@ function DeliveryDashBoard() {
       render: (text, record) => (
         <>
           <Select
-            size="small"
-            defaultValue="ON GOING"
+            // className={() => {}}
             style={{
               width: 90,
               // color: colorStatus,
               fontSize: "0.6rem",
             }}
+            defaultValue="ON GOING"
             // ref={statusRef}
             onChange={(value) => {
               // handleChange(text, record);
@@ -436,6 +463,7 @@ function DeliveryDashBoard() {
               const preStatus = record.status;
               console.log(preStatus);
               var price;
+
               if (value === "SUCCESS") {
                 price = parseFloat(record.price);
                 console.log("hey");
@@ -444,6 +472,11 @@ function DeliveryDashBoard() {
               if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
                 price = parseFloat(record.price);
                 console.log("hi ");
+                setTotal(total - price);
+              }
+
+              if (preStatus === "SUCCESS" && value === "ON GOING") {
+                price = parseFloat(record.price);
                 setTotal(total - price);
               }
 
@@ -484,6 +517,19 @@ function DeliveryDashBoard() {
             </Option>
           </Select>
           {/* })() */}
+          <Popover
+            content={<a onClick={hide}>Close</a>}
+            title="message"
+            trigger="click"
+            visible={visible}
+            onVisibleChange={handleVisibleChange}
+            key={record.key}
+            size="small"
+          >
+            <Button type="primary" size="small">
+              Click me
+            </Button>
+          </Popover>
         </>
       ),
     },
@@ -491,8 +537,8 @@ function DeliveryDashBoard() {
 
   return (
     <div>
-      {console.log(data)}
-      {console.log(total)}
+      {/* {console.log(data)}
+      {console.log(total)} */}
       <DeliveryHeader />
       <div className="content">
         <p className="content-header">TO BE DELIVER</p>

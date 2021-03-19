@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", sans-serif !important;
 }
 
 @import "./_NavBar.css";
@@ -20,3 +20,4 @@ body {
 @import "./_PDF.css";
 @import "./_HeaderBar.css";
 @import "./_ReportShop.css";
+@import "./_HomePage.css";

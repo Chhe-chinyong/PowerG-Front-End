@@ -8,7 +8,8 @@
   height: 72px;
 }
 .logo img {
-  max-width: 33%;
+  max-width: 22%;
+  margin-top: 0.5rem;
   min-width: 60px;
   /* max-width: 100px; */
   height: auto;
