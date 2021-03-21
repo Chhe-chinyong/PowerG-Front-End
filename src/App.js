@@ -42,7 +42,7 @@ function App() {
   const [loginStatus, setLoginStatus] = useState(false);
   const [roleStatus, setRoleStatus] = useState("");
   const [userNameStatus, setUsernameStatus] = useState("");
-  console.log("123213", roleStatus);
+
   // const [title, setTitle] = useState(path);
   const [title, setTitle] = useState("Dashboard");
   const handleCollapse = (collapsed) => {
@@ -72,8 +72,14 @@ function App() {
           <Router>
             <div className="App">
               <Switch>
-                <Route path="/" exact component={HomePage} />
-
+                {/* <Route path="/" exact component={HomePage} /> */}
+                <PrivateLogin
+                  path="/"
+                  exact
+                  component={HomePage}
+                  auth={loginStatus}
+                  role={roleStatus}
+                />
                 {/* Login */}
                 <PrivateLogin
                   path="/login"

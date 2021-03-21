@@ -62,6 +62,7 @@ function ContentUser() {
           "auth-token": localStorage.getItem("token"),
         },
       });
+      console.log(result);
       const allData = result.data.data;
       const datas = allData.map((data) => {
         const contact = data.contact.split("");
@@ -86,6 +87,7 @@ function ContentUser() {
           "auth-token": localStorage.getItem("token"),
         },
       });
+
       const allData = result.data.data;
       const datas = allData.map((data) => {
         const contact = data.contact.split("");

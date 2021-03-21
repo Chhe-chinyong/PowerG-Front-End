@@ -2,22 +2,6 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 const PrivateLogin = ({ component: Component, auth, role, ...rest }) => (
   <Route
-    // {...rest}
-    // render={(props) =>
-    //   auth === false ? <Component {...props} /> : <Redirect to="/dashboard" />
-    // }
-
-    // {...rest}
-    // render={(props) =>
-    //   auth === false ? (
-    //     <Component {...props} />
-    //   ) : (
-    //     () => {
-    //       console.log("hello dashbaord");
-    //       <Redirect to="/dashboard" />;
-    //     }
-    //   )
-    // }
     {...rest}
     render={(props) => {
       if (auth === false) {

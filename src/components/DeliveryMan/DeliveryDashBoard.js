@@ -273,7 +273,7 @@ function DeliveryDashBoard() {
     },
     {
       key: "4",
-      productId: "000002",
+      productId: "000004",
       location: "New York No. 1 Lake Park",
       contact: "099384757",
       price: "3",
@@ -281,7 +281,7 @@ function DeliveryDashBoard() {
     },
     {
       key: "5",
-      productId: "000002",
+      productId: "000005",
       location: "New York No. 1 Lake Park",
       contact: "099384757",
       price: "3",
@@ -289,7 +289,7 @@ function DeliveryDashBoard() {
     },
     {
       key: "6",
-      productId: "000001",
+      productId: "000006",
       location: "New York No. 1 Lake Park",
       contact: "012394858",
       price: "3.5",
@@ -298,10 +298,10 @@ function DeliveryDashBoard() {
   ];
   // state
   const [total, setTotal] = useState(0);
-  const [colorStatus, setColorStatus] = useState("#1890ff");
   const [initialValue, setInitialValue] = useState(data);
   const [trigger, setTrigger] = useState(false);
   const [visible, setVisible] = useState(false);
+
   // useRef
   // const statusRef = useRef(null);
   //UseEffect
@@ -327,7 +327,7 @@ function DeliveryDashBoard() {
     // console.log((statusRef.current.props.style.color = "red"));
     if (value == "UNSUCCESS") {
       console.log("hi");
-      setColorStatus("#ff4d4f");
+      // setColorStatus("#ff4d4f");
     }
     if (value == "ON GOING")
       if (value == "SUCCESS") {
@@ -446,92 +446,512 @@ function DeliveryDashBoard() {
       dataIndex: "status",
       key: "status",
       className: "columns",
-      render: (text, record) => (
-        <>
-          <Select
-            // className={() => {}}
-            style={{
-              width: 90,
-              // color: colorStatus,
-              fontSize: "0.6rem",
-            }}
-            defaultValue="ON GOING"
-            // ref={statusRef}
-            onChange={(value) => {
-              // handleChange(text, record);
-              console.log("value", value);
-              const preStatus = record.status;
-              console.log(preStatus);
-              var price;
+      // Original
+      // render: (text, record) => (
+      //   <>
+      //     <Select
+      //       // className={() => {}}
+      //       style={{
+      //         width: 90,
+      //         // color: colorStatus,
 
-              if (value === "SUCCESS") {
-                price = parseFloat(record.price);
-                console.log("hey");
-                setTotal(total + price);
-              }
-              if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
-                price = parseFloat(record.price);
-                console.log("hi ");
-                setTotal(total - price);
-              }
+      //         fontSize: "0.6rem",
+      //       }}
+      //       defaultValue="ON GOING"
+      //       // ref={statusRef}
+      //       onChange={(value) => {
+      //         // handleChange(text, record);
+      //         console.log("value", value);
+      //         console.log("record", record);
+      //         // Set key to state
+      //         setKeyIndex(record.key);
+      //         const preStatus = record.status;
+      //         console.log(preStatus);
+      //         var price;
 
-              if (preStatus === "SUCCESS" && value === "ON GOING") {
-                price = parseFloat(record.price);
-                setTotal(total - price);
-              }
+      //         if (value === "SUCCESS") {
+      //           price = parseFloat(record.price);
+      //           console.log("hey");
+      //           setTotal(total + price);
+      //           setColorStatus("green");
+      //         }
+      //         if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
+      //           price = parseFloat(record.price);
+      //           console.log("hi ");
+      //           setTotal(total - price);
+      //           setColorStatus("red");
+      //         }
 
-              console.log(record);
-              // Change status to data
-              record.status = value;
-            }}
-          >
-            <Option
-              value="ON GOING"
-              style={{
-                color: "#bdc3c7",
-                fontSize: "0.6rem",
-              }}
-            >
-              ON GOING
-            </Option>
-            <Option
-              value="SUCCESS"
-              // className="SUCCESS"
-              style={{
-                color: "#52c41a",
-                fontWeight: "bold",
-                fontSize: "0.6rem",
-              }}
-            >
-              SUCCESS
-            </Option>
-            <Option
-              value="UNSUCCESS"
-              style={{
-                color: "#ff4d4f",
-                fontWeight: "bold",
-                fontSize: "0.6rem",
-              }}
-            >
-              UNSUCCESS
-            </Option>
-          </Select>
-          {/* })() */}
-          <Popover
-            content={<a onClick={hide}>Close</a>}
-            title="message"
-            trigger="click"
-            visible={visible}
-            onVisibleChange={handleVisibleChange}
-            key={record.key}
-            size="small"
-          >
-            <Button type="primary" size="small">
-              Click me
-            </Button>
-          </Popover>
-        </>
-      ),
+      //         if (preStatus === "SUCCESS" && value === "ON GOING") {
+      //           price = parseFloat(record.price);
+      //           setTotal(total - price);
+      //           setColorStatus("gray");
+      //         }
+
+      //         console.log(record);
+      //         // Change status to data
+      //         record.status = value;
+      //       }}
+      //     >
+      //       <Option
+      //         value="ON GOING"
+      //         style={{
+      //           color: "#bdc3c7",
+      //           fontSize: "0.6rem",
+      //         }}
+      //       >
+      //         ON GOING
+      //       </Option>
+      //       <Option
+      //         value="SUCCESS"
+      //         // className="SUCCESS"
+      //         style={{
+      //           color: "#52c41a",
+      //           fontWeight: "bold",
+      //           fontSize: "0.6rem",
+      //         }}
+      //       >
+      //         SUCCESS
+      //       </Option>
+      //       <Option
+      //         value="UNSUCCESS"
+      //         style={{
+      //           color: "#ff4d4f",
+      //           fontWeight: "bold",
+      //           fontSize: "0.6rem",
+      //         }}
+      //       >
+      //         UNSUCCESS
+      //       </Option>
+      //     </Select>
+      //     {/* })() */}
+      //     {/* <Popover
+      //       content={<a onClick={hide}>Close</a>}
+      //       title="message"
+      //       trigger="click"
+      //       visible={visible}
+      //       onVisibleChange={handleVisibleChange}
+      //       key={record.key}
+      //       size="small"
+      //     >
+      //       <Button type="primary" size="small">
+      //         Click me
+      //       </Button>
+      //     </Popover> */}
+      //   </>
+      // ),
+
+      // Testing
+      render: (text, record) => {
+        console.log("first", record);
+        if (record.status === "ON GOING") {
+          console.log("hey on going");
+          return (
+            <>
+              <Select
+                // className={() => {}}
+                style={{
+                  width: 100,
+                  color: "#bdc3c7",
+                  fontSize: "0.6rem",
+                }}
+                defaultValue="ON GOING"
+                // ref={statusRef}
+                onChange={(value) => {
+                  // handleChange(text, record);
+                  console.log("value", value);
+                  console.log("record", record);
+                  // Set key to state
+                  // setKeyIndex(record.key);
+                  const preStatus = record.status;
+                  console.log("pre", preStatus);
+                  var price;
+
+                  if (value === "SUCCESS") {
+                    price = parseFloat(record.price);
+                    console.log("hey");
+                    setTotal(total + price);
+                  }
+                  if (value === "UNSUCCESS") {
+                    trigger ? setTrigger(false) : setTrigger(true);
+                    // trigger === true ? setTrigger(false) : setTrigger(true);
+
+                    // setTotal(total - 0.0);
+                    // {
+                    //   trigger ? false : true;
+                    // }
+                    // setTrigger(true);
+                  }
+                  if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
+                    price = parseFloat(record.price);
+                    console.log("hi ");
+                    setTotal(total - price);
+                  }
+
+                  if (preStatus === "SUCCESS" && value === "ON GOING") {
+                    price = parseFloat(record.price);
+                    setTotal(total - price);
+                  }
+
+                  console.log(record);
+                  // Change status to data
+                  record.status = value;
+                }}
+              >
+                <Option
+                  value="ON GOING"
+                  style={{
+                    color: "#bdc3c7",
+                    fontSize: "0.6rem",
+                  }}
+                >
+                  ON GOING
+                </Option>
+                <Option
+                  value="SUCCESS"
+                  // className="SUCCESS"
+                  style={{
+                    color: "#52c41a",
+                    fontWeight: "bold",
+                    fontSize: "0.6rem",
+                  }}
+                >
+                  SUCCESS
+                </Option>
+                <Option
+                  value="UNSUCCESS"
+                  style={{
+                    color: "#ff4d4f",
+                    fontWeight: "bold",
+                    fontSize: "0.6rem",
+                  }}
+                >
+                  UNSUCCESS
+                </Option>
+              </Select>
+            </>
+          );
+        } else if (record.status === "UNSUCCESS") {
+          console.log("hey UNSUCCESS");
+          return (
+            <>
+              <Select
+                // className={() => {}}
+                style={{
+                  width: 100,
+                  color: "red",
+                  fontSize: "0.6rem",
+                }}
+                // defaultValue="ON GOING"
+                // ref={statusRef}
+                onChange={(value) => {
+                  // handleChange(text, record);
+                  console.log("value", value);
+                  console.log("record", record);
+                  // Set key to state
+                  // setKeyIndex(record.key);
+                  const preStatus = record.status;
+                  console.log(preStatus);
+                  var price;
+
+                  if (value === "SUCCESS") {
+                    price = parseFloat(record.price);
+                    console.log("hey");
+                    setTotal(total + price);
+                  }
+
+                  if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
+                    price = parseFloat(record.price);
+                    console.log("hi ");
+                    setTotal(total - price);
+                  }
+
+                  if (preStatus === "SUCCESS" && value === "ON GOING") {
+                    price = parseFloat(record.price);
+                    setTotal(total - price);
+                  }
+
+                  console.log(record);
+                  // Change status to data
+                  record.status = value;
+                }}
+              >
+                <Option
+                  value="ON GOING"
+                  style={{
+                    color: "#bdc3c7",
+                    fontSize: "0.6rem",
+                  }}
+                >
+                  ON GOING
+                </Option>
+                <Option
+                  value="SUCCESS"
+                  // className="SUCCESS"
+                  style={{
+                    color: "#52c41a",
+                    fontWeight: "bold",
+                    fontSize: "0.6rem",
+                  }}
+                >
+                  SUCCESS
+                </Option>
+                <Option
+                  value="UNSUCCESS"
+                  style={{
+                    color: "#ff4d4f",
+                    fontWeight: "bold",
+                    fontSize: "0.6rem",
+                  }}
+                >
+                  UNSUCCESS
+                </Option>
+              </Select>
+            </>
+          );
+        } else if (record.status === "SUCCESS") {
+          console.log("hey success");
+          return (
+            <>
+              <Select
+                // className={() => {}}
+                style={{
+                  width: 100,
+                  color: "#52c41a",
+                  fontSize: "0.6rem",
+                }}
+                // defaultValue="ON GOING"
+                // ref={statusRef}
+                onChange={(value) => {
+                  // handleChange(text, record);
+                  console.log("value", value);
+                  console.log("record", record);
+                  // Set key to state
+                  // setKeyIndex(record.key);
+                  const preStatus = record.status;
+                  console.log(preStatus);
+                  var price;
+
+                  if (value === "SUCCESS") {
+                    price = parseFloat(record.price);
+                    console.log("hey");
+                    setTotal(total + price);
+                  }
+
+                  if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
+                    price = parseFloat(record.price);
+                    console.log("hi ");
+                    setTotal(total - price);
+                  }
+
+                  if (preStatus === "SUCCESS" && value === "ON GOING") {
+                    price = parseFloat(record.price);
+                    setTotal(total - price);
+                  }
+
+                  console.log(record);
+                  // Change status to data
+                  record.status = value;
+                }}
+              >
+                <Option
+                  value="ON GOING"
+                  style={{
+                    color: "#bdc3c7",
+                    fontSize: "0.6rem",
+                  }}
+                >
+                  ON GOING
+                </Option>
+                <Option
+                  value="SUCCESS"
+                  // className="SUCCESS"
+                  style={{
+                    color: "#52c41a",
+                    fontWeight: "bold",
+                    fontSize: "0.6rem",
+                  }}
+                >
+                  SUCCESS
+                </Option>
+                <Option
+                  value="UNSUCCESS"
+                  style={{
+                    color: "#ff4d4f",
+                    fontWeight: "bold",
+                    fontSize: "0.6rem",
+                  }}
+                >
+                  UNSUCCESS
+                </Option>
+              </Select>
+            </>
+          );
+        }
+        // if (record.key === keyIndex) {
+        //   console.log("if");
+        //   console.log(colorStatus);
+        //   return (
+        //     <>
+        //       <Select
+        //         // className={() => {}}
+        //         style={{
+        //           width: 90,
+        //           color: colorStatus,
+        //           fontSize: "0.6rem",
+        //         }}
+        //         defaultValue="ON GOING"
+        //         // ref={statusRef}
+        //         onChange={(value) => {
+        //           // handleChange(text, record);
+        //           console.log("value", value);
+        //           console.log("record", record);
+        //           // Set key to state
+        //           // setKeyIndex(record.key);
+        //           const preStatus = record.status;
+        //           console.log(preStatus);
+        //           var price;
+
+        //           if (value === "SUCCESS") {
+        //             price = parseFloat(record.price);
+        //             console.log("hey");
+        //             setTotal(total + price);
+        //             // setColorStatus("green");
+        //           }
+        //           if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
+        //             price = parseFloat(record.price);
+        //             console.log("hi ");
+        //             setTotal(total - price);
+        //             // setColorStatus("red");
+        //           }
+
+        //           if (preStatus === "SUCCESS" && value === "ON GOING") {
+        //             price = parseFloat(record.price);
+        //             setTotal(total - price);
+        //             // setColorStatus("gray");
+        //           }
+
+        //           console.log(record);
+        //           // Change status to data
+        //           record.status = value;
+        //         }}
+        //       >
+        //         <Option
+        //           value="ON GOING"
+        //           style={{
+        //             color: "#bdc3c7",
+        //             fontSize: "0.6rem",
+        //           }}
+        //         >
+        //           ON GOING
+        //         </Option>
+        //         <Option
+        //           value="SUCCESS"
+        //           // className="SUCCESS"
+        //           style={{
+        //             color: "#52c41a",
+        //             fontWeight: "bold",
+        //             fontSize: "0.6rem",
+        //           }}
+        //         >
+        //           SUCCESS
+        //         </Option>
+        //         <Option
+        //           value="UNSUCCESS"
+        //           style={{
+        //             color: "#ff4d4f",
+        //             fontWeight: "bold",
+        //             fontSize: "0.6rem",
+        //           }}
+        //         >
+        //           UNSUCCESS
+        //         </Option>
+        //       </Select>
+        //     </>
+        //   );
+        // } else {
+        //   console.log("else");
+        //   return (
+        //     <>
+        //       <Select
+        //         // className={() => {}}
+        //         style={{
+        //           width: 90,
+        //           // color: colorStatus,
+
+        //           fontSize: "0.6rem",
+        //         }}
+        //         defaultValue="ON GOING"
+        //         // ref={statusRef}
+        //         onChange={(value) => {
+        //           // handleChange(text, record);
+        //           console.log("value", value);
+        //           console.log("record", record);
+        //           // Set key to state
+        //           setKeyIndex(record.key);
+        //           const preStatus = record.status;
+        //           console.log(preStatus);
+        //           var price;
+
+        //           if (value === "SUCCESS") {
+        //             price = parseFloat(record.price);
+        //             console.log("hey");
+        //             setTotal(total + price);
+        //             setColorStatus("green");
+        //           }
+        //           if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
+        //             price = parseFloat(record.price);
+        //             console.log("hi ");
+        //             setTotal(total - price);
+        //             setColorStatus("red");
+        //           }
+
+        //           if (preStatus === "SUCCESS" && value === "ON GOING") {
+        //             price = parseFloat(record.price);
+        //             setTotal(total - price);
+        //             setColorStatus("gray");
+        //           }
+
+        //           console.log(record);
+        //           // Change status to data
+        //           record.status = value;
+        //         }}
+        //       >
+        //         <Option
+        //           value="ON GOING"
+        //           style={{
+        //             color: "#bdc3c7",
+        //             fontSize: "0.6rem",
+        //           }}
+        //         >
+        //           ON GOING
+        //         </Option>
+        //         <Option
+        //           value="SUCCESS"
+        //           // className="SUCCESS"
+        //           style={{
+        //             color: "#52c41a",
+        //             fontWeight: "bold",
+        //             fontSize: "0.6rem",
+        //           }}
+        //         >
+        //           SUCCESS
+        //         </Option>
+        //         <Option
+        //           value="UNSUCCESS"
+        //           style={{
+        //             color: "#ff4d4f",
+        //             fontWeight: "bold",
+        //             fontSize: "0.6rem",
+        //           }}
+        //         >
+        //           UNSUCCESS
+        //         </Option>
+        //       </Select>
+        //     </>
+        //   );
+        // }
+      },
     },
   ];
 
@@ -539,6 +959,7 @@ function DeliveryDashBoard() {
     <div>
       {/* {console.log(data)}
       {console.log(total)} */}
+
       <DeliveryHeader />
       <div className="content">
         <p className="content-header">TO BE DELIVER</p>

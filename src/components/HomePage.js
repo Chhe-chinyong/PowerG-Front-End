@@ -1,9 +1,20 @@
 import React from "react";
-import { Route, Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { BackTop } from "antd";
 import section1 from "../images/section1.1.jpg";
 import section3 from "../images/section3.jpg";
-
+import { UpOutlined } from "@ant-design/icons";
 function HomePage() {
+  const style = {
+    height: 35,
+    width: 35,
+    lineHeight: "35px",
+    borderRadius: 4,
+    backgroundColor: "#f86969",
+    color: "#fff",
+    textAlign: "center",
+  };
+
   return (
     <div>
       {/* <!-- Navigation--> */}
@@ -233,8 +244,14 @@ function HomePage() {
       <footer class="footer bg-black small text-center text-white-50">
         <div class="container">Copyright © etalket 2021</div>
       </footer>
+      <BackTop visibilityHeight={1000}>
+        <div className="backup">
+          <UpOutlined />
+        </div>
+      </BackTop>
     </div>
   );
 }
 
 export default HomePage;
+// style={style}
