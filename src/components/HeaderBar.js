@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Layout } from "antd";
-import { Avatar, Image, Menu, Dropdown, Button } from "antd";
+import { Avatar, Menu, Dropdown } from "antd";
 import { UserOutlined, DownOutlined, LogoutOutlined } from "@ant-design/icons";
 import {
   AuthContext,
@@ -56,12 +56,3 @@ function HeaderBar({ title }) {
 }
 
 export default HeaderBar;
-
-// {
-//   /* <h5 style={{ margin: "0" }}>{title}</h5> */
-// }
-
-// display: "flex",
-// height: "72px",
-// alignItems: "center",
-// paddingLeft: "40px",

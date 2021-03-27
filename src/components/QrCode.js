@@ -17,6 +17,7 @@ const layout = {
 function QrCode({ match }) {
   const pro_id = match.params.pro_id;
   const user_id = localStorage.getItem("u_id");
+
   useEffect(() => {}, []);
 
   const handleCancel = () => {
@@ -28,7 +29,15 @@ function QrCode({ match }) {
     console.log("this is " + values.username);
     console.log("this is " + values.password);
     const shop_owner = values.shop_owner;
-
+    const list_id = localStorage.getItem("listId");
+    if (!list_id) {
+      message.error({
+        content: "" + "Please create a list before you scan",
+        duration: 5,
+        className: "UserErrorMessage",
+      });
+      return;
+    }
     try {
       const result = await axios.post(
         `http://165.22.252.116/package/addpackagetodeliveryman`,

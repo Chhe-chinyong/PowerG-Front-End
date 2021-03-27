@@ -18,29 +18,29 @@ function ContentUser() {
   // useRef
   const searchRef = useRef(null);
 
-  const data = [
-    {
-      key: "1",
-      user_id: "000001",
-      user_name: "Kok dara",
-      user_password: "901294012940214",
-      user_contact: "0129928475",
-    },
-    {
-      key: "2",
-      user_id: "000002",
-      user_name: "Mingthean Lay",
-      user_password: "901294012940214",
-      user_contact: "0298844888",
-    },
-    {
-      key: "3",
-      user_id: "000003",
-      user_name: "Phal sokheng",
-      user_password: "901294012940214",
-      user_contact: "010928475",
-    },
-  ];
+  // const data = [
+  //   {
+  //     key: "1",
+  //     user_id: "000001",
+  //     user_name: "Kok dara",
+  //     user_password: "901294012940214",
+  //     user_contact: "0129928475",
+  //   },
+  //   {
+  //     key: "2",
+  //     user_id: "000002",
+  //     user_name: "Mingthean Lay",
+  //     user_password: "901294012940214",
+  //     user_contact: "0298844888",
+  //   },
+  //   {
+  //     key: "3",
+  //     user_id: "000003",
+  //     user_name: "Phal sokheng",
+  //     user_password: "901294012940214",
+  //     user_contact: "010928475",
+  //   },
+  // ];
 
   // State
   const [initialValue, setInitialValue] = useState([]);
@@ -48,7 +48,6 @@ function ContentUser() {
   // const [searchInput, setSearchInput] = useState("");
   const [searchedColumn, SetSearchedColumn] = useState("");
   const [user, setUser] = useState("");
-  const [click, setClick] = useState(false);
   const [visible, setVisible] = useState(false);
   const [visible1, setVisible1] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -76,7 +75,7 @@ function ContentUser() {
       setInitialValue(datas);
     };
     fetchItem();
-    console.log("first", initialValue);
+    // console.log("first", initialValue);
   }, []);
 
   // Fetch data again we anything change
@@ -101,7 +100,7 @@ function ContentUser() {
       setInitialValue(datas);
     };
     fetchItem();
-    console.log("first", initialValue);
+    // console.log("first", initialValue);
   }, [trigger]);
 
   // searchBar
@@ -185,12 +184,12 @@ function ContentUser() {
   };
 
   //   Event-handler
-  const handleClick = (e) => {
-    console.log("Clicked me");
-    setClick((prevClicked) => (prevClicked ? false : true));
-    console.log(click);
-    // <ContentUserAdd />;
-  };
+  // const handleClick = (e) => {
+  //   console.log("Clicked me");
+  //   setClick((prevClicked) => (prevClicked ? false : true));
+  //   console.log(click);
+  //   // <ContentUserAdd />;
+  // };
 
   const showModal = () => {
     setVisible(true);
@@ -244,7 +243,7 @@ function ContentUser() {
         }
       );
       console.log(initialValue);
-      setInitialValue(initialValue.filter((value) => value.user_id != id));
+      setInitialValue(initialValue.filter((value) => value.user_id !== id));
       message.success({
         content: "" + result.data.message,
         duration: 5,
@@ -265,9 +264,9 @@ function ContentUser() {
     message.error("Click on No");
   };
 
-  function refreshPage() {
-    window.location.reload();
-  }
+  // function refreshPage() {
+  //   window.location.reload();
+  // }
   // Data
   const columns = [
     {
@@ -394,10 +393,3 @@ function ContentUser() {
 }
 
 export default ContentUser;
-
-{
-  /* Condition */
-}
-{
-  /* {click ? <ContentUserAdd /> : <></>} */
-}

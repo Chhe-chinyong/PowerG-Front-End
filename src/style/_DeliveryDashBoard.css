@@ -60,6 +60,12 @@
   margin: 0;
 }
 
+.contentHeaderWrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .content {
   background: #f2f3f6;
 }
@@ -92,6 +98,16 @@
 .UNSUCCESS {
   color: #f05454;
 }
+
+.generateList {
+  background-color: #5cb85c;
+  margin-right: 1rem;
+  color: white;
+}
+.generateList span svg {
+  margin-bottom: 0.4rem;
+}
+
 @media only screen and (orientation: landscape) {
   .columns {
     font-size: 12px;

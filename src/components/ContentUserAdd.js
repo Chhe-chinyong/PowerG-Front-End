@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { Button, Form, Input, message, Col, Row, Select } from "antd";
-import { UserAddOutlined } from "@ant-design/icons";
+import React from "react";
+import { Button, Form, Input, message } from "antd";
+
 import axios from "axios";
 import "antd/dist/antd.css";
 const { Item } = Form;
-const { Option } = Select;
 const layout = {
   labelCol: {
     span: 8,
@@ -16,14 +15,13 @@ const layout = {
 
 function ContentUserAdd({
   setVisible,
-  initialValue,
-  setInitialValue,
+
   setTrigger,
 }) {
   // State
   // const [visible, setVisible] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState("Content of the modal");
+  // const [confirmLoading, setConfirmLoading] = useState(false);
+  // const [modalText, setModalText] = useState("Content of the modal");
 
   const onFinish = async (values) => {
     console.log("this is " + values.username);
@@ -210,18 +208,3 @@ export default ContentUserAdd;
 //               width: "100%",
 //             }}
 //           />
-
-{
-  /* <Input.Group>
-<Input
-  style={{ width: "20%" }}
-  placeholder="012"
-  value={"23123123"}
-/>
-<Input
-  style={{ width: "40%" }}
-  placeholder="899388338"
-  value={"23123123"}
-/>
-</Input.Group> */
-}

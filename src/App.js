@@ -7,7 +7,6 @@ import { Layout, Button } from "antd";
 import NavBar from "./components/NavBar";
 import DashBoard from "./components/DashBoard";
 import Products from "./components/Products";
-import Report from "./components/Report";
 import Users from "./components/Users";
 import Home from "./components/Home";
 import HeaderBar from "./components/HeaderBar";
@@ -34,7 +33,7 @@ const { Content, Sider } = Layout;
 
 function App() {
   // Convert pathname set to header
-  const firstPath = window.location.pathname.split("/")[1];
+  // const firstPath = window.location.pathname.split("/")[1];
   // const path = firstPath.charAt(0).toUpperCase() + firstPath.slice(1);
 
   // State

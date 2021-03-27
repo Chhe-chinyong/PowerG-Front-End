@@ -108,7 +108,12 @@ function HomePage() {
           </h2>
           <div class="row align-items-center no-gutters mb-4 mb-lg-5">
             <div class="col-xl-8 col-lg-7">
-              <img class="img-fluid mb-3 mb-lg-0" src={section1} alt="done3" />
+              <img
+                class="img-fluid mb-3 mb-lg-0"
+                loading="lazy"
+                src={section1}
+                alt="Poster"
+              />
             </div>
             <div class="col-xl-4 col-lg-5">
               <div class="featured-text text-center text-lg-left">
@@ -124,9 +129,10 @@ function HomePage() {
           <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
             <div class="col-lg-6">
               <img
+                loading="lazy"
                 class="img-fluid"
                 src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&h=500&q=80"
-                alt="DEMO1"
+                alt="product to customer"
               />
             </div>
             <div class="col-lg-6">
@@ -147,7 +153,12 @@ function HomePage() {
           {/* <!-- Project Two Row--> */}
           <div class="row justify-content-center no-gutters">
             <div class="col-lg-6">
-              <img class="img-fluid" src={section3} alt="Demo2" />
+              <img
+                class="img-fluid"
+                src={section3}
+                alt="showcase"
+                loading="lazy"
+              />
             </div>
             <div class="col-lg-6 order-lg-first">
               <div class="bg-black text-center h-100 project">

@@ -1,249 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-import {
-  Form,
-  Table,
-  Tag,
-  Space,
-  Select,
-  Button,
-  message,
-  Popover,
-  Tooltip,
-} from "antd";
+import React, { useState, useEffect } from "react";
+import { Form, Table, Select, Button, message } from "antd";
+import { v4 as uuidv4 } from "uuid";
 import DeliveryHeader from "../DeliveryMan/DeliveryHeader";
 import axios from "axios";
 import { getAllByDisplayValue } from "@testing-library/dom";
+import { FileAddOutlined } from "@ant-design/icons";
 const { Option } = Select;
-// const columns = [
-//   {
-//     title: "PRODUCT ID",
-//     dataIndex: "productId",
-//     key: "productId",
-//     className: "columns",
-//     // width: 100,
-//     render: (text) => <a>{text}</a>,
-//   },
-//   {
-//     title: "LOCATION",
-//     dataIndex: "location",
-//     key: "location",
-//     className: "columns",
-//   },
-//   {
-//     title: "CONTACT",
-//     dataIndex: "contact",
-//     key: "contact",
-//     className: "columns",
-//   },
-//   {
-//     title: "PRICE",
-//     dataIndex: "price",
-//     key: "price",
-//     className: "columns",
-//     render: (record) => {
-//       return <span>${record}</span>;
-//     },
-//   },
-//   {
-//     title: "STATUS",
-//     dataIndex: "status",
-//     key: "status",
-//     className: "columns",
-//     render: (status) => (
-//       <>
-//         {(() => {
-//           <Select
-//             defaultValue="Transferer"
-//             style={{ width: 116 }}
-//             onChange={handleChange}
-//           >
-//             <Option value="Transferer">Transferer</Option>
-//             <Option value="Receiver">Receiver</Option>
-//           </Select>;
-//           // if (status === "UNSUCCESS")
-//           //   return (
-//           //     <span style={{ color: "#ff4d4f", fontWeight: "bold" }}>
-//           //       UNSUCCESS
-//           //     </span>
-//           //   );
-//           // if (status === "ON GOING")
-//           //   return (
-//           //     <span style={{ color: "#1890ff", fontWeight: "bold" }}>
-//           //       ON GOING
-//           //     </span>
-//           //   );
-//           // return (
-//           //   <span style={{ color: "#52c41a", fontWeight: "bold" }}>
-//           //     SUCCESS
-//           //   </span>
-//           // );
-//         })()}
-//       </>
-//     ),
-//   },
-// ];
-// const data = [
-//   {
-//     key: "1",
-//     productId: "000001",
-//     location: "New York No. 1 Lake Park",
-//     contact: "012394858",
-//     price: "3.5",
-//     status: "SUCCESS",
-//   },
-//   {
-//     key: "2",
-//     productId: "000002",
-//     location: "New York No. 1 Lake Park",
-//     contact: "099384757",
-//     price: "3.5",
-//     status: "UNSUCCESS",
-//   },
-//   {
-//     key: "1",
-//     productId: "000001",
-//     location: "New York No. 1 Lake Park",
-//     contact: "012394858",
-//     price: "3.5",
-//     status: "SUCCESS",
-//   },
-//   {
-//     key: "2",
-//     productId: "000002",
-//     location: "New York No. 1 Lake Park",
-//     contact: "099384757",
-//     price: "3",
-//     status: "UNSUCCESS",
-//   },
-//   {
-//     key: "2",
-//     productId: "000002",
-//     location: "New York No. 1 Lake Park",
-//     contact: "099384757",
-//     price: "3",
-//     status: "UNSUCCESS",
-//   },
-//   {
-//     key: "1",
-//     productId: "000001",
-//     location: "New York No. 1 Lake Park",
-//     contact: "012394858",
-//     price: "3.5",
-//     status: "SUCCESS",
-//   },
-//   {
-//     key: "2",
-//     productId: "000002",
-//     location: "New York No. 1 Lake Park",
-//     contact: "099384757",
-//     price: "3",
-//     status: "UNSUCCESS",
-//   },
-//   {
-//     key: "2",
-//     productId: "000002",
-//     location: "New York No. 1 Lake Park",
-//     contact: "099384757",
-//     price: "3",
-//     status: "UNSUCCESS",
-//   },
-//   {
-//     key: "2",
-//     productId: "000002",
-//     location: "New York No. 1 Lake Park",
-//     contact: "099384757",
-//     price: "3",
-//     status: "UNSUCCESS",
-//   },
-//   {
-//     key: "2",
-//     productId: "000002",
-//     location: "New York No. 1 Lake Park",
-//     contact: "099384757",
-//     price: "3",
-//     status: "UNSUCCESS",
-//   },
-//   {
-//     key: "2",
-//     productId: "000002",
-//     location: "New York No. 1 Lake Park",
-//     contact: "099384757",
-//     price: "3.5$",
-//     status: "UNSUCCESS",
-//   },
-//   {
-//     key: "2",
-//     productId: "000002",
-//     location: "New York No. 1 Lake Park",
-//     contact: "099384757",
-//     price: "5",
-//     status: "UNSUCCESS",
-//   },
-//   {
-//     key: "2",
-//     productId: "000002",
-//     location: "New York No. 1 Lake Park",
-//     contact: "099384757",
-//     price: "4",
-//     status: "UNSUCCESS",
-//   },
-//   {
-//     key: "2",
-//     productId: "000002",
-//     location: "New York No. 1 Lake Park",
-//     contact: "099384757",
-//     price: "",
-//     status: "UNSUCCESS",
-//   },
-//   {
-//     key: "2",
-//     productId: "000002",
-//     location: "New York No. 1 Lake Park",
-//     contact: "099384757",
-//     price: "3.5",
-//     status: "UNSUCCESS",
-//   },
-//   {
-//     key: "2",
-//     productId: "000002",
-//     location: "AEONII, sen sok city",
-//     contact: "099384757",
-//     price: "3.5",
-//     status: "UNSUCCESS",
-//   },
-//   // {
-//   //   key: "2",
-//   //   productId: "000002",
-//   //   location: "New York No. 1 Lake Park",
-//   //   contact: "099384757",
-//   //   price: "3.5$",
-//   //   status: "UNSUCCESS",
-//   // },
-//   // {
-//   //   key: "2",
-//   //   productId: "000002",
-//   //   location: "New York No. 1 Lake Park",
-//   //   contact: "099384757",
-//   //   price: "3.5$",
-//   //   status: "UNSUCCESS",
-//   // },
-//   // {
-//   //   key: "2",
-//   //   productId: "000002",
-//   //   location: "New York No. 1 Lake Park",
-//   //   contact: "099384757",
-//   //   price: "3.5$",
-//   //   status: "UNSUCCESS",
-//   // },
-//   // {
-//   //   key: "2",
-//   //   productId: "000002",
-//   //   location: "New York No. 1 Lake Park",
-//   //   contact: "099384757",
-//   //   price: "3.5$",
-//   //   status: "SUCCESS",
-//   // },
-// ];
 
 function DeliveryDashBoard() {
   const data = [
@@ -309,6 +71,15 @@ function DeliveryDashBoard() {
     console.log("initialValue", initialValue);
   }, []);
 
+  const generateList = async () => {
+    const listId = localStorage.getItem("listId");
+    if (listId) {
+      return console.log("u have already generate list");
+    }
+    const uuid_store = await uuidv4();
+    localStorage.setItem("listId", uuid_store.substring(0, 12));
+    // return console.log(uuid_store.substring(0, 8));
+  };
   const hide = () => {
     setVisible(false);
   };
@@ -317,37 +88,6 @@ function DeliveryDashBoard() {
     setVisible(visible);
     console.log(visible);
   };
-  function handleChange(text, record, value) {
-    // console.log(`selected ${value.productId}`);
-    console.log("text", text);
-    console.log("record", record);
-
-    // console.log(colorStatus);
-    // console.log(value);
-    // console.log((statusRef.current.props.style.color = "red"));
-    if (value == "UNSUCCESS") {
-      console.log("hi");
-      // setColorStatus("#ff4d4f");
-    }
-    if (value == "ON GOING")
-      if (value == "SUCCESS") {
-        // setColorStatus("#1890ff");
-        return (
-          <Option
-            value="SUCCESS"
-            style={{
-              color: "#52c41a",
-              fontWeight: "bold",
-              fontSize: "0.6rem",
-            }}
-          >
-            SUCCESS
-          </Option>
-        );
-      }
-
-    // setColorStatus("#52c41a");
-  }
 
   function checkStatus(values) {
     values.forEach((value) => {
@@ -380,7 +120,7 @@ function DeliveryDashBoard() {
         }
       );
       console.log(result);
-
+      localStorage.remove("listId");
       message.success({
         content: "" + result.data.message,
         duration: 5,
@@ -446,104 +186,9 @@ function DeliveryDashBoard() {
       dataIndex: "status",
       key: "status",
       className: "columns",
-      // Original
-      // render: (text, record) => (
-      //   <>
-      //     <Select
-      //       // className={() => {}}
-      //       style={{
-      //         width: 90,
-      //         // color: colorStatus,
-
-      //         fontSize: "0.6rem",
-      //       }}
-      //       defaultValue="ON GOING"
-      //       // ref={statusRef}
-      //       onChange={(value) => {
-      //         // handleChange(text, record);
-      //         console.log("value", value);
-      //         console.log("record", record);
-      //         // Set key to state
-      //         setKeyIndex(record.key);
-      //         const preStatus = record.status;
-      //         console.log(preStatus);
-      //         var price;
-
-      //         if (value === "SUCCESS") {
-      //           price = parseFloat(record.price);
-      //           console.log("hey");
-      //           setTotal(total + price);
-      //           setColorStatus("green");
-      //         }
-      //         if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
-      //           price = parseFloat(record.price);
-      //           console.log("hi ");
-      //           setTotal(total - price);
-      //           setColorStatus("red");
-      //         }
-
-      //         if (preStatus === "SUCCESS" && value === "ON GOING") {
-      //           price = parseFloat(record.price);
-      //           setTotal(total - price);
-      //           setColorStatus("gray");
-      //         }
-
-      //         console.log(record);
-      //         // Change status to data
-      //         record.status = value;
-      //       }}
-      //     >
-      //       <Option
-      //         value="ON GOING"
-      //         style={{
-      //           color: "#bdc3c7",
-      //           fontSize: "0.6rem",
-      //         }}
-      //       >
-      //         ON GOING
-      //       </Option>
-      //       <Option
-      //         value="SUCCESS"
-      //         // className="SUCCESS"
-      //         style={{
-      //           color: "#52c41a",
-      //           fontWeight: "bold",
-      //           fontSize: "0.6rem",
-      //         }}
-      //       >
-      //         SUCCESS
-      //       </Option>
-      //       <Option
-      //         value="UNSUCCESS"
-      //         style={{
-      //           color: "#ff4d4f",
-      //           fontWeight: "bold",
-      //           fontSize: "0.6rem",
-      //         }}
-      //       >
-      //         UNSUCCESS
-      //       </Option>
-      //     </Select>
-      //     {/* })() */}
-      //     {/* <Popover
-      //       content={<a onClick={hide}>Close</a>}
-      //       title="message"
-      //       trigger="click"
-      //       visible={visible}
-      //       onVisibleChange={handleVisibleChange}
-      //       key={record.key}
-      //       size="small"
-      //     >
-      //       <Button type="primary" size="small">
-      //         Click me
-      //       </Button>
-      //     </Popover> */}
-      //   </>
-      // ),
 
       // Testing
       render: (text, record) => {
-        console.log("first", record);
         if (record.status === "ON GOING") {
           console.log("hey on going");
           return (
@@ -575,12 +220,6 @@ function DeliveryDashBoard() {
                   if (value === "UNSUCCESS") {
                     trigger ? setTrigger(false) : setTrigger(true);
                     // trigger === true ? setTrigger(false) : setTrigger(true);
-
-                    // setTotal(total - 0.0);
-                    // {
-                    //   trigger ? false : true;
-                    // }
-                    // setTrigger(true);
                   }
                   if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
                     price = parseFloat(record.price);
@@ -636,14 +275,11 @@ function DeliveryDashBoard() {
           return (
             <>
               <Select
-                // className={() => {}}
                 style={{
                   width: 100,
                   color: "red",
                   fontSize: "0.6rem",
                 }}
-                // defaultValue="ON GOING"
-                // ref={statusRef}
                 onChange={(value) => {
                   // handleChange(text, record);
                   console.log("value", value);
@@ -714,7 +350,6 @@ function DeliveryDashBoard() {
           return (
             <>
               <Select
-                // className={() => {}}
                 style={{
                   width: 100,
                   color: "#52c41a",
@@ -788,169 +423,6 @@ function DeliveryDashBoard() {
             </>
           );
         }
-        // if (record.key === keyIndex) {
-        //   console.log("if");
-        //   console.log(colorStatus);
-        //   return (
-        //     <>
-        //       <Select
-        //         // className={() => {}}
-        //         style={{
-        //           width: 90,
-        //           color: colorStatus,
-        //           fontSize: "0.6rem",
-        //         }}
-        //         defaultValue="ON GOING"
-        //         // ref={statusRef}
-        //         onChange={(value) => {
-        //           // handleChange(text, record);
-        //           console.log("value", value);
-        //           console.log("record", record);
-        //           // Set key to state
-        //           // setKeyIndex(record.key);
-        //           const preStatus = record.status;
-        //           console.log(preStatus);
-        //           var price;
-
-        //           if (value === "SUCCESS") {
-        //             price = parseFloat(record.price);
-        //             console.log("hey");
-        //             setTotal(total + price);
-        //             // setColorStatus("green");
-        //           }
-        //           if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
-        //             price = parseFloat(record.price);
-        //             console.log("hi ");
-        //             setTotal(total - price);
-        //             // setColorStatus("red");
-        //           }
-
-        //           if (preStatus === "SUCCESS" && value === "ON GOING") {
-        //             price = parseFloat(record.price);
-        //             setTotal(total - price);
-        //             // setColorStatus("gray");
-        //           }
-
-        //           console.log(record);
-        //           // Change status to data
-        //           record.status = value;
-        //         }}
-        //       >
-        //         <Option
-        //           value="ON GOING"
-        //           style={{
-        //             color: "#bdc3c7",
-        //             fontSize: "0.6rem",
-        //           }}
-        //         >
-        //           ON GOING
-        //         </Option>
-        //         <Option
-        //           value="SUCCESS"
-        //           // className="SUCCESS"
-        //           style={{
-        //             color: "#52c41a",
-        //             fontWeight: "bold",
-        //             fontSize: "0.6rem",
-        //           }}
-        //         >
-        //           SUCCESS
-        //         </Option>
-        //         <Option
-        //           value="UNSUCCESS"
-        //           style={{
-        //             color: "#ff4d4f",
-        //             fontWeight: "bold",
-        //             fontSize: "0.6rem",
-        //           }}
-        //         >
-        //           UNSUCCESS
-        //         </Option>
-        //       </Select>
-        //     </>
-        //   );
-        // } else {
-        //   console.log("else");
-        //   return (
-        //     <>
-        //       <Select
-        //         // className={() => {}}
-        //         style={{
-        //           width: 90,
-        //           // color: colorStatus,
-
-        //           fontSize: "0.6rem",
-        //         }}
-        //         defaultValue="ON GOING"
-        //         // ref={statusRef}
-        //         onChange={(value) => {
-        //           // handleChange(text, record);
-        //           console.log("value", value);
-        //           console.log("record", record);
-        //           // Set key to state
-        //           setKeyIndex(record.key);
-        //           const preStatus = record.status;
-        //           console.log(preStatus);
-        //           var price;
-
-        //           if (value === "SUCCESS") {
-        //             price = parseFloat(record.price);
-        //             console.log("hey");
-        //             setTotal(total + price);
-        //             setColorStatus("green");
-        //           }
-        //           if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
-        //             price = parseFloat(record.price);
-        //             console.log("hi ");
-        //             setTotal(total - price);
-        //             setColorStatus("red");
-        //           }
-
-        //           if (preStatus === "SUCCESS" && value === "ON GOING") {
-        //             price = parseFloat(record.price);
-        //             setTotal(total - price);
-        //             setColorStatus("gray");
-        //           }
-
-        //           console.log(record);
-        //           // Change status to data
-        //           record.status = value;
-        //         }}
-        //       >
-        //         <Option
-        //           value="ON GOING"
-        //           style={{
-        //             color: "#bdc3c7",
-        //             fontSize: "0.6rem",
-        //           }}
-        //         >
-        //           ON GOING
-        //         </Option>
-        //         <Option
-        //           value="SUCCESS"
-        //           // className="SUCCESS"
-        //           style={{
-        //             color: "#52c41a",
-        //             fontWeight: "bold",
-        //             fontSize: "0.6rem",
-        //           }}
-        //         >
-        //           SUCCESS
-        //         </Option>
-        //         <Option
-        //           value="UNSUCCESS"
-        //           style={{
-        //             color: "#ff4d4f",
-        //             fontWeight: "bold",
-        //             fontSize: "0.6rem",
-        //           }}
-        //         >
-        //           UNSUCCESS
-        //         </Option>
-        //       </Select>
-        //     </>
-        //   );
-        // }
       },
     },
   ];
@@ -962,7 +434,18 @@ function DeliveryDashBoard() {
 
       <DeliveryHeader />
       <div className="content">
-        <p className="content-header">TO BE DELIVER</p>
+        <div className="contentHeaderWrap">
+          <p className="content-header">TO BE DELIVER </p>
+          <Button
+            size="default"
+            className="generateList"
+            icon={<FileAddOutlined />}
+            onClick={generateList}
+          >
+            Generate
+          </Button>
+        </div>
+
         <Table
           columns={columns}
           // dataSource={data}
@@ -998,22 +481,3 @@ function DeliveryDashBoard() {
 }
 
 export default DeliveryDashBoard;
-
-// if (status === "UNSUCCESS")
-//   return (
-//     <span style={{ color: "#ff4d4f", fontWeight: "bold" }}>
-//       UNSUCCESS
-//     </span>
-//   );
-
-// if (status === "ON GOING")
-//   return (
-//     <span style={{ color: "#1890ff", fontWeight: "bold" }}>
-//       ON GOING
-//     </span>
-//   );
-// return (
-//   <span style={{ color: "#52c41a", fontWeight: "bold" }}>
-//     SUCCESS
-//   </span>
-// );
