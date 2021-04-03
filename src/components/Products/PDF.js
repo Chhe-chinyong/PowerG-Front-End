@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import ReactToPdf from "react-to-pdf";
+import ReactToPrint, { useReactToPrint } from "react-to-print";
 import axios from "axios";
 import { Button } from "antd";
 import QRCode from "react-qr-code";
@@ -7,17 +8,20 @@ import logo from "../../images/favicon.ico";
 import packagePng from "../../images/package.png";
 import location from "../../images/location.png";
 import moment from "moment";
-// const options = {
-//   orientation: "landscape",
-//   unit: "mm",
-//   format: [297, 210],
-// };
+const options = {
+  orientation: "landscape",
+  unit: "in",
+  format: [4, 2],
+};
 const PDF = ({ productData, package_id }) => {
   console.log(productData);
   if (productData.service_fee === undefined) {
     productData.service_fee = 4000;
   }
   const refPrint = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => refPrint.current,
+  });
   useEffect(() => {
     const fetchItem = () => {
       try {
@@ -30,7 +34,7 @@ const PDF = ({ productData, package_id }) => {
   }, []);
   return (
     <>
-      <div className="btnPdf-container">
+      <div className="btnPdf-container" ref={refPrint}>
         {/* <ReactToPdf
           targetRef={refPrint}
           filename="qr-package.pdf"
@@ -60,12 +64,12 @@ const PDF = ({ productData, package_id }) => {
             </p>
             <div className="pdf-sender">
               <img src={packagePng} alt="package.png" />
-              អ្នកផ្ញើ <pre> ៖ </pre>
+              អ្នកផ្ញើ ៖{/* <pre> : </pre> */}
               <span> {productData.shop_owner}</span>
             </div>
             <div className="pdf-receiver">
               <img src={location} alt="location.png" />
-              អ្នកទទួល <pre> ៖</pre>{" "}
+              អ្នកទទួល ៖{/* <pre> :</pre>{" "} */}
               <span>
                 {" "}
                 {productData.cust_phone}, {productData.cust_location}.
@@ -96,10 +100,9 @@ const PDF = ({ productData, package_id }) => {
           <h2>Product-ID convert to QR code</h2> */}
         </div>
 
-        <ReactToPdf
+        {/* <ReactToPdf
           targetRef={refPrint}
           filename="qr-package.pdf"
-          // options={options}
           scale={1}
           x={30}
           y={5}
@@ -109,7 +112,12 @@ const PDF = ({ productData, package_id }) => {
               Generate pdf
             </Button>
           )}
-        </ReactToPdf>
+        </ReactToPdf> */}
+      </div>
+      <div className="pdfBtnContainer">
+        <Button type="primary" onClick={handlePrint} className="btnPdf">
+          Generate pdf
+        </Button>
       </div>
     </>
   );

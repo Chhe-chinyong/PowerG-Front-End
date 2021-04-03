@@ -4,6 +4,7 @@ import { Button, Form, Input, message } from "antd";
 import axios from "axios";
 import "antd/dist/antd.css";
 const { Item } = Form;
+
 const layout = {
   labelCol: {
     span: 8,
@@ -31,7 +32,7 @@ function ContentUserAdd({
     const contact = values.contact;
     try {
       const result = await axios.post(
-        `http://165.22.252.116/api/user/register`,
+        `${process.env.REACT_APP_DOMAIN}/api/user/register`,
         {
           name: username,
           password: password,

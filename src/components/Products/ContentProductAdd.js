@@ -65,7 +65,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
 
     try {
       const result = await axios.post(
-        `http://165.22.252.116/package/addpackage`,
+        `${process.env.REACT_APP_DOMAIN}/package/addpackage`,
         {
           shop_owner: shop_owner,
           cust_name: cust_name,

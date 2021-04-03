@@ -87,7 +87,9 @@ function ContentProduct() {
   //Display all packages
   useEffect(() => {
     const fetchItem = async () => {
-      const result = await axios(`http://165.22.252.116/package/getAllPackage`);
+      const result = await axios(
+        `${process.env.REACT_APP_DOMAIN}/package/getAllPackage`
+      );
       console.log("result" + result.data.data);
       console.log(result.data);
       const datas = result.data.data;
@@ -110,7 +112,9 @@ function ContentProduct() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      const result = await axios(`http://165.22.252.116/package/getAllPackage`);
+      const result = await axios(
+        `${process.env.REACT_APP_DOMAIN}/package/getAllPackage`
+      );
       console.log("result" + result.data.data);
       console.log(result.data);
       const datas = result.data.data;
@@ -180,7 +184,7 @@ function ContentProduct() {
     try {
       // Delete Data
       const result = await axios.delete(
-        `http://165.22.252.116/api/package/deleteuserby/${id}`,
+        `${process.env.REACT_APP_DOMAIN}/api/package/deleteuserby/${id}`,
         {
           headers: {
             "auth-token": localStorage.getItem("token"),

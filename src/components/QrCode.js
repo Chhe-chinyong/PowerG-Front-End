@@ -26,25 +26,44 @@ function QrCode({ match }) {
   };
   //Event
   const onFinish = async (values) => {
-    console.log("this is " + values.username);
-    console.log("this is " + values.password);
-    const shop_owner = values.shop_owner;
-    const list_id = localStorage.getItem("listId");
-    if (!list_id) {
-      message.error({
-        content: "" + "Please create a list before you scan",
-        duration: 5,
-        className: "UserErrorMessage",
-      });
-      return;
+    // console.log("this is " + values.username);
+    // console.log("this is " + values.password);
+    // const shop_owner = values.shop_owner;
+    if (values.product_id === undefined) {
+      var pro_id = match.params.pro_id;
     }
+    if (values.delivery_id === undefined) {
+      var user_id = localStorage.getItem("u_id");
+    }
+
+    const list_id = localStorage.getItem("listId");
+    console.log(list_id);
+    console.log(pro_id);
+    console.log(user_id);
+    // if (!list_id) {
+    //   message.error({
+    //     content: "" + "Please create a list before you scan",
+    //     duration: 5,
+    //     className: "UserErrorMessage",
+    //   });
+    //   return;
+    // }
     try {
       const result = await axios.post(
-        `http://165.22.252.116/package/addpackagetodeliveryman`,
-        {},
+        `${process.env.REACT_APP_DOMAIN}/packageList/addList`,
+        {
+          listId: list_id,
+          deliveryManId: user_id,
+          package: pro_id,
+        },
         { headers: { "Access-Control-Allow-Origin": "*" } }
       );
+      if (!list_id) {
+        localStorage.setItem("listId", result.data.listId);
+        console.log(localStorage.getItem("listId"));
+      }
 
+      // localStorage.setItem("listId", listId);
       message.success({
         content: "" + result.data.message,
         duration: 5,
@@ -63,54 +82,6 @@ function QrCode({ match }) {
     }
   };
   return (
-    // <div className="qr-container">
-    //   <Form {...layout} onFinish={onFinish} className="qrCode">
-    // {/* Package'Id*/}
-    // <Item
-    //   name={"product_id"}
-    //   label="Package's Id"
-    //   className="disabledByMe"
-    //   rules={[
-    //     {
-    //       whitespace: true,
-    //       message: "No whitespace",
-    //     },
-    //   ]}
-    // >
-    //   <Input defaultValue={pro_id} />
-    // </Item>
-
-    // {/*  DeliveryMan'Id */}
-    // <Item
-    //   name={"delivery_id"}
-    //   label="Delivery man's Id"
-    //   className="disabledByMe"
-    //   rules={[
-    //     {
-    //       whitespace: true,
-    //       message: "No whitespace",
-    //     },
-    //   ]}
-    // >
-    //   <Input defaultValue={user_id} />
-    // </Item>
-
-    //     {/* Submit */}
-    //     <Item className="qrSubmit">
-    //       <Button
-    //         className="btnSubmitUser btnSubmitQr"
-    //         type="primary"
-    //         htmlType="submit"
-    //       >
-    //         Submit
-    //       </Button>
-    //       <Button type="default" onClick={handleCancel}>
-    //         Cancel
-    //       </Button>
-    //     </Item>
-    //   </Form>
-    // </div>
-
     <div className="qr-cover">
       <div className="userContainer">
         {/* Logo */}

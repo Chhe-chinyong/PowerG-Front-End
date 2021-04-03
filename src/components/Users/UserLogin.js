@@ -23,10 +23,13 @@ export const UserLogin = () => {
   const onFinish = async (values) => {
     const { username, password } = values;
     try {
-      const result = await axios.post(`http://165.22.252.116/api/user/login`, {
-        name: username,
-        password: password,
-      });
+      const result = await axios.post(
+        `${process.env.REACT_APP_DOMAIN}/api/user/login`,
+        {
+          name: username,
+          password: password,
+        }
+      );
       console.log("result", result);
       const role = result.data.role;
       console.log("role", role);

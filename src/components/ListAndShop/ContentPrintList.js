@@ -7,14 +7,15 @@ import {
   DeleteOutlined,
   EditOutlined,
   SearchOutlined,
+  PrinterOutlined,
 } from "@ant-design/icons";
 import "antd/dist/antd.css";
 
 // Component;
-import ContentUserAdd from "./ContentUserAdd";
-import ContentUserEdit from "./ContentUserEdit";
+import ContentUserAdd from "../ContentUserAdd";
+import ContentUserEdit from "../ContentUserEdit";
 
-function ContentUser() {
+function ContentPrintList() {
   // useRef
   const searchRef = useRef(null);
 
@@ -56,23 +57,18 @@ function ContentUser() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      const result = await axios(`http://159.65.138.109/api/user/getallusers`, {
-        headers: {
-          "auth-token": localStorage.getItem("token"),
-        },
-      });
+      const result = await axios(
+        `${process.env.REACT_APP_DOMAIN}/packageList/getAllLists`,
+        {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
       console.log(result);
       const allData = result.data.data;
-      const datas = allData.map((data) => {
-        const contact = data.contact.split("");
-        contact.splice(3, 0, "  ");
-        contact.splice(7, 0, "  ");
-        const contact_result = contact.join("");
-        console.log(contact_result);
-        const object = Object.assign({}, data, { contact: contact_result });
-        return object;
-      });
-      setInitialValue(datas);
+
+      setInitialValue(allData.reverse());
     };
     fetchItem();
     // console.log("first", initialValue);
@@ -91,16 +87,8 @@ function ContentUser() {
       );
 
       const allData = result.data.data;
-      const datas = allData.map((data) => {
-        const contact = data.contact.split("");
-        contact.splice(3, 0, "  ");
-        contact.splice(7, 0, "  ");
-        const contact_result = contact.join("");
-        console.log(contact_result);
-        const object = Object.assign({}, data, { contact: contact_result });
-        return object;
-      });
-      setInitialValue(datas);
+
+      setInitialValue(allData.reverse());
     };
     fetchItem();
     // console.log("first", initialValue);
@@ -272,33 +260,29 @@ function ContentUser() {
   // }
   // Data
   const columns = [
-    {
-      //title is display on coulmn
-      //dataIndex to match with datasouce to display
-      title: <strong>ID</strong>,
-      dataIndex: "user_id",
-      key: "id",
-      // defaultSortOrder: "ascend",
-
-      ...getColumnSearchProps("user_id"),
-      sorter: (a, b) => a.user_id - b.user_id,
-    },
-    {
-      title: <strong>USERNAME</strong>,
-      dataIndex: "user_name",
-      key: "user_name",
-      className: "col-username",
-      ...getColumnSearchProps("user_name"),
-    },
     // {
-    //   title: <strong>PASSWORD</strong>,
-    //   dataIndex: "user_password",
-    //   key: "user_password",
+    //   //title is display on coulmn
+    //   //dataIndex to match with datasouce to display
+    //   title: <strong>ID</strong>,
+    //   dataIndex: "id",
+    //   key: "id",
+    //   defaultSortOrder: "ascend",
+
+    //   ...getColumnSearchProps("user_id"),
+    //   sorter: (a, b) => a.user_id - b.user_id,
     // },
     {
-      title: <strong>CONTACT</strong>,
-      dataIndex: "contact",
-      key: "user_contact",
+      title: <strong>ListId</strong>,
+      dataIndex: "listId",
+      key: "listId",
+      className: "col-username",
+      ...getColumnSearchProps("ListId"),
+    },
+
+    {
+      title: <strong>DeliveryBy</strong>,
+      dataIndex: "deliveryManId",
+      key: "deliveryManId",
     },
     {
       title: <strong>ACTION</strong>,
@@ -307,24 +291,9 @@ function ContentUser() {
         return (
           // const editable = isEditing(record);
           <Space size="middle">
-            <Popconfirm
-              title="Are you sure to delete this user?"
-              onConfirm={() => {
-                confirm(record);
-              }}
-              onCancel={cancel}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button
-                className="noOutLine removeUser"
-                icon={<DeleteOutlined />}
-              ></Button>
-            </Popconfirm>
-
             <Button
               className="noOutLine editUser"
-              icon={<EditOutlined />}
+              icon={<PrinterOutlined />}
               // onClick={() => handleEdit(text, record)}
               onClick={() => {
                 handleEdit(record);
@@ -395,4 +364,4 @@ function ContentUser() {
   );
 }
 
-export default ContentUser;
+export default ContentPrintList;

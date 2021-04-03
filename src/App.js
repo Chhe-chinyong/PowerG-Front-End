@@ -23,6 +23,7 @@ import DeliveryDashBoard from "./components/DeliveryMan/DeliveryDashBoard";
 import ReportDelivery from "./components/Reports/ReportDelivery";
 import ReportShop from "./components/Reports/ReportShop";
 import HomePage from "./components/HomePage";
+import ContentList from "./components/ListAndShop/ContentList";
 // Style
 import "./style/app.css";
 // import ReportDelivery from "./components/Reports/ReportDelivery";
@@ -140,6 +141,12 @@ function App() {
                           path="/reportShop"
                           component={ReportShop}
                           auth={loginStatus}
+                        />
+                        {/* List & Shop */}
+                        <Route
+                          path="/listAndShop"
+                          component={ContentList}
+                          // auth={loginStatus}
                         />
                         {/* <Route path="/users" component={Users} /> */}
                         <PrivateRoute

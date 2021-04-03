@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Khmer&display=swap");
 .pdf-logo {
   width: 67px;
   height: 67px;
@@ -51,7 +50,7 @@
 }
 
 .pdf-sender span {
-  margin-left: 1.4rem;
+  margin-left: 2rem;
 }
 
 .pdf-price {
@@ -104,16 +103,23 @@ figcaption {
   font-weight: lighter;
 }
 
-/* .btnPdf {
+.btnPdf {
   justify-content: center;
   text-align: center;
-} */
+  text-align: center;
+}
+
 .pdf-date {
   text-align: left;
 }
-
-.btnPdf-container {
+.pdfBtnContainer {
   width: 90%;
   margin: 0 auto;
+  text-align: center;
+}
+.btnPdf-container {
+  width: 90%;
+  margin: 5rem auto;
+  margin-bottom: 0;
   text-align: center;
 }
