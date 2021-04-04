@@ -1,4 +1,98 @@
 .ContentList {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.list {
+  margin-top: 2rem;
+  width: 45%;
+  height: 90vh;
+  /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+}
+
+.list h4 {
+  /* padding: 1rem; */
+  padding-top: 1rem;
+  margin-left: 1.8rem;
+  font-weight: bold;
+  font-size: 1.5;
+  border-bottom: 2.2px solid rgb(139, 137, 137);
+  width: 12%;
+  /* padding: 1rem;
+  padding-left: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-left: 0.5rem;
+  color: black;
+  font-weight: 600;
+  width: 20%;
+  display: inline-block;
+  border-bottom: 2px solid rgb(139, 137, 137); */
+}
+.listTable {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 1rem;
+}
+
+.shop {
+  margin-top: 2rem;
+
+  width: 45%;
+  height: 80vh;
+  background-color: yellow;
+}
+.shop h4 {
+  padding: 1rem;
+}
+
+.PDF-table-list {
+  border: 1px solid black;
+}
+
+.center-pdf {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.pdf-list-header {
+  margin: 1.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pdf-list-header img {
+  width: 100px;
+  height: auto;
+}
+.pdf-list-header h1 {
+  /* float: right; */
+  font-weight: bold;
+}
+
+.pdf-list-header p {
+  margin: 1rem 0;
+  font-size: 1.5rem;
+  /* font-weight: bold; */
+}
+
+/* .text-align .listDate {
+  /* /* float: right; */
+/* text-align: right;
+  font-weight: 200;
+  font-size: 12px;
+  margin-top: 2rem;
+} */
+.text-align .listPhone {
+  font-weight: 200;
+  font-size: 12px;
+  margin-top: 1rem;
+}
+
+.PDFLIST {
+  display: none;
+  visibility: hidden;
 }

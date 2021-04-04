@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Table, Button, Space, Modal, Input, Popconfirm, message } from "antd";
+import ReactToPrint, { useReactToPrint } from "react-to-print";
+
 import Highlighter from "react-highlight-words";
 import axios from "axios";
 import {
@@ -14,38 +16,21 @@ import "antd/dist/antd.css";
 // Component;
 import ContentUserAdd from "../ContentUserAdd";
 import ContentUserEdit from "../ContentUserEdit";
-
+import { PDFList } from "../ListAndShop/PDFList";
 function ContentPrintList() {
+  const data = [
+    {
+      listId: "11",
+      deliveryManId: "1",
+    },
+  ];
   // useRef
   const searchRef = useRef(null);
-
-  // const data = [
-  //   {
-  //     key: "1",
-  //     user_id: "000001",
-  //     user_name: "Kok dara",
-  //     user_password: "901294012940214",
-  //     user_contact: "0129928475",
-  //   },
-  //   {
-  //     key: "2",
-  //     user_id: "000002",
-  //     user_name: "Mingthean Lay",
-  //     user_password: "901294012940214",
-  //     user_contact: "0298844888",
-  //   },
-  //   {
-  //     key: "3",
-  //     user_id: "000003",
-  //     user_name: "Phal sokheng",
-  //     user_password: "901294012940214",
-  //     user_contact: "010928475",
-  //   },
-  // ];
-
+  const refPrint = useRef();
   // State
   const [initialValue, setInitialValue] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [productList, setProductList] = useState({});
   // const [searchInput, setSearchInput] = useState("");
   const [searchedColumn, SetSearchedColumn] = useState("");
   const [user, setUser] = useState("");
@@ -54,6 +39,10 @@ function ContentPrintList() {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [trigger, setTrigger] = useState(false);
   const [modalText, setModalText] = useState("Content of the modal");
+  const [click, setClick] = useState(false);
+  const handlePrint = useReactToPrint({
+    content: () => refPrint.current,
+  });
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -78,7 +67,7 @@ function ContentPrintList() {
   useEffect(() => {
     const fetchItem = async () => {
       const result = await axios(
-        `${process.env.REACT_APP_DOMAIN}/api/user/getallusers`,
+        `${process.env.REACT_APP_DOMAIN}/packageList/getAllLists`,
         {
           headers: {
             "auth-token": localStorage.getItem("token"),
@@ -174,14 +163,6 @@ function ContentPrintList() {
     setSearchText("");
   };
 
-  //   Event-handler
-  // const handleClick = (e) => {
-  //   console.log("Clicked me");
-  //   setClick((prevClicked) => (prevClicked ? false : true));
-  //   console.log(click);
-  //   // <ContentUserAdd />;
-  // };
-
   const showModal = () => {
     setVisible(true);
   };
@@ -209,15 +190,21 @@ function ContentPrintList() {
     setVisible1(false);
   };
 
+  const handleDownload = (record) => {
+    console.log(record);
+    setProductList(record);
+    // return <PDFList productList={productList} />;
+    // handlePrint();
+    // return <PDFList ref={refPrint} />;
+  };
   // const handleDelete = (record) => {
   //   console.log("record", record);
   // };
-  const handleEdit = (record) => {
-    setVisible1(true);
-    setUser(record);
-
-    console.log(record);
-  };
+  // const handlePrint = (record) => {
+  //   setVisible1(true);
+  //   console.log(record);
+  //   // <PDFList data={record} />;
+  // };
 
   // Delete user
   const confirm = async (record) => {
@@ -274,9 +261,9 @@ function ContentPrintList() {
     {
       title: <strong>ListId</strong>,
       dataIndex: "listId",
-      key: "listId",
+      key: "id",
       className: "col-username",
-      ...getColumnSearchProps("ListId"),
+      ...getColumnSearchProps("listId"),
     },
 
     {
@@ -296,8 +283,18 @@ function ContentPrintList() {
               icon={<PrinterOutlined />}
               // onClick={() => handleEdit(text, record)}
               onClick={() => {
-                handleEdit(record);
+                // handleDownload(record);
+
+                setProductList(record);
+
+                setTimeout(() => {
+                  setClick(true);
+                  handlePrint();
+                }, 2000);
+
+                // handlePrint
               }}
+              // onClick={handleDownload}
             ></Button>
           </Space>
         );
@@ -308,58 +305,18 @@ function ContentPrintList() {
   //  Data
   return (
     <>
-      {/* Refresh Button */}
-      {/* <Button
-        className="userRefreshPage"
-        icon={<SyncOutlined />}
-        onClick={refreshPage}
-        type="primary"
-      >
-        Refresh
-      </Button> */}
-      <Button
-        className="userAdd "
-        icon={<UserAddOutlined />}
-        onClick={showModal}
-      >
-        ADD
-      </Button>
       {/* Table */}
-      <Table columns={columns} dataSource={initialValue} />
-
-      {/* ADD*/}
-      <Modal
-        title="Add New User"
-        visible={visible}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
-        footer={null}
-        onCancel={handleCancel}
-      >
-        <ContentUserAdd
-          setVisible={setVisible}
-          initialValue={initialValue}
-          setInitialValue={setInitialValue}
-          setTrigger={setTrigger}
-        />
-      </Modal>
-
-      {/* Edit */}
-      <Modal
-        title="Edit User"
-        visible={visible1}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
-        footer={null}
-        onCancel={handleCancel1}
-      >
-        <ContentUserEdit
-          setVisible={setVisible1}
-          user={user}
-          visible1={visible1}
-          setTrigger={setTrigger}
-        />
-      </Modal>
+      <Table
+        className="listTable"
+        columns={columns}
+        dataSource={initialValue}
+        // dataSource={data}
+        scroll={{ x: "max-content", y: 500 }}
+        pagination={false}
+      />
+      {click && (
+        <PDFList ref={refPrint} productList={productList} className="PDFLIST" />
+      )}
     </>
   );
 }
