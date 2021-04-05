@@ -1,9 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import PDF from "./PDF";
 import { ProductContext } from "../../context/AuthContext";
 import "antd/dist/antd.css";
-import { Button, Form, Input, message, Col, Row, Select } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  message,
+  Col,
+  Row,
+  Select,
+  AutoComplete,
+} from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
 const { Item } = Form;
 const { Option } = Select;
@@ -17,23 +26,59 @@ const layout = {
 };
 function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
   //State
-  // const [redirect, setRedirect] = useState(false);
   const [productData, setProductData] = useState({});
   const [packageId, setPackageId] = useState();
-  //useContext
-  // const {
-  //   packageId,
-  //   date,
-  //   location,
-  //   shopPhone,
-  //   receiverPhone,
-  //   setPackageId,
-  //   setDate,
-  //   setLocation,
-  //   setShopPhone,
-  //   setReceiverPhone,
-  // } = useContext(ProductContext);
+  const [data, setData] = useState([]);
+  const [options, setOptions] = useState([]);
+  const [value, setValue] = useState("");
+  const mockVal = (str, repeat = 1) => ({
+    value: str.repeat(repeat),
+  });
+  //UseEffect
+  useEffect(() => {
+    const fetchItem = async () => {
+      const result = await axios.get(
+        `${process.env.REACT_APP_DOMAIN}/shop/getAllShops`,
+        {
+          headers: { "auth-token": localStorage.getItem("token") },
+        }
+      );
+      const allData = result.data.data;
+      console.log("all", allData);
+      setData(allData);
+    };
+    fetchItem();
+    console.log("first", data);
+  }, []);
 
+  const onSearch = (searchText) => {
+    console.log("search", searchText);
+    setOptions(
+      !searchText
+        ? []
+        : () => {
+            const regex = new RegExp(`^${value}`, "i");
+            const store = data.sort().filter((v) => regex.test(v.shopName));
+
+            // setValue(store);
+            const send = store.map((data) => {
+              return {
+                value: data.shopName,
+              };
+            });
+            console.log("send", send);
+            return send;
+          }
+    );
+  };
+
+  const onSelect = (data) => {
+    console.log("onSelect", data);
+  };
+
+  const onChange = (data) => {
+    setValue(data);
+  };
   function handleChange(value) {
     console.log(`selected ${value}`);
   }
@@ -114,6 +159,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
   };
   return (
     <div>
+      {console.log("options", options)}
       {!redirect ? (
         <Form
           // onSubmit={handleSubmit}
@@ -138,7 +184,25 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
               },
             ]}
           >
-            <Input />
+            {/* <Input /> */}
+            <AutoComplete
+              options={options}
+              onSelect={onSelect}
+              onSearch={onSearch}
+              onChange={onChange}
+              placeholder="Input here"
+            />
+            {/* {data.map((data) => {
+                <Option key={data.id} value={data.value}>
+                  {data.shopName}
+                </Option>;
+              })} */}
+
+            {/* {options.map((option) => (
+              <Option key={option.id} value={option.value}>
+                {option.shopName}
+              </Option>
+            ))} */}
           </Item>
 
           {/* Password */}

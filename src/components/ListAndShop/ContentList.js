@@ -1,5 +1,6 @@
 import React from "react";
 import ContentPrintList from "../ListAndShop/ContentPrintList";
+import ContentShop from "../ListAndShop/ContentShop";
 
 function ContentList() {
   return (
@@ -9,8 +10,7 @@ function ContentList() {
         <ContentPrintList className="listTable" />
       </div>
       <div className="shop">
-        <h4>Shop</h4>
-        <ContentPrintList />
+        <ContentShop className="listShop" />
       </div>
     </div>
   );

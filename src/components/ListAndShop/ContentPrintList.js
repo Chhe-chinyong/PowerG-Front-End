@@ -56,6 +56,7 @@ function ContentPrintList() {
       );
       console.log(result);
       const allData = result.data.data;
+      console.log(allData);
 
       setInitialValue(allData.reverse());
     };
@@ -268,8 +269,8 @@ function ContentPrintList() {
 
     {
       title: <strong>DeliveryBy</strong>,
-      dataIndex: "deliveryManId",
-      key: "deliveryManId",
+      dataIndex: "deliveryManName",
+      key: "deliveryManName",
     },
     {
       title: <strong>ACTION</strong>,
@@ -314,9 +315,16 @@ function ContentPrintList() {
         scroll={{ x: "max-content", y: 500 }}
         pagination={false}
       />
-      {click && (
+      <PDFList
+        ref={refPrint}
+        productList={productList}
+        click={click}
+        setClick={setClick}
+      />
+
+      {/* {click ? (
         <PDFList ref={refPrint} productList={productList} className="PDFLIST" />
-      )}
+      ) : null} */}
     </>
   );
 }

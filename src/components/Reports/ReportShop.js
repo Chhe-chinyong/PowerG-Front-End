@@ -105,23 +105,30 @@ function ReportShop() {
   const [location, setLocation] = useState();
   const [shopPhone, setShopPhone] = useState();
   const [receiverPhone, setReceiverPhone] = useState();
+  const [options, setOptions] = useState([]);
 
   //UseEffect
   //Display all packages
   useEffect(() => {
     const fetchItem = async () => {
-      const result = await axios(`http://165.22.252.116/api/user/getallusers`);
+      const result = await axios.get(
+        `${process.env.REACT_APP_DOMAIN}/shop/getAllShops`,
+        {
+          headers: { "auth-token": localStorage.getItem("token") },
+        }
+      );
       const allData = result.data.data;
-      const datas = allData.map((data) => {
-        const contact = data.contact.split("");
-        contact.splice(3, 0, "  ");
-        contact.splice(7, 0, "  ");
-        const contact_result = contact.join("");
-        console.log(contact_result);
-        const object = Object.assign({}, data, { contact: contact_result });
-        return object;
-      });
-      setInitialValue(datas);
+      console.log(allData);
+      // const datas = allData.map((data) => {
+      //   const contact = data.contact.split("");
+      //   contact.splice(3, 0, "  ");
+      //   contact.splice(7, 0, "  ");
+      //   const contact_result = contact.join("");
+      //   console.log(contact_result);
+      //   const object = Object.assign({}, data, { contact: contact_result });
+      //   return object;
+      // });
+      setOptions(allData);
     };
     fetchItem();
     console.log("first", initialValue);
@@ -354,9 +361,15 @@ function ReportShop() {
             onChange={handleChange}
             size="default"
           >
-            <Option value="jack">ZANDO</Option>
+            {options.map((option) => (
+              <Option key={option.id} value={option.value}>
+                {option.shopName}
+              </Option>
+            ))}
+
+            {/* <Option value="jack">ZANDO</Option>
             <Option value="lucy">MANZER</Option>
-            <Option value="lucy">PEDRO</Option>
+            <Option value="lucy">PEDRO</Option> */}
           </Select>
           {/* Status */}
           <Select

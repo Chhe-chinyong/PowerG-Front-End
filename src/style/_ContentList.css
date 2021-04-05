@@ -7,8 +7,10 @@
 
 .list {
   margin-top: 2rem;
-  width: 45%;
+  width: 40%;
   height: 90vh;
+  border-radius: 10px;
+
   /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
   background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
 }
@@ -35,17 +37,6 @@
   width: 90%;
   margin: 0 auto;
   margin-top: 1rem;
-}
-
-.shop {
-  margin-top: 2rem;
-
-  width: 45%;
-  height: 80vh;
-  background-color: yellow;
-}
-.shop h4 {
-  padding: 1rem;
 }
 
 .PDF-table-list {
@@ -95,4 +86,37 @@
 .PDFLIST {
   display: none;
   visibility: hidden;
+}
+
+/* Shop */
+
+.shop {
+  margin-top: 2rem;
+  width: 56%;
+  height: 80vh;
+  border-radius: 10px;
+  /* border: 2px solid black; */
+  /* background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
+  background-image: linear-gradient(to top, #e5e9ee 0%, #dfe2e6 100%);
+  /* background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); */
+}
+.flex-shop h4 {
+  padding-top: 1rem;
+  margin-left: 1.8rem;
+  font-weight: bold;
+  font-size: 1.5;
+  border-bottom: 2.2px solid rgb(139, 137, 137);
+  width: 14%;
+}
+
+.flex-shop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.listShop {
+  width: 90%;
+  margin: 0 auto;
+  /* margin-top: 1rem; */
 }

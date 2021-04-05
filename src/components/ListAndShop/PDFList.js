@@ -8,13 +8,17 @@ export class PDFList extends React.Component {
   state = {
     value: [],
     listId: "",
+    deliveryManName: "",
   };
 
+  componentDidMount() {
+    this.props.setClick(false);
+  }
   componentDidUpdate() {
     // Runs after the first render() lifecycle
     if (this.props.productList.listId == this.props.productList.listId) {
       const listId = this.props.productList.listId;
-
+      const deliveryManName = this.props.productList.deliveryManName;
       console.log(listId);
       const fetchItem = async () => {
         try {
@@ -26,6 +30,7 @@ export class PDFList extends React.Component {
           this.setState({
             listValue: listId,
             value: result.data.data,
+            deliveryManName: deliveryManName,
           });
         } catch (error) {
           console.log("error" + error);
@@ -102,7 +107,7 @@ export class PDFList extends React.Component {
     ];
     // console.log(this.props);
     // console.log(this.props.productList.listId);
-    console.log();
+
     return (
       <>
         {/* <div className="pdf-header">
@@ -112,11 +117,16 @@ export class PDFList extends React.Component {
         {/* list's ID <span>{this.state.value}</span> */}
         {/* </p> */}
         {this.state.value && (
-          <div className="center-pdf">
+          <div
+            className="center-pdf"
+            style={{
+              display: this.props.click ? "block" : "none",
+            }}
+          >
             <div className="pdf-list-header">
               <div>
                 <img src={logo} alt="Logo" className="pdf-list-header-logo" />
-                <p>ឈ្មោះអ្នកដឹក :</p>
+                <p>ឈ្មោះអ្នកដឹក :{this.state.deliveryManName}</p>
                 <p>លេខបញ្ជី :{this.state.listValue}</p>
                 {/* <p>ពេលដឹក</p> */}
               </div>

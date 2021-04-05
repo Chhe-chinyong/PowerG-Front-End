@@ -86,7 +86,7 @@ const PDF = ({ productData, package_id }) => {
             <div className="pdf-cod">{productData.payment_method}</div>
             <figure>
               <QRCode
-                value={`http://192.168.18.242:3000/qr/${package_id}`}
+                value={`http://192.168.1.212:3000/qr/${package_id}`}
                 size={120}
               />
               <figcaption>Scan me</figcaption>

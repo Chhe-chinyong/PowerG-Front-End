@@ -11,10 +11,10 @@ import {
 import "antd/dist/antd.css";
 
 // Component;
-import ContentUserAdd from "../components/ContentUserAdd";
-import ContentUserEdit from "../components/ContentUserEdit";
+import ContentShopAdd from "./ContentShopAdd";
+import ContentUserEdit from "../ContentUserEdit";
 
-function ContentUser() {
+function ContentShop() {
   // useRef
   const searchRef = useRef(null);
 
@@ -56,23 +56,18 @@ function ContentUser() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      const result = await axios(`http://159.65.138.109/api/user/getallusers`, {
-        headers: {
-          "auth-token": localStorage.getItem("token"),
-        },
-      });
+      const result = await axios(
+        `${process.env.REACT_APP_DOMAIN}/shop/getAllShops`,
+        {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
       console.log(result);
       const allData = result.data.data;
-      const datas = allData.map((data) => {
-        const contact = data.contact.split("");
-        contact.splice(3, 0, "  ");
-        contact.splice(7, 0, "  ");
-        const contact_result = contact.join("");
-        console.log(contact_result);
-        const object = Object.assign({}, data, { contact: contact_result });
-        return object;
-      });
-      setInitialValue(datas);
+
+      setInitialValue(allData);
     };
     fetchItem();
     // console.log("first", initialValue);
@@ -82,7 +77,7 @@ function ContentUser() {
   useEffect(() => {
     const fetchItem = async () => {
       const result = await axios(
-        `${process.env.REACT_APP_DOMAIN}/api/user/getallusers`,
+        `${process.env.REACT_APP_DOMAIN}/shop/getAllShops`,
         {
           headers: {
             "auth-token": localStorage.getItem("token"),
@@ -91,16 +86,7 @@ function ContentUser() {
       );
 
       const allData = result.data.data;
-      const datas = allData.map((data) => {
-        const contact = data.contact.split("");
-        contact.splice(3, 0, "  ");
-        contact.splice(7, 0, "  ");
-        const contact_result = contact.join("");
-        console.log(contact_result);
-        const object = Object.assign({}, data, { contact: contact_result });
-        return object;
-      });
-      setInitialValue(datas);
+      setInitialValue(allData);
     };
     fetchItem();
     // console.log("first", initialValue);
@@ -272,23 +258,23 @@ function ContentUser() {
   // }
   // Data
   const columns = [
-    {
-      //title is display on coulmn
-      //dataIndex to match with datasouce to display
-      title: <strong>ID</strong>,
-      dataIndex: "user_id",
-      key: "id",
-      // defaultSortOrder: "ascend",
+    // {
+    //   //title is display on coulmn
+    //   //dataIndex to match with datasouce to display
+    //   title: <strong>ID</strong>,
+    //   dataIndex: "user_id",
+    //   key: "id",
+    //   // defaultSortOrder: "ascend",
 
-      ...getColumnSearchProps("user_id"),
-      sorter: (a, b) => a.user_id - b.user_id,
-    },
+    //   ...getColumnSearchProps("user_id"),
+    //   sorter: (a, b) => a.user_id - b.user_id,
+    // },
     {
-      title: <strong>USERNAME</strong>,
-      dataIndex: "user_name",
-      key: "user_name",
+      title: <strong>shopName</strong>,
+      dataIndex: "shopName",
+      key: "shopName",
       className: "col-username",
-      ...getColumnSearchProps("user_name"),
+      ...getColumnSearchProps("shopName"),
     },
     // {
     //   title: <strong>PASSWORD</strong>,
@@ -296,9 +282,15 @@ function ContentUser() {
     //   key: "user_password",
     // },
     {
-      title: <strong>CONTACT</strong>,
-      dataIndex: "contact",
-      key: "user_contact",
+      title: <strong>shopContact</strong>,
+      dataIndex: "shopContact",
+      key: "shopContact",
+    },
+
+    {
+      title: <strong>shopAddress</strong>,
+      dataIndex: "shopAddress",
+      key: "shopAddress",
     },
     {
       title: <strong>ACTION</strong>,
@@ -322,14 +314,14 @@ function ContentUser() {
               ></Button>
             </Popconfirm>
 
-            <Button
+            {/* <Button
               className="noOutLine editUser"
               icon={<EditOutlined />}
               // onClick={() => handleEdit(text, record)}
               onClick={() => {
                 handleEdit(record);
               }}
-            ></Button>
+            ></Button> */}
           </Space>
         );
       },
@@ -348,26 +340,36 @@ function ContentUser() {
       >
         Refresh
       </Button> */}
-      <Button
-        className="userAdd "
-        icon={<UserAddOutlined />}
-        onClick={showModal}
-      >
-        ADD
-      </Button>
+      <div className="flex-shop">
+        <h4>Shop</h4>
+        <Button
+          className="userAdd "
+          icon={<UserAddOutlined />}
+          onClick={showModal}
+        >
+          ADD
+        </Button>
+      </div>
+
       {/* Table */}
-      <Table columns={columns} dataSource={initialValue} />
+      <Table
+        columns={columns}
+        dataSource={initialValue}
+        scroll={{ x: "max-content", y: 500 }}
+        pagination={false}
+        className="listShop"
+      />
 
       {/* ADD*/}
       <Modal
-        title="Add New User"
+        title="Add New Shop"
         visible={visible}
         onOk={handleOk}
         confirmLoading={confirmLoading}
         footer={null}
         onCancel={handleCancel}
       >
-        <ContentUserAdd
+        <ContentShopAdd
           setVisible={setVisible}
           initialValue={initialValue}
           setInitialValue={setInitialValue}
@@ -395,4 +397,4 @@ function ContentUser() {
   );
 }
 
-export default ContentUser;
+export default ContentShop;
