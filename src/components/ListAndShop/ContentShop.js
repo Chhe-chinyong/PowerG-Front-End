@@ -219,12 +219,13 @@ function ContentShop() {
 
   // Delete user
   const confirm = async (record) => {
-    const id = record.user_id;
+    console.log(record);
+    const id = record.id;
     console.log(id);
     try {
       // Delete Data
       const result = await axios.delete(
-        `${process.env.REACT_APP_DOMAIN}/api/user/deleteuserbyid/${id}`,
+        `${process.env.REACT_APP_DOMAIN}/shop/deleteShop/${id}`,
         {
           headers: {
             "auth-token": localStorage.getItem("token"),

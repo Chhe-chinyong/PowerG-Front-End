@@ -8,59 +8,60 @@ import { FileAddOutlined } from "@ant-design/icons";
 const { Option } = Select;
 
 function DeliveryDashBoard() {
-  const data = [
-    {
-      key: "1",
-      productId: "000001",
-      location: "New York No. 1 Lake Park",
-      contact: "012394858",
-      price: "3.5",
-      status: "ON GOING",
-    },
-    {
-      key: "2",
-      productId: "000002",
-      location: "New York No. 1 Lake Park",
-      contact: "099384757",
-      price: "3.5",
-      status: "ON GOING",
-    },
-    {
-      key: "3",
-      productId: "000003",
-      location: "New York No. 1 Lake Park",
-      contact: "012394858",
-      price: "3.5",
-      status: "ON GOING",
-    },
-    {
-      key: "4",
-      productId: "000004",
-      location: "New York No. 1 Lake Park",
-      contact: "099384757",
-      price: "3",
-      status: "ON GOING",
-    },
-    {
-      key: "5",
-      productId: "000005",
-      location: "New York No. 1 Lake Park",
-      contact: "099384757",
-      price: "3",
-      status: "ON GOING",
-    },
-    {
-      key: "6",
-      productId: "000006",
-      location: "New York No. 1 Lake Park",
-      contact: "012394858",
-      price: "3.5",
-      status: "ON GOING",
-    },
-  ];
+  // const data = [
+  //   {
+  //     key: "1",
+  //     productId: "000001",
+  //     location: "New York No. 1 Lake Park",
+  //     contact: "012394858",
+  //     price: "3.5",
+  //     status: "ON GOING",
+  //   },
+  //   {
+  //     key: "2",
+  //     productId: "000002",
+  //     location: "New York No. 1 Lake Park",
+  //     contact: "099384757",
+  //     price: "3.5",
+  //     status: "ON GOING",
+  //   },
+  //   {
+  //     key: "3",
+  //     productId: "000003",
+  //     location: "New York No. 1 Lake Park",
+  //     contact: "012394858",
+  //     price: "3.5",
+  //     status: "ON GOING",
+  //   },
+  //   {
+  //     key: "4",
+  //     productId: "000004",
+  //     location: "New York No. 1 Lake Park",
+  //     contact: "099384757",
+  //     price: "3",
+  //     status: "ON GOING",
+  //   },
+  //   {
+  //     key: "5",
+  //     productId: "000005",
+  //     location: "New York No. 1 Lake Park",
+  //     contact: "099384757",
+  //     price: "3",
+  //     status: "ON GOING",
+  //   },
+  //   {
+  //     key: "6",
+  //     productId: "000006",
+  //     location: "New York No. 1 Lake Park",
+  //     contact: "012394858",
+  //     price: "3.5",
+  //     status: "ON GOING",
+  //   },
+  // ];
   // state
   const [total, setTotal] = useState(0);
-  const [initialValue, setInitialValue] = useState(data);
+  const [listId, setListId] = useState();
+  const [initialValue, setInitialValue] = useState([]);
   const [trigger, setTrigger] = useState(false);
   const [visible, setVisible] = useState(false);
 
@@ -68,17 +69,32 @@ function DeliveryDashBoard() {
   // const statusRef = useRef(null);
   //UseEffect
   useEffect(() => {
-    console.log("initialValue", initialValue);
+    const listId = localStorage.getItem("listId");
+    setListId(listId);
+    const fetchItem = async () => {
+      const result = await axios(
+        `${process.env.REACT_APP_DOMAIN}/packageList/getListById/${listId}`,
+        {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(result);
+      const allData = result.data.data;
+      setInitialValue(allData);
+    };
+    fetchItem();
   }, []);
 
   const generateList = async () => {
     const listId = localStorage.getItem("listId");
-    if (listId) {
-      return console.log("u have already generate list");
-    }
-    const uuid_store = await uuidv4();
-    localStorage.setItem("listId", uuid_store.substring(0, 12));
-    // return console.log(uuid_store.substring(0, 8));
+    // if (listId) {
+    //   return console.log("u have already generate list");
+    // }
+    // const uuid_store = await uuidv4();
+    // localStorage.setItem("listId", uuid_store.substring(0, 12));
+    // // return console.log(uuid_store.substring(0, 8));
   };
   const hide = () => {
     setVisible(false);
@@ -108,19 +124,28 @@ function DeliveryDashBoard() {
     try {
       console.log("data", initialValue);
       checkStatus(initialValue);
+      if (!localStorage.getItem("listId")) {
+        throw {
+          response: {
+            data: {
+              message: "please scan product in order to create list",
+            },
+          },
+        };
+      }
+      const data = initialValue;
       const result = await axios.post(
-        `http://165.22.252.116/list`,
-        {
-          data: initialValue,
-        },
+        `${process.env.REACT_APP_DOMAIN}/package/finalUpdate`,
+        data,
         {
           headers: {
             "auth-token": localStorage.getItem("token"),
           },
         }
       );
+      console.log("data", initialValue);
       console.log(result);
-      localStorage.remove("listId");
+      localStorage.removeItem("listId");
       message.success({
         content: "" + result.data.message,
         duration: 5,
@@ -147,8 +172,8 @@ function DeliveryDashBoard() {
   const columns = [
     {
       title: "PRODUCT ID",
-      dataIndex: "productId",
-      key: "productId",
+      dataIndex: "package_id",
+      key: "package_id",
       className: "columns",
       render: (text) => <a>{text}</a>,
     },
@@ -168,14 +193,14 @@ function DeliveryDashBoard() {
     // },
     {
       title: "CONTACT",
-      dataIndex: "contact",
-      key: "contact",
+      dataIndex: "cust_phone",
+      key: "cust_phone",
       className: "columns",
     },
     {
       title: "PRICE",
-      dataIndex: "price",
-      key: "price",
+      dataIndex: "pro_price",
+      key: "pro_price",
       className: "columns",
       render: (record) => {
         return <span className="priceDelivery">${record}</span>;
@@ -189,12 +214,12 @@ function DeliveryDashBoard() {
 
       // Testing
       render: (text, record) => {
+        console.log("reocrd", record);
         if (record.status === "ON GOING") {
           console.log("hey on going");
           return (
             <>
               <Select
-                // className={() => {}}
                 style={{
                   width: 100,
                   color: "#bdc3c7",
@@ -216,6 +241,7 @@ function DeliveryDashBoard() {
                     price = parseFloat(record.price);
                     console.log("hey");
                     setTotal(total + price);
+                    trigger ? setTrigger(false) : setTrigger(true);
                   }
                   if (value === "UNSUCCESS") {
                     trigger ? setTrigger(false) : setTrigger(true);
@@ -225,11 +251,13 @@ function DeliveryDashBoard() {
                     price = parseFloat(record.price);
                     console.log("hi ");
                     setTotal(total - price);
+                    trigger ? setTrigger(false) : setTrigger(true);
                   }
 
                   if (preStatus === "SUCCESS" && value === "ON GOING") {
                     price = parseFloat(record.price);
                     setTotal(total - price);
+                    trigger ? setTrigger(false) : setTrigger(true);
                   }
 
                   console.log(record);
@@ -294,17 +322,20 @@ function DeliveryDashBoard() {
                     price = parseFloat(record.price);
                     console.log("hey");
                     setTotal(total + price);
+                    trigger ? setTrigger(false) : setTrigger(true);
                   }
 
                   if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
                     price = parseFloat(record.price);
                     console.log("hi ");
                     setTotal(total - price);
+                    trigger ? setTrigger(false) : setTrigger(true);
                   }
 
                   if (preStatus === "SUCCESS" && value === "ON GOING") {
                     price = parseFloat(record.price);
                     setTotal(total - price);
+                    trigger ? setTrigger(false) : setTrigger(true);
                   }
 
                   console.log(record);
@@ -371,17 +402,20 @@ function DeliveryDashBoard() {
                     price = parseFloat(record.price);
                     console.log("hey");
                     setTotal(total + price);
+                    trigger ? setTrigger(false) : setTrigger(true);
                   }
 
                   if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
                     price = parseFloat(record.price);
                     console.log("hi ");
                     setTotal(total - price);
+                    trigger ? setTrigger(false) : setTrigger(true);
                   }
 
                   if (preStatus === "SUCCESS" && value === "ON GOING") {
                     price = parseFloat(record.price);
                     setTotal(total - price);
+                    trigger ? setTrigger(false) : setTrigger(true);
                   }
 
                   console.log(record);

@@ -27,7 +27,7 @@ function ContentShopAdd({
   const onFinish = async (values) => {
     console.log("this is " + values.username);
     console.log("this is " + values.password);
-    const shopName = values.shopName;
+    const shopName = values.shopName.toUpperCase();
     const shopContact = values.shopContact;
     const shopAddress = values.shopAddress;
     try {

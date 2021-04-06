@@ -3,6 +3,7 @@ import ReactToPrint, { useReactToPrint } from "react-to-print";
 import logo from "../../images/favicon.ico";
 import axios from "axios";
 import { Button, Table } from "antd";
+import moment from "moment";
 
 export class PDFList extends React.Component {
   state = {
@@ -12,11 +13,13 @@ export class PDFList extends React.Component {
   };
 
   componentDidMount() {
-    this.props.setClick(false);
+    // this.props.setClick(false);
   }
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     // Runs after the first render() lifecycle
-    if (this.props.productList.listId == this.props.productList.listId) {
+    console.log("prevProps", prevProps);
+    console.log(this.props.click);
+    if (this.props.productList !== prevProps.productList) {
       const listId = this.props.productList.listId;
       const deliveryManName = this.props.productList.deliveryManName;
       console.log(listId);
@@ -107,14 +110,14 @@ export class PDFList extends React.Component {
     ];
     // console.log(this.props);
     // console.log(this.props.productList.listId);
-
+    // console.log(this.state.value);
     return (
       <>
         {/* <div className="pdf-header">
           <img src={logo} alt="Logo" className="pdf-logo" />
           <p>
             {/* Change*/}
-        {/* list's ID <span>{this.state.value}</span> */}
+
         {/* </p> */}
         {this.state.value && (
           <div
@@ -133,7 +136,10 @@ export class PDFList extends React.Component {
               <div className="text-align">
                 <h1>តារាងដឹកជញ្ចួន</h1>
                 {/* <p>ការបរិច្ជេទ: {this.state.value[0].created_at}</p> */}
-                <p className="listDate">ការបរិច្ជេទ: 09/02/2012</p>
+                <p className="listDate">
+                  ការបរិច្ជេទ:{" "}
+                  {this.state.value[0] ? this.state.value[0].created_at : null}
+                </p>
                 <p className="listPhone">
                   លេខទូរស័ព្ទ: 099 589 689 / 081 335 965
                 </p>
@@ -154,66 +160,3 @@ export class PDFList extends React.Component {
     );
   }
 }
-
-// <table>
-//   <thead>
-//     <th>column 1</th>
-//     <th>column 2</th>
-//     <th>column 3</th>
-//   </thead>
-//   <tbody>
-//     <tr>
-//       <td>data 1</td>
-//       <td>data 2</td>
-//       <td>data 3</td>
-//     </tr>
-//   </tbody>
-// </table>
-// function PDFList({ listId, data, productList }) {
-//   console.log(data);
-//   console.log(productList);
-//   const refPrint = useRef();
-//   // State
-//   //   const [productList, setProductList] = useState({});
-//   const handlePrint = useReactToPrint({
-//     content: () => refPrint.current,
-//   });
-//   useEffect(() => {
-//     const fetchItem = () => {
-//       try {
-//         const result = axios.get(
-//           `${process.env.REACT_APP_DOMAIN}/packageList/getListById/${listId}`
-//         );
-//         // setProductList(result);
-//         console.log(result);
-//       } catch (error) {
-//         console.log("error" + error);
-//       }
-//     };
-//     fetchItem();
-//   }, []);
-
-//   return (
-//     <div>
-//       <div ref={refPrint} className="pdf-container">
-//         {/* Header */}
-//         <div className="pdf-header">
-//           <img src={logo} alt="Logo" className="pdf-logo" />
-//           <p>
-//             {/* Change*/}
-//             ID <span>094958189</span>
-//           </p>
-//         </div>
-
-//         <p className="pdf-website">www.powergdelivery.com</p>
-//       </div>
-//       {/* {handlePrint()} */}
-
-//       {/* <Button type="primary" onClick={handlePrint} className="btnPdf">
-//         Generate pdf
-//       </Button> */}
-//     </div>
-//   );
-// }
-
-// export default PDFList;

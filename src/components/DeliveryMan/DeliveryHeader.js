@@ -14,6 +14,7 @@ function DeliveryHeader() {
   const { loginStatus, setLoginStatus } = useContext(AuthContext);
   const { roleStatus, setRoleStatus } = useContext(RoleContext);
   const { userNameStatus, setUsernameStatus } = useContext(UsernameContext);
+  const listId = localStorage.getItem("listId");
   const handleLogout = () => {
     setLoginStatus(false);
     setRoleStatus("");
@@ -63,7 +64,7 @@ function DeliveryHeader() {
         </div>
       </div>
       <p className="deliveryDate"> 21 January 2021</p>
-      <div className="listId">#0959828</div>
+      <div className="listId">#{listId}</div>
     </header>
   );
 }
