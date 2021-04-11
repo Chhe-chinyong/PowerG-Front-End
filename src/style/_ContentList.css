@@ -46,6 +46,7 @@
 .center-pdf {
   width: 90%;
   margin: 0 auto;
+  display:none;
 }
 
 .pdf-list-header {
@@ -119,4 +120,15 @@
   width: 90%;
   margin: 0 auto;
   /* margin-top: 1rem; */
+}
+/* body > .center-pdf
+{
+  display:block;
+} */
+
+@media print {
+  .center-pdf {
+    display: block;
+    
+  }
 }

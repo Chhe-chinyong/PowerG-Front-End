@@ -5,7 +5,7 @@ import axios from "axios";
 import { Button, Table } from "antd";
 import moment from "moment";
 
-export class PDFShop extends React.Component {
+export class PDFList extends React.Component {
   state = {
     value: [],
     listId: "",

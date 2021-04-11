@@ -27,45 +27,8 @@ import moment from "moment";
 import ContentProductAdd from "../Products/ContentProductAdd";
 import { ProductContext } from "../../context/AuthContext";
 function ContentProduct() {
-  const data = [
-    {
-      key: "1",
-      package_id: "000001",
-      shop_owner: "Kok dara",
-      service_paid_by: "COD",
-      cust_location: "AEON2",
-      cust_name: "Yong",
-      pro_price: "10$",
-      date: "30-july-2021",
-      cust_contact: "029384811",
-      DeliveryID: "0001",
-    },
-    {
-      key: "2",
-      product_id: "000002",
-      shop_owner: "Heng chanto",
-      service_paid_by: "COD",
-      cust_location: "Piphup tmey krang thnoung st7 #50 ",
-      cust_name: "Yong",
-      pro_price: "1$",
-      date: "30-july-2021",
-      cust_contact: "0293848112",
-      DeliveryID: "9999",
-    },
-    {
-      key: "3",
-      product_id: "000003",
-      shop_owner: "Kok dara",
-      service_paid_by: "COD",
-      cust_location: "borey penghout near AEON2",
-      cust_name: "Yong",
-      pro_price: "10$",
-      date: "30-july-2021",
-      cust_contact: "029384811",
-      DeliveryID: "094885717",
-    },
-  ];
-  const dateFormat = "YYYY/MM/DD";
+
+  const dateFormat = "YYYY/M/D";
   //State
   const [Trigger, setTrigger] = useState(false);
   const [initialValue, setInitialValue] = useState([]);
@@ -87,59 +50,50 @@ function ContentProduct() {
   //Display all packages
   useEffect(() => {
     const fetchItem = async () => {
+      const tgai = await moment().format('YYYY/M/D');
+      console.log(tgai)
       const result = await axios(
-        `${process.env.REACT_APP_DOMAIN}/package/getAllPackage`
+        `${process.env.REACT_APP_DOMAIN}/package/countPackageByDate`,
+        {
+          headers: { "auth-token": localStorage.getItem("token"),
+          "query_date": tgai,
+         },
+        }
       );
-      console.log("result" + result.data.data);
-      console.log(result.data);
+     
+      console.log(result.data.data);
       const datas = result.data.data;
-
-      // const allData = result.data.data;
-      // const datas = allData.map((data) => {
-      //   const contact = data.contact.split("");
-      //   contact.splice(3, 0, "  ");
-      //   contact.splice(7, 0, "  ");
-      //   const contact_result = contact.join("");
-      //   console.log(contact_result);
-      //   const object = Object.assign({}, data, { contact: contact_result });
-      //   return object;
-      // });
-      setInitialValue(datas);
-    };
-    fetchItem();
-    console.log("first", initialValue);
-  }, []);
-
-  useEffect(() => {
-    const fetchItem = async () => {
-      const result = await axios(
-        `${process.env.REACT_APP_DOMAIN}/package/getAllPackage`
-      );
-      console.log("result" + result.data.data);
-      console.log(result.data);
-      const datas = result.data.data;
-
-      // const allData = result.data.data;
-      // const datas = allData.map((data) => {
-      //   const contact = data.contact.split("");
-      //   contact.splice(3, 0, "  ");
-      //   contact.splice(7, 0, "  ");
-      //   const contact_result = contact.join("");
-      //   console.log(contact_result);
-      //   const object = Object.assign({}, data, { contact: contact_result });
-      //   return object;
-      // });
       setInitialValue(datas);
     };
     fetchItem();
     console.log("first", initialValue);
   }, [Trigger]);
 
+  useEffect(() => {
+    const fetchItem = async () => {
+      const result = await axios(
+        `${process.env.REACT_APP_DOMAIN}/package/countPackageByDate`,
+        {
+          headers: { "auth-token": localStorage.getItem("token"),
+          "query_date": date,
+         },
+        }
+      );
+      console.log("result" + result.data.data);
+      const datas = result.data.data;
+      setInitialValue(datas);
+    };
+    fetchItem();
+    console.log("first", initialValue);
+  }, [date]);
+
   // Event
   // get data after change date
   function onChange(date, dateString) {
     console.log("date", date);
     console.log("dateString", dateString);
+    setDate(dateString)
+
   }
 
   const cancel = (e) => {
@@ -184,7 +138,7 @@ function ContentProduct() {
     try {
       // Delete Data
       const result = await axios.delete(
-        `${process.env.REACT_APP_DOMAIN}/api/package/deleteuserby/${id}`,
+        `${process.env.REACT_APP_DOMAIN}/package/deletePackageById/${id}`,
         {
           headers: {
             "auth-token": localStorage.getItem("token"),
@@ -193,6 +147,7 @@ function ContentProduct() {
       );
       console.log(initialValue);
       setInitialValue(initialValue.filter((value) => value.user_id != id));
+      setTrigger();
       message.success({
         content: "" + result.data.message,
         duration: 5,

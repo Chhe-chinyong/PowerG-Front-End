@@ -8,56 +8,6 @@ import { FileAddOutlined } from "@ant-design/icons";
 const { Option } = Select;
 
 function DeliveryDashBoard() {
-  // const data = [
-  //   {
-  //     key: "1",
-  //     productId: "000001",
-  //     location: "New York No. 1 Lake Park",
-  //     contact: "012394858",
-  //     price: "3.5",
-  //     status: "ON GOING",
-  //   },
-  //   {
-  //     key: "2",
-  //     productId: "000002",
-  //     location: "New York No. 1 Lake Park",
-  //     contact: "099384757",
-  //     price: "3.5",
-  //     status: "ON GOING",
-  //   },
-  //   {
-  //     key: "3",
-  //     productId: "000003",
-  //     location: "New York No. 1 Lake Park",
-  //     contact: "012394858",
-  //     price: "3.5",
-  //     status: "ON GOING",
-  //   },
-  //   {
-  //     key: "4",
-  //     productId: "000004",
-  //     location: "New York No. 1 Lake Park",
-  //     contact: "099384757",
-  //     price: "3",
-  //     status: "ON GOING",
-  //   },
-  //   {
-  //     key: "5",
-  //     productId: "000005",
-  //     location: "New York No. 1 Lake Park",
-  //     contact: "099384757",
-  //     price: "3",
-  //     status: "ON GOING",
-  //   },
-  //   {
-  //     key: "6",
-  //     productId: "000006",
-  //     location: "New York No. 1 Lake Park",
-  //     contact: "012394858",
-  //     price: "3.5",
-  //     status: "ON GOING",
-  //   },
-  // ];
   // state
   const [total, setTotal] = useState(0);
   const [listId, setListId] = useState();
@@ -133,7 +83,8 @@ function DeliveryDashBoard() {
           },
         };
       }
-      const data = initialValue;
+      const data = initialValue
+      // console.log('data',data)
       const result = await axios.post(
         `${process.env.REACT_APP_DOMAIN}/package/finalUpdate`,
         data,

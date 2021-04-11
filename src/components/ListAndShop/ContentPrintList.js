@@ -318,8 +318,8 @@ function ContentPrintList() {
       <PDFList
         ref={refPrint}
         productList={productList}
-        click={click}
-        setClick={setClick}
+        // click={click}
+        // setClick={setClick}
       />
 
       {/* {click ? (

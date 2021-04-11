@@ -31,6 +31,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
   const [data, setData] = useState([]);
   const [options, setOptions] = useState([]);
   const [value, setValue] = useState("");
+  const [serviceFee, setServiceFee] = useState("")
   const mockVal = (str, repeat = 1) => ({
     value: str.repeat(repeat),
   });
@@ -79,8 +80,9 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
   const onChange = (data) => {
     setValue(data);
   };
-  function handleChange(value) {
+  const handleChange=(value) => {
     console.log(`selected ${value}`);
+    setServiceFee(value)
   }
 
   const handleCancel = () => {
@@ -89,17 +91,21 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
   };
   //Event
   const onFinish = async (values) => {
+    console.log('value',values)
     const shop_owner = values.shop_owner;
     const cust_name = values.cust_name;
     const cust_location = values.cust_location;
     const cust_phone = values.cust_phone;
     const pro_price = values.pro_price;
     var payment_method = values.payment_method;
-    var service_fee = values.service_fee;
+    // var service_fee = values.service_fee;
+    // var service_fee = serviceFee;
+    var store_fee = serviceFee;
     var service_paid_by = values.service_paid_by;
     console.log(values);
     if (values.service_fee === undefined) {
-      service_fee = 4000;
+      //  setServiceFee(1)
+      store_fee = 1;
     }
     if (values.service_paid_by === undefined) {
       service_paid_by = "Transferer";
@@ -107,7 +113,8 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
     if (values.payment_method === undefined) {
       payment_method = "COD";
     }
-
+    console.log('value')
+    console.log(store_fee,'asd')
     try {
       const result = await axios.post(
         `${process.env.REACT_APP_DOMAIN}/package/addpackage`,
@@ -118,7 +125,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
           cust_phone: cust_phone,
           pro_price: pro_price,
           payment_method: payment_method,
-          service_fee: service_fee,
+          service_fee: store_fee,
           service_paid_by: service_paid_by,
         },
         { headers: { "Access-Control-Allow-Origin": "*" } }
@@ -141,7 +148,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
         cust_phone: cust_phone,
         pro_price: pro_price,
         payment_method: payment_method,
-        service_fee: service_fee,
+        service_fee: store_fee,
         service_paid_by: service_paid_by,
       });
       // setVisible(false);
@@ -151,7 +158,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
       const messageError = error.response.data.message;
 
       message.error({
-        content: "" + messageError,
+        content: "this " + messageError,
         className: "UserErrorMessage",
         duration: 5,
       });
@@ -259,7 +266,8 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
 
           <Item
             name={"service_fee"}
-            label="service_fee (៛)"
+            label="service_fee ($)"
+            style={{ textAlign: "left" }}
             rules={[
               // {
               //   message: "please input your servie_fee!",
@@ -270,7 +278,14 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
               },
             ]}
           >
-            <Input defaultValue={4000} />
+            <Select
+              defaultValue="1"
+              style={{ width: 116 }}
+              onChange={handleChange}
+            >
+              <Option value="1">1</Option>
+              <Option value="1.25">1.25</Option>
+            </Select>
           </Item>
 
           <Item

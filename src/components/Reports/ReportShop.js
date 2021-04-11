@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import axios from "axios";
 import Highlighter from "react-highlight-words";
+import { v4 as uuid_v4 } from "uuid";
+import ReactToPrint, { useReactToPrint } from "react-to-print";
+// import  {PDFShop} from './PDFShop';
+
 import {
   DatePicker,
   Table,
@@ -32,52 +36,8 @@ import { ProductContext } from "../../context/AuthContext";
 const { Option } = Select;
 
 function ReportShop() {
-  const data = [
-    {
-      key: "1",
-      product_id: "000001",
-      shop_owner: "Kok dara",
-      service_paid_by: "COD",
-      cust_location: "AEON2",
-      cust_name: "Yong",
-      status: "SUCCESS",
-      date: "30-july-2021",
-      DeliveryID: "0001",
-    },
-    {
-      key: "2",
-      product_id: "000002",
-      shop_owner: "totot",
-      service_paid_by: "COD",
-      cust_location: "borey penghout near AEON2",
-      cust_name: "Yong",
-      status: "ON GOING",
-      date: "30-july-2021",
-      DeliveryID: "0001",
-    },
-    {
-      key: "3",
-      product_id: "000003",
-      shop_owner: "yong yong",
-      service_paid_by: "COD",
-      cust_location: "borey penghout ",
-      cust_name: "Yong",
-      status: "ON GOING",
-      date: "30-july-2021",
-      DeliveryID: "0008",
-    },
-    {
-      key: "4",
-      product_id: "000003",
-      shop_owner: "yong yong",
-      service_paid_by: "COD",
-      cust_location: "borey penghout ",
-      cust_name: "Yong",
-      status: "UNSUCCESS",
-      date: "30-july-2021",
-      DeliveryID: "0008",
-    },
-  ];
+
+  
   // const object = Object.assign({}, datas, () => {
   //   datas.map((data) => {
   //     if (data.status === "SUCCESS") {
@@ -89,7 +49,7 @@ function ReportShop() {
   //   return data.status;
   // });
 
-  const dateFormat = "YYYY/MM/DD";
+  const dateFormat = 'YYYY/M/D';
   //State
   const [Trigger, setTrigger] = useState(false);
   const [initialValue, setInitialValue] = useState([]);
@@ -99,8 +59,11 @@ function ReportShop() {
   const [searchedColumn, SetSearchedColumn] = useState("");
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("Content of the modal");
+
   //State for Product
   const [packageId, setPackageId] = useState();
+  const [status, setStatus] =useState({});
+  const [shop, setShop] = useState();
   const [date, setDate] = useState();
   const [location, setLocation] = useState();
   const [shopPhone, setShopPhone] = useState();
@@ -108,37 +71,69 @@ function ReportShop() {
   const [options, setOptions] = useState([]);
 
   //UseEffect
-  //Display all packages
+  //Display shop
   useEffect(() => {
     const fetchItem = async () => {
+      const tgai = await moment().format('YYYY/M/D');
       const result = await axios.get(
-        `${process.env.REACT_APP_DOMAIN}/shop/getAllShops`,
+        `${process.env.REACT_APP_DOMAIN}/shop/getShopByDate`,
         {
-          headers: { "auth-token": localStorage.getItem("token") },
+          headers: { "auth-token": localStorage.getItem("token"),
+          "query_date": tgai,
+        },
         }
       );
+      setDate(tgai);
       const allData = result.data.data;
-      console.log(allData);
-      // const datas = allData.map((data) => {
-      //   const contact = data.contact.split("");
-      //   contact.splice(3, 0, "  ");
-      //   contact.splice(7, 0, "  ");
-      //   const contact_result = contact.join("");
-      //   console.log(contact_result);
-      //   const object = Object.assign({}, data, { contact: contact_result });
-      //   return object;
-      // });
+      console.log('reportShop',allData);
+      if (allData === undefined)
+          return;
+      
       setOptions(allData);
     };
     fetchItem();
     console.log("first", initialValue);
   }, []);
 
+
+  useEffect(() => {
+    const fetchItem = async () => {
+      const result = await axios.get(
+        `${process.env.REACT_APP_DOMAIN}/shop/packageOfShopByDate`,
+        {
+          headers: { "auth-token": localStorage.getItem("token"),
+          "query_date": date,
+          "shop": shop
+        },
+        }
+      );
+      const allData = result.data.data;
+      console.log('reportShop',allData);
+      setInitialValue(allData)
+
+      const daily = await axios.get(
+        `${process.env.REACT_APP_DOMAIN}/shop/dailyShopReport`,
+        {
+          headers: { "auth-token": localStorage.getItem("token"),
+          "query_date": date,
+          "shop": shop
+        },
+        }
+      );
+
+        setStatus(daily.data);
+        console.log('status',status)
+
+    };
+    fetchItem();
+    console.log("first", initialValue);
+  }, [shop]);
   // Event
   // get data after change date
   function onChange(date, dateString) {
     console.log("date", date);
     console.log("dateString", dateString);
+    setDate(dateString)
   }
 
   const cancel = (e) => {
@@ -177,7 +172,8 @@ function ReportShop() {
   };
 
   function handleChange(value) {
-    console.log(`selected ${value}`);
+      setShop(value);
+  
   }
 
   const handleDownload = () => {
@@ -264,12 +260,12 @@ function ReportShop() {
       //title is display on coulmn
       //dataIndex to match with datasouce to display
       title: <strong>ID</strong>,
-      dataIndex: "product_id",
+      dataIndex: "package_id",
       key: "id",
       // defaultSortOrder: "ascend",
 
       ...getColumnSearchProps("product_id"),
-      sorter: (a, b) => a.product_id - b.product_id,
+      sorter: (a, b) => a.package_id - b.package_id,
     },
     {
       title: <strong>SHOP's Name</strong>,
@@ -299,21 +295,24 @@ function ReportShop() {
               return <span style={{ color: "#ff4d4f" }}>UNSUCCESS</span>;
             if (status === "ON GOING")
               return <span style={{ color: "#1890ff" }}>ON GOING</span>;
-            return <span style={{ color: "#52c41a" }}>SUCCESS</span>;
+            if (status === "SUCCESS")
+              return <span style={{ color: "#52c41a" }}>SUCCESS</span>;
+            return <span style={{ color: "#bdc3c7" }}>PENDING</span>;
+           
           })()}
         </>
       ),
     },
     {
       title: <strong>Date</strong>,
-      dataIndex: "date",
+      dataIndex: "delivered_at",
       key: "date",
     },
 
     {
       title: <strong>Delivery By</strong>,
-      dataIndex: "DeliveryID",
-      key: "DeliveryID",
+      dataIndex: "delivery_man_name",
+      key: "delivery_man_name",
     },
   ];
   return (
@@ -338,7 +337,7 @@ function ReportShop() {
             TOTAL AMOUNT:{}
             <span style={{ color: "#e74c3c", fontSize: "1.25rem" }}>
               {" "}
-              $100{" "}
+              ${status.total_amount}{" "}
             </span>{" "}
           </p>
           {/* <Button type="primary" size="default" className="total-button">
@@ -348,6 +347,7 @@ function ReportShop() {
         </div>
         <div className="header-reportShop">
           <DatePicker
+            // defaultValue={moment(dateFormat)}
             defaultValue={moment()}
             format={dateFormat}
             onChange={onChange}
@@ -361,15 +361,12 @@ function ReportShop() {
             onChange={handleChange}
             size="default"
           >
-            {options.map((option) => (
-              <Option key={option.id} value={option.value}>
-                {option.shopName}
+             {options.map((option) => (
+              <Option key={option.shop_owner} value={option.value}>
+                {option.shop_owner}
               </Option>
-            ))}
+            ))} 
 
-            {/* <Option value="jack">ZANDO</Option>
-            <Option value="lucy">MANZER</Option>
-            <Option value="lucy">PEDRO</Option> */}
           </Select>
           {/* Status */}
           <Select
@@ -398,7 +395,7 @@ function ReportShop() {
         {/* Table */}
         <Table
           columns={columns}
-          dataSource={data} /*dataSource={initialValue}*/
+           dataSource={initialValue}
         />
 
         {/* Amount is dynamic value */}

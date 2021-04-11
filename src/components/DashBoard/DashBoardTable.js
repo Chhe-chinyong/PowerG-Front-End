@@ -27,6 +27,7 @@ import moment from "moment";
 import ContentProductAdd from "../Products/ContentProductAdd";
 import Chart from "../../components/DashBoard/Chart";
 import { ProductContext } from "../../context/AuthContext";
+import { empty } from "uuidv4";
 
 const { Option } = Select;
 
@@ -109,20 +110,20 @@ function ContentProduct() {
   //Display all packages
   useEffect(() => {
     const fetchItem = async () => {
+      const tgai = await moment().format('YYYY/M/D');
+
       const result = await axios(
-        `${process.env.REACT_APP_DOMAIN}/api/user/getallusers`
+        `${process.env.REACT_APP_DOMAIN}/package/countPackageByDate`,
+        {
+          headers: { "auth-token": localStorage.getItem("token"),
+          "query_date": tgai,
+         },
+        }
       );
+      console.log(result)
+    
       const allData = result.data.data;
-      const datas = allData.map((data) => {
-        const contact = data.contact.split("");
-        contact.splice(3, 0, "  ");
-        contact.splice(7, 0, "  ");
-        const contact_result = contact.join("");
-        console.log(contact_result);
-        const object = Object.assign({}, data, { contact: contact_result });
-        return object;
-      });
-      setInitialValue(datas);
+      setInitialValue(allData);
     };
     fetchItem();
     console.log("first", initialValue);
@@ -274,12 +275,12 @@ function ContentProduct() {
       //title is display on coulmn
       //dataIndex to match with datasouce to display
       title: <strong>ID</strong>,
-      dataIndex: "product_id",
+      dataIndex: "package_id",
       key: "id",
       // defaultSortOrder: "ascend",
 
-      ...getColumnSearchProps("product_id"),
-      sorter: (a, b) => a.product_id - b.product_id,
+      ...getColumnSearchProps("package_id"),
+      sorter: (a, b) => a.package_id - b.package_id,
     },
     {
       title: <strong>SHOP's Name</strong>,
@@ -295,9 +296,10 @@ function ContentProduct() {
 
     {
       title: <strong>Receiver</strong>,
-      dataIndex: "cust_name",
-      key: "cust_name",
+      dataIndex: "service_paid_by",
+      key: "service_paid_by",
     },
+    
     {
       title: <strong>STATUS</strong>,
       dataIndex: "status",
@@ -309,21 +311,23 @@ function ContentProduct() {
               return <span style={{ color: "#ff4d4f" }}>UNSUCCESS</span>;
             if (status === "ON GOING")
               return <span style={{ color: "#1890ff" }}>ON GOING</span>;
-            return <span style={{ color: "#52c41a" }}>SUCCESS</span>;
+              if (status === "SUCCESS")
+              return <span style={{ color: "#52c41a" }}>SUCCESS</span>;
+            return <span style={{ color: "#bdc3c7" }}>PENDING</span>;
           })()}
         </>
       ),
     },
-    {
-      title: <strong>Date</strong>,
-      dataIndex: "date",
-      key: "date",
-    },
+    // {
+    //   title: <strong>Date</strong>,
+    //   dataIndex: "date",
+    //   key: "date",
+    // },
 
     {
       title: <strong>Delivery By</strong>,
-      dataIndex: "DeliveryID",
-      key: "DeliveryID",
+      dataIndex: "delivery_man_name",
+      key: "delivery_man_name",
     },
   ];
   return (
@@ -347,7 +351,7 @@ function ContentProduct() {
         {/* Table */}
         <Table
           columns={columns}
-          dataSource={data} /*dataSource={initialValue}*/
+          dataSource={initialValue}
         />
       </div>
     </ProductContext.Provider>
