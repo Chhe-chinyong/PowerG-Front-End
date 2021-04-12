@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "antd/dist/antd.css";
 import axios from "axios";
 import Highlighter from "react-highlight-words";
 import { v4 as uuid_v4 } from "uuid";
 import ReactToPrint, { useReactToPrint } from "react-to-print";
-// import  {PDFShop} from './PDFShop';
+import  {PDFShop} from './PDFShop';
 
 import {
   DatePicker,
@@ -38,17 +38,7 @@ const { Option } = Select;
 function ReportShop() {
 
   
-  // const object = Object.assign({}, datas, () => {
-  //   datas.map((data) => {
-  //     if (data.status === "SUCCESS") {
-  //       data.status;
-  //     }
-  //   });
-  // });
-  // const result = datas.map((data) => {
-  //   return data.status;
-  // });
-
+ 
   const dateFormat = 'YYYY/M/D';
   //State
   const [Trigger, setTrigger] = useState(false);
@@ -59,6 +49,8 @@ function ReportShop() {
   const [searchedColumn, SetSearchedColumn] = useState("");
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("Content of the modal");
+  const [productList, setProductList] = useState({});
+
 
   //State for Product
   const [packageId, setPackageId] = useState();
@@ -69,9 +61,12 @@ function ReportShop() {
   const [shopPhone, setShopPhone] = useState();
   const [receiverPhone, setReceiverPhone] = useState();
   const [options, setOptions] = useState([]);
+  //Ref
+  const clearRef = useRef('');
+  const refPrint = useRef();
 
   //UseEffect
-  //Display shop
+  //get shop name
   useEffect(() => {
     const fetchItem = async () => {
       const tgai = await moment().format('YYYY/M/D');
@@ -94,8 +89,39 @@ function ReportShop() {
     fetchItem();
     console.log("first", initialValue);
   }, []);
-
-
+  //
+  useEffect(() => {
+    const fetchItem = async () => {
+      console.log('date',date)
+      const result = await axios.get(
+        `${process.env.REACT_APP_DOMAIN}/shop/getShopByDate`,
+        {
+          headers: { "auth-token": localStorage.getItem("token"),
+          "query_date": date,
+        },
+        }
+      );
+      
+      const allData = result.data.data;
+    
+      console.log('change',result.data)
+      console.log('reportShop',allData);
+      if (allData === undefined)
+      {
+        console.log(clearRef)
+          // clearRef.current.innerText = status.total_amount;
+          setOptions([])
+          setInitialValue([])
+          return;
+      }
+      
+      setOptions(allData);
+      setProductList(initialValue)
+    };
+    fetchItem();
+    console.log("first", initialValue);
+  }, [date]);
+//
   useEffect(() => {
     const fetchItem = async () => {
       const result = await axios.get(
@@ -110,7 +136,7 @@ function ReportShop() {
       const allData = result.data.data;
       console.log('reportShop',allData);
       setInitialValue(allData)
-
+      setProductList(allData)
       const daily = await axios.get(
         `${process.env.REACT_APP_DOMAIN}/shop/dailyShopReport`,
         {
@@ -122,13 +148,20 @@ function ReportShop() {
       );
 
         setStatus(daily.data);
+       
         console.log('status',status)
 
     };
     fetchItem();
+    
     console.log("first", initialValue);
   }, [shop]);
   // Event
+
+  //print report PDF
+  const handlePrint = useReactToPrint({
+    content: () => refPrint.current,
+  });
   // get data after change date
   function onChange(date, dateString) {
     console.log("date", date);
@@ -173,7 +206,6 @@ function ReportShop() {
 
   function handleChange(value) {
       setShop(value);
-  
   }
 
   const handleDownload = () => {
@@ -335,7 +367,7 @@ function ReportShop() {
         <div className="total-container-report">
           <p>
             TOTAL AMOUNT:{}
-            <span style={{ color: "#e74c3c", fontSize: "1.25rem" }}>
+            <span style={{ color: "#e74c3c", fontSize: "1.25rem" }}  ref={clearRef}>
               {" "}
               ${status.total_amount}{" "}
             </span>{" "}
@@ -360,9 +392,10 @@ function ReportShop() {
             style={{ width: 120 }}
             onChange={handleChange}
             size="default"
+           
           >
              {options.map((option) => (
-              <Option key={option.shop_owner} value={option.value}>
+              <Option key={option.shop_owner} value={option.value}  >
                 {option.shop_owner}
               </Option>
             ))} 
@@ -389,15 +422,19 @@ function ReportShop() {
             type="primary"
             size="default"
             icon={<DownloadOutlined />}
-            onClick={handleDownload}
+            onClick={()=> {
+              setProductList(initialValue);
+              handlePrint();
+            }}
           ></Button>
         </div>
         {/* Table */}
         <Table
           columns={columns}
-           dataSource={initialValue}
+          dataSource={initialValue}
         />
-
+        <PDFShop ref={refPrint}
+         productList={productList}/>
         {/* Amount is dynamic value */}
         {/* Amount is dynamic value */}
         {/* <div className="total-container-report">

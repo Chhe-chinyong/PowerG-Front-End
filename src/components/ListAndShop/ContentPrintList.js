@@ -16,7 +16,7 @@ import "antd/dist/antd.css";
 // Component;
 import ContentUserAdd from "../ContentUserAdd";
 import ContentUserEdit from "../ContentUserEdit";
-import { PDFList } from "../ListAndShop/PDFList";
+import { PDFList } from "./PDFList";
 function ContentPrintList() {
   const data = [
     {

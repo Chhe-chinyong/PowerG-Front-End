@@ -5,41 +5,35 @@ import axios from "axios";
 import { Button, Table } from "antd";
 import moment from "moment";
 
-export class PDFList extends React.Component {
+export class PDFShop extends React.Component {
   state = {
-    value: [],
+    value: null,
     listId: "",
     deliveryManName: "",
   };
 
-  componentDidMount() {
-    // this.props.setClick(false);
-  }
+  // componentDidMount() {
+  //   console.log(this.props.productList)
+  // }
+  
   componentDidUpdate(prevProps, prevState) {
     // Runs after the first render() lifecycle
+    console.log(this.props.productList)
+    const product = this.props.productList;
+    console.log(product)
+   
+    
     console.log("prevProps", prevProps);
-    console.log(this.props.click);
+    // console.log(this.props.click);
     if (this.props.productList !== prevProps.productList) {
       const listId = this.props.productList.listId;
       const deliveryManName = this.props.productList.deliveryManName;
       console.log(listId);
-      const fetchItem = async () => {
-        try {
-          const result = await axios.get(
-            `${process.env.REACT_APP_DOMAIN}/packageList/getListById/${listId}`
-          );
-          // setProductList(result);
-          console.log(result.data.data);
-          this.setState({
-            listValue: listId,
-            value: result.data.data,
-            deliveryManName: deliveryManName,
-          });
-        } catch (error) {
-          console.log("error" + error);
-        }
-      };
-      fetchItem();
+      this.setState({
+        value: product
+      });
+      console.log(this.state)
+   
       console.log("fectch api");
     }
   }
@@ -53,11 +47,11 @@ export class PDFList extends React.Component {
         dataIndex: "package_id",
         key: "package_id",
       },
-      {
-        title: <strong>អតិថិជន</strong>,
-        dataIndex: "shop_owner",
-        key: "shop_owner",
-      },
+      // {
+      //   title: <strong>អតិថិជន</strong>,
+      //   dataIndex: "shop_owner",
+      //   key: "shop_owner",
+      // },
 
       {
         title: <strong>ទីតាំង</strong>,
@@ -73,12 +67,6 @@ export class PDFList extends React.Component {
       },
 
       {
-        title: <strong> ម្លៃសេវា</strong>,
-        dataIndex: "service_fee",
-        key: "service_fee",
-      },
-
-      {
         title: <strong>តម្លៃទំនិញ</strong>,
         dataIndex: "pro_price",
         key: "pro_price",
@@ -91,16 +79,35 @@ export class PDFList extends React.Component {
       },
 
       {
+        title: <strong> ម្លៃសេវា</strong>,
+        dataIndex: "service_fee",
+        key: "service_fee",
+      },
+
+      {
         title: <strong>ការបង់ថ្លៃសេវា</strong>,
         dataIndex: "payment_method",
         key: "payment_method",
       },
 
-      // {
-      //   title: <strong>Delivery By</strong>,
-      //   dataIndex: "DeliveryID",
-      //   key: "DeliveryID",
-      // },
+      {
+        title: <strong>ការបង់ថ្លៃសេវា</strong>,
+        dataIndex: "payment_method",
+        key: "payment_method",
+      },
+
+      
+      {
+        title: <strong>ស្ថានភាព</strong>,
+        dataIndex: "status",
+        key: "status",
+      },
+
+      {
+        title: <strong>Total</strong>,
+        dataIndex: "subtotal",
+        key: "subtotal",
+      },
 
       // {
       //   title: <strong>Date</strong>,
@@ -127,12 +134,10 @@ export class PDFList extends React.Component {
             <div className="pdf-list-header">
               <div>
                 <img src={logo} alt="Logo" className="pdf-list-header-logo" />
-                <p>ឈ្មោះអ្នកដឹក :{this.state.deliveryManName}</p>
-                <p>លេខបញ្ជី :{this.state.listValue}</p>
-                {/* <p>ពេលដឹក</p> */}
+                <p>ឈ្មោះហាង :{this.state.value[0] ? this.state.value[0].shop_owner : null} </p> 
               </div>
               <div className="text-align">
-                <h1>តារាងដឹកជញ្ចួន</h1>
+                <h1 className="invoice">Invoice</h1>
                 {/* <p>ការបរិច្ជេទ: {this.state.value[0].created_at}</p> */}
                 <p className="listDate">
                   ការបរិច្ជេទ:{" "}
@@ -142,10 +147,29 @@ export class PDFList extends React.Component {
                   លេខទូរស័ព្ទ: 099 589 689 / 081 335 965
                 </p>
               </div>
+              
             </div>
 
-            <Table
+            {/* Status success */}
+            <div className="status-column">
+                  <div className="status-box1">
+                    <p>DELIVERED TODAY</p>
+                    <h3>{0}</h3>
+                  </div>
+
+                  <div className="status-box2">
+                    <p>SUCCESS</p>
+                    <h3>{0}</h3>
+                  </div>
+
+                  <div className="status-box4">
+                    <p>RETURNED </p>
+                    <h3>{0}</h3>
+                  </div>
+            </div>
+              <Table
               columns={columns}
+              // dataSource={[1,2,3]}
               dataSource={this.state.value}
               bordered
               pagination={false}

@@ -132,3 +132,41 @@
     
   }
 }
+
+/* PDFSHOp */
+
+.invoice {
+  /* background: linear-gradient(rgb(255 30 30 / 83%), rgb(228 217 217 / 14%)); */
+  color: #F05454;
+}
+
+.status-column {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem 0.5rem;
+  height: 92px;
+}
+
+.status-box1 {
+  background: linear-gradient(180deg, #a1c4fd 0%, #c2e9fb 100%);
+  border-radius: 10px;
+  width: 30%;
+  height: auto;
+  padding: 1rem;
+}
+
+.status-box2 {
+  background: linear-gradient(180deg, #84fab0 0%, #8fd3f4 100%);
+  border-radius: 10px;
+  width: 30%;
+  height: auto;
+  padding: 1rem;
+}
+
+.status-box4 {
+  background: linear-gradient(180deg, #feada6 0%, #f5efef 100%);
+  border-radius: 10px;
+  width: 30%;
+  height: auto;
+  padding: 1rem;
+}
