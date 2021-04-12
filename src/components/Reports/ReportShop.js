@@ -117,6 +117,8 @@ function ReportShop() {
       
       setOptions(allData);
       setProductList(initialValue)
+      setDate(date)
+      setShop(shop)
     };
     fetchItem();
     console.log("first", initialValue);
@@ -434,7 +436,10 @@ function ReportShop() {
           dataSource={initialValue}
         />
         <PDFShop ref={refPrint}
-         productList={productList}/>
+         productList={productList}
+         date={date}
+         shop={shop}
+         />
         {/* Amount is dynamic value */}
         {/* Amount is dynamic value */}
         {/* <div className="total-container-report">

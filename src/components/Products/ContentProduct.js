@@ -56,7 +56,7 @@ function ContentProduct() {
         `${process.env.REACT_APP_DOMAIN}/package/countPackageByDate`,
         {
           headers: { "auth-token": localStorage.getItem("token"),
-          "date": tgai,
+          "query_date": tgai,
          },
         }
       );
@@ -75,7 +75,7 @@ function ContentProduct() {
         `${process.env.REACT_APP_DOMAIN}/package/countPackageByDate`,
         {
           headers: { "auth-token": localStorage.getItem("token"),
-          "date": date,
+          "query_date": date,
          },
         }
       );
