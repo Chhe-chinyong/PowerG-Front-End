@@ -146,6 +146,7 @@ export class PDFShop extends React.Component {
                 <p className="listPhone">
                   លេខទូរស័ព្ទ: 099 589 689 / 081 335 965
                 </p>
+                <p className="listPhone">www.powergdelivery.com</p>
               </div>
               
             </div>
@@ -175,7 +176,17 @@ export class PDFShop extends React.Component {
               pagination={false}
               // className="PDF-table-list"
             />
-            <p className="pdf-website">www.powergdelivery.com</p>
+
+            {/* Total_Amount */}
+            <div className="total_amount">
+                <p>
+                  TOTAL AMOUNT:{}
+                  <span style={{ color: "#e74c3c", fontSize: "1.25rem" }}  >
+                  $1000 
+                  </span>
+                </p>
+            </div>
+           
           </div>
         )}
       </>

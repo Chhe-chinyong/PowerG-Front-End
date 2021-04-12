@@ -61,7 +61,7 @@ function ContentProduct() {
         }
       );
      
-      console.log(result.data.data);
+      console.log('data',result.data);
       const datas = result.data.data;
       setInitialValue(datas);
     };

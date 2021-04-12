@@ -136,7 +136,6 @@
 /* PDFSHOp */
 
 .invoice {
-  /* background: linear-gradient(rgb(255 30 30 / 83%), rgb(228 217 217 / 14%)); */
   color: #F05454;
 }
 
@@ -169,4 +168,23 @@
   width: 30%;
   height: auto;
   padding: 1rem;
+}
+
+.total_amount {
+  padding: 0.5rem 0.7rem;
+  align-items: center;
+  margin-left: 2.3rem;
+  margin-top: 0.5rem;
+  background: linear-gradient(180deg, #a1c4fd 0%, #c2e9fb 100%);
+  text-align: right;
+  border-radius: 10px;
+  float:right;
+
+}
+.total_amount {
+  font-size: large;
+}
+
+.total_amount span {
+  font-weight: bold;
 }

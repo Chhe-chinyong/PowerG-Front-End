@@ -125,12 +125,16 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
           cust_phone: cust_phone,
           pro_price: pro_price,
           payment_method: payment_method,
-          service_fee: store_fee,
+          service_fee: parseFloat(store_fee),
           service_paid_by: service_paid_by,
         },
-        { headers: { "Access-Control-Allow-Origin": "*" } }
+        {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
       );
-      console.log(result);
+      console.log('result',result);
 
       message.success({
         content: "" + result.data.message,
