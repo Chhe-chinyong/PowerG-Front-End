@@ -72,10 +72,13 @@ function ReportShop() {
       const tgai = await moment().format('YYYY/M/D');
       const result = await axios.get(
         `${process.env.REACT_APP_DOMAIN}/shop/getShopByDate`,
-        {
+        { 
+          params: {
+          date: tgai
+         },
           headers: { "auth-token": localStorage.getItem("token"),
-          "query_date": tgai,
-        },
+         
+         },
         }
       );
       setDate(tgai);
@@ -95,10 +98,13 @@ function ReportShop() {
       console.log('date',date)
       const result = await axios.get(
         `${process.env.REACT_APP_DOMAIN}/shop/getShopByDate`,
-        {
-          headers: { "auth-token": localStorage.getItem("token"),
-          "query_date": date,
-        },
+        { 
+          params: {
+          date: date
+         },
+          headers: { "auth-token": localStorage.getItem("token"), 
+         },
+        
         }
       );
       
@@ -128,11 +134,13 @@ function ReportShop() {
     const fetchItem = async () => {
       const result = await axios.get(
         `${process.env.REACT_APP_DOMAIN}/shop/packageOfShopByDate`,
-        {
+        { 
+          params: {
+          date: date,
+          shop:shop
+         },
           headers: { "auth-token": localStorage.getItem("token"),
-          "query_date": date,
-          "shop": shop
-        },
+         },
         }
       );
       const allData = result.data.data;
@@ -142,9 +150,11 @@ function ReportShop() {
       const daily = await axios.get(
         `${process.env.REACT_APP_DOMAIN}/shop/dailyShopReport`,
         {
+          params:{
+            date:date,
+            shop:shop
+          },
           headers: { "auth-token": localStorage.getItem("token"),
-          "query_date": date,
-          "shop": shop
         },
         }
       );
@@ -381,7 +391,6 @@ function ReportShop() {
         </div>
         <div className="header-reportShop">
           <DatePicker
-            // defaultValue={moment(dateFormat)}
             defaultValue={moment()}
             format={dateFormat}
             onChange={onChange}

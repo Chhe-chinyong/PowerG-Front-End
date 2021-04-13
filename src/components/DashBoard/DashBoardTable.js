@@ -114,9 +114,12 @@ function ContentProduct() {
 
       const result = await axios(
         `${process.env.REACT_APP_DOMAIN}/package/countPackageByDate`,
-        {
+        { 
+          params: {
+          date: tgai
+         },
           headers: { "auth-token": localStorage.getItem("token"),
-          "query_date": tgai,
+         
          },
         }
       );
@@ -290,12 +293,12 @@ function ContentProduct() {
 
     {
       title: <strong>COD</strong>,
-      dataIndex: "service_paid_by",
-      key: "service_paid_by",
+      dataIndex: "payment_method",
+      key: "payment_method",
     },
 
     {
-      title: <strong>Receiver</strong>,
+      title: <strong>service_paid</strong>,
       dataIndex: "service_paid_by",
       key: "service_paid_by",
     },

@@ -6,7 +6,8 @@ import { Button, Table } from "antd";
 export class PDFShop extends React.Component {
   state = {
     value: null,
-    status: {}
+    status: {},
+    reasons:null
   };
 
   // componentDidMount() {
@@ -16,8 +17,8 @@ export class PDFShop extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     // Runs after the first render() lifecycle
     console.log(this.props.productList)
-    const product = this.props.productList;
-    console.log(product)
+    const products = this.props.productList;
+    console.log(products)
    
     
     console.log("prevProps", prevProps);
@@ -28,8 +29,27 @@ export class PDFShop extends React.Component {
       console.log(listId);
       console.log(this.props)
       this.setState({
-        value: product
+        value: products
       });
+
+      const filter = products.filter((product)=> 
+      {
+        if (product.status === 'UNSUCCESS')
+        {
+            return {
+              package_id :product.package_id, 
+              package_price: product.package_price
+            }
+        }
+      })
+
+      console.log('filter',filter)
+
+      this.setState({
+        reasons:filter
+      })
+
+      console.log('hey',this.state.reasons)
      
       // Fetch data
       const fetchItem = async () => {
@@ -37,11 +57,9 @@ export class PDFShop extends React.Component {
           const result = await axios.get(
             `${process.env.REACT_APP_DOMAIN}/shop/dailyShopReport`,
             {
-              headers: { "auth-token": localStorage.getItem("token"),
-              "query_date": this.props.date,
-              "shop":this.props.shop
-             },
-            }
+              params: {date:this.props.date, shop:this.props.shop},
+              headers: { "auth-token": localStorage.getItem("token")}
+             }
           );
           // setProductList(result);
           console.log(result.data.data);
@@ -147,7 +165,7 @@ export class PDFShop extends React.Component {
             <div className="pdf-list-header">
               <div>
                 <img src={logo} alt="Logo" className="pdf-list-header-logo" />
-                <p>ឈ្មោះហាង :{this.state.value[0] ? this.state.value[0].shop_owner : null} </p> 
+                <p > <span className="store-name">ឈ្មោះហាង :</span>{this.state.value[0] ? this.state.value[0].shop_owner : null} </p> 
               </div>
               <div className="text-align">
                 <h1 className="invoice">Invoice</h1>
@@ -190,14 +208,28 @@ export class PDFShop extends React.Component {
             />
 
             {/* Total_Amount */}
-            <div className="total_amount">
-                <p>
-                  TOTAL AMOUNT:{}
-                  <span style={{ color: "#e74c3c", fontSize: "1.25rem" }}  >
-                  {this.state.status.total_amount}
-                  </span>
-                </p>
+            <div className="footer-pdfShop">
+                <div className="unsuccess-note">
+                    <p className="unsuccess-note-note">សំគាល់:</p>
+                    <ol className="unsuccess-reason">
+                      {this.state.reasons.map((reason)=> {
+                          <li>{reason.package_price}</li>
+                      })}
+                      <li>​មិនលើកទូរស៍្ទ</li>
+                      <li>តេមិនចូល</li>
+                    </ol>
+                </div>
+                <div className="total_amount">
+                    <p>
+                      TOTAL AMOUNT:{}
+                      <span style={{ color: "#e74c3c", fontSize: "1.25rem" }}  >
+                      {this.state.status.total_amount}
+                      </span>
+                    </p>
+                </div>
+
             </div>
+           
            
           </div>
         )}

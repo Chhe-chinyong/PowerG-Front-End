@@ -13,9 +13,11 @@ function Chart() {
         const delivery_report = await axios(
           `${process.env.REACT_APP_DOMAIN}/shop/dailyReport`,
           {
-            
-              headers: { "auth-token": localStorage.getItem("token"),
-              "query_date": tgai,
+            params:{
+              date:tgai
+            },
+              headers: { "auth-token": localStorage.getItem("token")
+             
           }
           }
         );

@@ -53,10 +53,14 @@ function ContentProduct() {
       const tgai = await moment().format('YYYY/M/D');
       console.log(tgai)
       const result = await axios(
-        `${process.env.REACT_APP_DOMAIN}/package/countPackageByDate`,
+        `${process.env.REACT_APP_DOMAIN}/package/getAllPackageByDate`,
+       
         {
+          params: {
+            date: tgai
+          },
           headers: { "auth-token": localStorage.getItem("token"),
-          "query_date": tgai,
+        
          },
         }
       );
@@ -72,10 +76,13 @@ function ContentProduct() {
   useEffect(() => {
     const fetchItem = async () => {
       const result = await axios(
-        `${process.env.REACT_APP_DOMAIN}/package/countPackageByDate`,
-        {
+        `${process.env.REACT_APP_DOMAIN}/package/getAllPackageByDate`,
+        { 
+          params: {
+          date: date
+         },
           headers: { "auth-token": localStorage.getItem("token"),
-          "query_date": date,
+         
          },
         }
       );

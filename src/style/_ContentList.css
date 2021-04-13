@@ -138,6 +138,9 @@
 .invoice {
   color: #F05454;
 }
+.store-name {
+    margin-top: 0.5rem;
+}
 
 .status-column {
   display: flex;
@@ -170,16 +173,21 @@
   padding: 1rem;
 }
 
+/* .footer-pdfShop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ 
+} */
+
 .total_amount {
   padding: 0.5rem 0.7rem;
-  align-items: center;
+  align-items:cetner;
   margin-left: 2.3rem;
-  margin-top: 0.5rem;
   background: linear-gradient(180deg, #a1c4fd 0%, #c2e9fb 100%);
   text-align: right;
   border-radius: 10px;
-  float:right;
-
+  float: right;
 }
 .total_amount {
   font-size: large;
@@ -187,4 +195,19 @@
 
 .total_amount span {
   font-weight: bold;
+}
+
+.unsuccess-note {
+  padding: 0.5rem;
+  float: left;
+}
+.unsuccess-note-note {
+  color:red;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.unsuccess-reason li {
+  
+  margin-left: 0.5rem;
 }
