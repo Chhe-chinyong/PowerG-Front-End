@@ -7,7 +7,7 @@ export class PDFShop extends React.Component {
   state = {
     value: null,
     status: {},
-    reasons:null
+    reasons: {}
   };
 
   // componentDidMount() {
@@ -28,28 +28,19 @@ export class PDFShop extends React.Component {
       const deliveryManName = this.props.productList.deliveryManName;
       console.log(listId);
       console.log(this.props)
+      const filter =  products.filter((product)=> product.status === 'UNSUCCESS');
       this.setState({
-        value: products
+        value: products,
+        reasons:filter
       });
 
-      const filter = products.filter((product)=> 
-      {
-        if (product.status === 'UNSUCCESS')
-        {
-            return {
-              package_id :product.package_id, 
-              package_price: product.package_price
-            }
-        }
-      })
-
+      
       console.log('filter',filter)
 
-      this.setState({
-        reasons:filter
-      })
 
-      console.log('hey',this.state.reasons)
+      
+
+      console.log('hey',this.state)
      
       // Fetch data
       const fetchItem = async () => {
@@ -149,6 +140,7 @@ export class PDFShop extends React.Component {
     // console.log(this.props);
     // console.log(this.props.productList.listId);
     // console.log(this.state.value);
+    console.log(this.state.reasons)
     return (
       <>
         {/* <div className="pdf-header">
@@ -157,7 +149,7 @@ export class PDFShop extends React.Component {
             {/* Change*/}
 
         {/* </p> */}
-        {this.state.value && (
+        {this.state.value && this.state.reasons && (
           <div
             className="center-pdf"
           
@@ -211,13 +203,19 @@ export class PDFShop extends React.Component {
             <div className="footer-pdfShop">
                 <div className="unsuccess-note">
                     <p className="unsuccess-note-note">សំគាល់:</p>
-                    <ol className="unsuccess-reason">
-                      {this.state.reasons.map((reason)=> {
-                          <li>{reason.package_price}</li>
-                      })}
-                      <li>​មិនលើកទូរស៍្ទ</li>
-                      <li>តេមិនចូល</li>
-                    </ol>
+                    {/* <ol className="unsuccess-reason">
+                        {this.state.reasons.map((reason) => 
+                            <li> 
+                                 {reason.package_id}
+                            </li>)}       
+                    </ol> */}
+
+                
+                     {this.state.reasons.map((reason) => 
+                        <p className="unsuccess-reason"> 
+                            {reason.package_id} {reason.others}
+                       </p>)}       
+                                    
                 </div>
                 <div className="total_amount">
                     <p>
