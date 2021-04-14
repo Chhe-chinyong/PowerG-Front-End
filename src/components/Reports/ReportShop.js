@@ -160,7 +160,6 @@ function ReportShop() {
       );
 
         setStatus(daily.data);
-       
         console.log('status',status)
 
     };

@@ -126,8 +126,8 @@ export class PDFShop extends React.Component {
       },
 
       {
-        title: <strong>Total</strong>,
-        dataIndex: "subtotal",
+        title: <strong>តម្លៃសរុប</strong>,
+        dataIndex: "package_price",
         key: "subtotal",
       },
 
@@ -213,7 +213,7 @@ export class PDFShop extends React.Component {
                 
                      {this.state.reasons.map((reason) => 
                         <p className="unsuccess-reason"> 
-                            {reason.package_id} {reason.others}
+                            {reason.package_id}: {reason.others}
                        </p>)}       
                                     
                 </div>
@@ -221,7 +221,7 @@ export class PDFShop extends React.Component {
                     <p>
                       TOTAL AMOUNT:{}
                       <span style={{ color: "#e74c3c", fontSize: "1.25rem" }}  >
-                      {this.state.status.total_amount}
+                      {"$"}{this.state.status.total_amount}
                       </span>
                     </p>
                 </div>

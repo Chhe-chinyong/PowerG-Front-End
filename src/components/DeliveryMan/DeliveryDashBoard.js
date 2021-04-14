@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Table, Select, Button, message } from "antd";
+import { Form, Table, Select, Button, message, Input } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import DeliveryHeader from "../DeliveryMan/DeliveryHeader";
 import axios from "axios";
@@ -55,6 +55,14 @@ function DeliveryDashBoard() {
     console.log(visible);
   };
 
+  const handleTextChange = (e,record) => {
+    console.log('record change',record);
+    console.log(e.target.value);
+    // update messaget to data
+    record.others = e.target.value;
+    console.log(record)
+  }
+
   function checkStatus(values) {
     values.forEach((value) => {
       if (value.status === "ON GOING") {
@@ -95,6 +103,7 @@ function DeliveryDashBoard() {
         }
       );
       console.log("data", initialValue);
+      console.log("data1", data);
       console.log(result);
       localStorage.removeItem("listId");
       message.success({
@@ -148,15 +157,15 @@ function DeliveryDashBoard() {
       key: "cust_phone",
       className: "columns",
     },
-    {
-      title: "PRICE",
-      dataIndex: "pro_price",
-      key: "pro_price",
-      className: "columns",
-      render: (record) => {
-        return <span className="priceDelivery">${record}</span>;
-      },
-    },
+    // {
+    //   title: "PRICE",
+    //   dataIndex: "pro_price",
+    //   key: "pro_price",
+    //   className: "columns",
+    //   render: (record) => {
+    //     return <span className="priceDelivery">${record}</span>;
+    //   },
+    // },
     {
       title: "STATUS",
       dataIndex: "status",
@@ -409,6 +418,21 @@ function DeliveryDashBoard() {
           );
         }
       },
+    },
+
+    {
+      title: "Message",
+      dataIndex: "others",
+      key: "others",
+      className: "columns",
+      render: (text, record) => (<Input placeholder="write" onChange={(e)=> {
+        handleTextChange(e, record);
+      }}/>)
+        // return (<Input placeholder={record} onChange={(record,key)=> {
+        //     console.log('record input',record);
+        //     console.log('text input',);
+        // }}/>)
+      
     },
   ];
 
