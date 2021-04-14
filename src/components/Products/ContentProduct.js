@@ -71,7 +71,7 @@ function ContentProduct() {
     };
     fetchItem();
     console.log("first", initialValue);
-  }, [Trigger]);
+  }, []);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -154,7 +154,8 @@ function ContentProduct() {
       );
       console.log(initialValue);
       setInitialValue(initialValue.filter((value) => value.user_id != id));
-      setTrigger();
+      setTrigger(!Trigger? true:false);
+      // setTrigger(true);
       message.success({
         content: "" + result.data.message,
         duration: 5,
@@ -338,6 +339,7 @@ function ContentProduct() {
     },
   ];
   return (
+    
     <ProductContext.Provider
       value={{
         packageId,
@@ -352,6 +354,7 @@ function ContentProduct() {
         setReceiverPhone,
       }}
     >
+      {initialValue && (
       <div>
         {/* ADD*/}
 
@@ -393,7 +396,9 @@ function ContentProduct() {
           /* dataSource={data} */ dataSource={initialValue}
         />
       </div>
+        )}
     </ProductContext.Provider>
+ 
   );
 }
 
