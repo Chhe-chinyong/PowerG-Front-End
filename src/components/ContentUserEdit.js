@@ -39,7 +39,7 @@ const ContentUserEdit = ({ setVisible, user, visible1, setTrigger }) => {
       const contact = values.contact;
 
       const result = await axios.put(
-        `http://165.22.252.116/api/user/updateinfo/${id}`,
+        `${process.env.REACT_APP_DOMAIN}/api/user/updateinfo/${id}`,
         {
           name: username,
           password: password,

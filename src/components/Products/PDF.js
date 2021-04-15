@@ -1,7 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import ReactToPdf from "react-to-pdf";
-import ReactToPrint, { useReactToPrint } from "react-to-print";
-import axios from "axios";
+import  { useReactToPrint } from "react-to-print";
 import { Button } from "antd";
 import QRCode from "react-qr-code";
 import logo from "../../images/favicon.ico";
@@ -86,7 +84,7 @@ const PDF = ({ productData, package_id }) => {
             <div className="pdf-cod">{productData.payment_method}</div>
             <figure>
               <QRCode
-                value={`http://192.168.1.212:3000/qr/${package_id}`}
+                value={`http://192.168.1.213:3000/qr/${package_id}`}
                 size={120}
               />
               <figcaption>Scan me</figcaption>

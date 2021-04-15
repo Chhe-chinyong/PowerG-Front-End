@@ -257,7 +257,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
             rules={[
               {
                 required: true,
-                message: "please input your customer name!",
+                message: "please input your product price!",
               },
               {
                 whitespace: true,
@@ -274,6 +274,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
             style={{ textAlign: "left" }}
             rules={[
               // {
+              //   required: true,
               //   message: "please input your servie_fee!",
               // },
               {
@@ -298,7 +299,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
             rules={[
               // {
               //   required: true,
-              //   message: "please input your servie_fee!",
+              //   message: "please input your servie_paid_by!",
               // },
               {
                 whitespace: true,

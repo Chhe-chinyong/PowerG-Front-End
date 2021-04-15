@@ -128,6 +128,9 @@ function ReportShop() {
     };
     fetchItem();
     console.log("first", initialValue);
+    return ()=> {
+        setShop(null)
+    }
   }, [date]);
 //
   useEffect(() => {
@@ -216,6 +219,7 @@ function ReportShop() {
   };
 
   function handleChange(value) {
+      
       setShop(value);
   }
 

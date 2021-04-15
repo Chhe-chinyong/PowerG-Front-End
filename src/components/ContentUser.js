@@ -18,30 +18,6 @@ function ContentUser() {
   // useRef
   const searchRef = useRef(null);
 
-  // const data = [
-  //   {
-  //     key: "1",
-  //     user_id: "000001",
-  //     user_name: "Kok dara",
-  //     user_password: "901294012940214",
-  //     user_contact: "0129928475",
-  //   },
-  //   {
-  //     key: "2",
-  //     user_id: "000002",
-  //     user_name: "Mingthean Lay",
-  //     user_password: "901294012940214",
-  //     user_contact: "0298844888",
-  //   },
-  //   {
-  //     key: "3",
-  //     user_id: "000003",
-  //     user_name: "Phal sokheng",
-  //     user_password: "901294012940214",
-  //     user_contact: "010928475",
-  //   },
-  // ];
-
   // State
   const [initialValue, setInitialValue] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -56,7 +32,7 @@ function ContentUser() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      const result = await axios(`http://159.65.138.109/api/user/getallusers`, {
+      const result = await axios(`${process.env.REACT_APP_DOMAIN}/api/user/getallusers`, {
         headers: {
           "auth-token": localStorage.getItem("token"),
         },
@@ -186,14 +162,6 @@ function ContentUser() {
     setSearchText("");
   };
 
-  //   Event-handler
-  // const handleClick = (e) => {
-  //   console.log("Clicked me");
-  //   setClick((prevClicked) => (prevClicked ? false : true));
-  //   console.log(click);
-  //   // <ContentUserAdd />;
-  // };
-
   const showModal = () => {
     setVisible(true);
   };
@@ -221,9 +189,6 @@ function ContentUser() {
     setVisible1(false);
   };
 
-  // const handleDelete = (record) => {
-  //   console.log("record", record);
-  // };
   const handleEdit = (record) => {
     setVisible1(true);
     setUser(record);

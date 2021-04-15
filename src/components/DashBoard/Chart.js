@@ -9,7 +9,7 @@ function Chart() {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const tgai = await moment().format('YYYY/M/D');
+        const tgai = moment().format('YYYY/M/D');
         const delivery_report = await axios(
           `${process.env.REACT_APP_DOMAIN}/shop/dailyReport`,
           {

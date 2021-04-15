@@ -205,9 +205,13 @@
   color:red;
   margin-bottom: 0;
   padding-bottom: 0;
+  font-weight: bold;
 }
 
-.unsuccess-reason li {
-  
-  margin-left: 0.5rem;
+
+
+.unsuccess-reason  {
+  /* margin-left: 0.5rem; */
+  margin-bottom: 0;
+  /* padding-bottom: 0; */
 }

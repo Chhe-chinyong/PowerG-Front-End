@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import logo from "../../images/favicon.ico";
 import axios from "axios";
-import { Button, Table } from "antd";
+import {  Table } from "antd";
 
 export class PDFShop extends React.Component {
   state = {
@@ -34,13 +34,6 @@ export class PDFShop extends React.Component {
         reasons:filter
       });
 
-      
-      console.log('filter',filter)
-
-
-      
-
-      console.log('hey',this.state)
      
       // Fetch data
       const fetchItem = async () => {
@@ -52,7 +45,7 @@ export class PDFShop extends React.Component {
               headers: { "auth-token": localStorage.getItem("token")}
              }
           );
-          // setProductList(result);
+      
           console.log(result.data.data);
           this.setState({
             status:result.data
@@ -92,6 +85,9 @@ export class PDFShop extends React.Component {
         title: <strong>តម្លៃទំនិញ</strong>,
         dataIndex: "pro_price",
         key: "pro_price",
+        render:(text)=>{
+          return <span>${text}</span>
+      }
       },
 
       {
@@ -104,6 +100,9 @@ export class PDFShop extends React.Component {
         title: <strong> ម្លៃសេវា</strong>,
         dataIndex: "service_fee",
         key: "service_fee",
+        render:(text)=>{
+          return <span>${text}</span>
+      }
       },
 
       {
@@ -129,26 +128,16 @@ export class PDFShop extends React.Component {
         title: <strong>តម្លៃសរុប</strong>,
         dataIndex: "package_price",
         key: "subtotal",
+        render:(text)=>{
+          return <span>${text}</span>
+      }
       },
 
-      // {
-      //   title: <strong>Date</strong>,
-      //   dataIndex: "created_at",
-      //   key: "date",
-      // },
     ];
-    // console.log(this.props);
-    // console.log(this.props.productList.listId);
-    // console.log(this.state.value);
+   
     console.log(this.state.reasons)
     return (
       <>
-        {/* <div className="pdf-header">
-          <img src={logo} alt="Logo" className="pdf-logo" />
-          <p>
-            {/* Change*/}
-
-        {/* </p> */}
         {this.state.value && this.state.reasons && (
           <div
             className="center-pdf"
@@ -203,14 +192,8 @@ export class PDFShop extends React.Component {
             <div className="footer-pdfShop">
                 <div className="unsuccess-note">
                     <p className="unsuccess-note-note">សំគាល់:</p>
-                    {/* <ol className="unsuccess-reason">
-                        {this.state.reasons.map((reason) => 
-                            <li> 
-                                 {reason.package_id}
-                            </li>)}       
-                    </ol> */}
+                    
 
-                
                      {this.state.reasons.map((reason) => 
                         <p className="unsuccess-reason"> 
                             {reason.package_id}: {reason.others}

@@ -50,7 +50,7 @@ function ContentProduct() {
   //Display all packages
   useEffect(() => {
     const fetchItem = async () => {
-      const tgai = await moment().format('YYYY/M/D');
+      const tgai =  moment().format('YYYY/M/D');
       console.log(tgai)
       const result = await axios(
         `${process.env.REACT_APP_DOMAIN}/package/getAllPackageByDate`,
@@ -71,10 +71,13 @@ function ContentProduct() {
     };
     fetchItem();
     console.log("first", initialValue);
-  }, []);
+  }, [Trigger]);
+
+
 
   useEffect(() => {
     const fetchItem = async () => {
+     
       const result = await axios(
         `${process.env.REACT_APP_DOMAIN}/package/getAllPackageByDate`,
         { 
@@ -86,12 +89,17 @@ function ContentProduct() {
          },
         }
       );
-      console.log("result" + result.data.data);
+      console.log("result inside" + result.data.data);
       const datas = result.data.data;
       setInitialValue(datas);
     };
-    fetchItem();
-    console.log("first", initialValue);
+    console.log('date from state',date)
+    if(date!==undefined)
+    {
+      console.log('from inside')
+      fetchItem();
+    }
+    
   }, [date]);
 
   // Event
@@ -154,8 +162,9 @@ function ContentProduct() {
       );
       console.log(initialValue);
       setInitialValue(initialValue.filter((value) => value.user_id != id));
-      setTrigger(!Trigger? true:false);
-      // setTrigger(true);
+      // setTrigger(!Trigger? true:false);
+      setTrigger(true);
+      setTrigger(false);
       message.success({
         content: "" + result.data.message,
         duration: 5,
@@ -281,6 +290,21 @@ function ContentProduct() {
     },
 
     {
+      title: <strong> Fee</strong>,
+      dataIndex: "service_fee",
+      key: "service_fee",
+    },
+    {
+      title: <strong> Service</strong>,
+      dataIndex: "service_paid_by",
+      key: "service_paid_by",
+    },
+    {
+      title: <strong> Method</strong>,
+      dataIndex: "payment_method",
+      key: "payment_method",
+    },
+    {
       title: <strong> Contact</strong>,
       dataIndex: "cust_phone",
       key: "cust_phone",
@@ -348,7 +372,7 @@ function ContentProduct() {
         shopPhone,
         receiverPhone,
         setPackageId,
-        setDate,
+        // setDate,
         setLocation,
         setShopPhone,
         setReceiverPhone,
