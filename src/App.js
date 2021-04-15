@@ -89,17 +89,17 @@ function App() {
                   role={roleStatus}
                 />
                 {/* Delivery man */}
-                {/* <PrivateRoute
-                  path="/delivery"
-                  component={DeliveryDashBoard}
-                  auth={loginStatus}
-                /> */}
-                {/* Delivery man */}
-                <Route
+                <PrivateRoute
                   path="/delivery"
                   component={DeliveryDashBoard}
                   auth={loginStatus}
                 />
+                {/* Delivery man */}
+                {/* <Route
+                  path="/delivery"
+                  component={DeliveryDashBoard}
+                  auth={loginStatus}
+                /> */}
                 <Route path="/qr/:pro_id" component={QrCode} />
 
                 <Layout>
