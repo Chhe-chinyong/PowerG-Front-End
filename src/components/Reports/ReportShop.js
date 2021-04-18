@@ -430,7 +430,7 @@ function ReportShop() {
 
           </Select>
           {/* Status */}
-          <Select
+          {/* <Select
             icon={<ShopOutlined />}
             defaultValue="Status"
             style={{ width: 120 }}
@@ -443,7 +443,7 @@ function ReportShop() {
             <Option value="UNSUCCESS" style={{ color: "#ff4d4f" }}>
               UNSUCCESS
             </Option>
-          </Select>
+          </Select> */}
 
           {/* Download */}
           <Button
