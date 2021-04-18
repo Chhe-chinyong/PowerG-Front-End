@@ -16,20 +16,39 @@ const PDF = ({ productData, package_id }) => {
   if (productData.service_fee === undefined) {
     productData.service_fee = 4000;
   }
+ 
+  
+  const check = ( productData) => {
+    if(productData.service_paid_by === 'Transferer')
+        productData.service_paid_by = 'អ្នកផ្ញេី'
+    if(productData.service_paid_by === 'Receiver')
+        productData.service_paid_by = 'អ្នកទទួល'
+  }
+
+  const padToEight = (number) => {
+    if (number < 9999999) {
+      number = ("0000000" + number ).slice(-8);
+    }
+    return number;
+  }
+   // change data to khmer
+   check(productData);
+  var id =  padToEight(package_id)
+
   const refPrint = useRef();
   const handlePrint = useReactToPrint({
     content: () => refPrint.current,
   });
-  useEffect(() => {
-    const fetchItem = () => {
-      try {
-        // const result = axios.get(`15605.94949/get/${pro_id}`);
-      } catch (error) {
-        console.log("error" + error);
-      }
-    };
-    fetchItem();
-  }, []);
+  // useEffect(() => {
+  //   const fetchItem = () => {
+  //     try {
+  //       // const result = axios.get(`15605.94949/get/${pro_id}`);
+  //     } catch (error) {
+  //       console.log("error" + error);
+  //     }
+  //   };
+  //   fetchItem();
+  // }, []);
   return (
     <>
       <div className="btnPdf-container" ref={refPrint}>
@@ -48,7 +67,7 @@ const PDF = ({ productData, package_id }) => {
             <img src={logo} alt="Logo" className="pdf-logo" />
             <p>
               {/* Change*/}
-              ID <span>094958189</span>
+                ID: <span>{id }</span>
             </p>
           </div>
 
@@ -79,9 +98,12 @@ const PDF = ({ productData, package_id }) => {
             <div className="pdf-priceTag">
               <p>តម្លៃដឹកជញ្ជួន</p>
               {/* Change */}
-              <h3 className="price">៛ {productData.service_fee}</h3>
+              <h3 className="price">$ {productData.service_fee} <span className="product_paid_by">({productData.service_paid_by})</span> </h3>
+              
             </div>
-            <div className="pdf-cod">{productData.payment_method}</div>
+            <div className="pdf-cod">
+              <p className="product_payment">{productData.payment_method} </p> <p className="product_price"> (${productData.pro_price}) </p>
+            </div>
             <figure>
               <QRCode
                 value={`http://192.168.1.213:3000/qr/${package_id}`}

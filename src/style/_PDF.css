@@ -83,11 +83,13 @@ figcaption {
 
 .price {
   font-size: 46px;
+  margin-left: 2rem;
+  font-weight: bold;
 }
 
 .pdf-cod {
   border: 1px solid rgb(196, 196, 196);
-  height: 63%;
+  height: 56%;
   width: 128px;
   text-align: center;
   font-weight: regular;
@@ -95,6 +97,24 @@ figcaption {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.product_payment{
+  margin-top: 1rem;
+  margin-bottom: 0;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.product_price {
+    font-size: medium;
+    font-weight: bold;   
+}
+
+.product_paid_by {
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .pdf-website {
