@@ -61,6 +61,7 @@ const ContentUserEdit = ({ setVisible, user, visible1, setTrigger }) => {
       });
       setTrigger(true);
       setTrigger(false);
+      setVisible(false);
     } catch (error) {
       const messageError = error.response.data.message;
       message.error({

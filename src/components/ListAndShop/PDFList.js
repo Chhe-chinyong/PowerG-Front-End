@@ -5,7 +5,7 @@ import axios from "axios";
 import { Button, Table } from "antd";
 import moment from "moment";
 
-export class PDFList extends React.Component {
+export class PDFList extends React.PureComponent{
   state = {
     value: [],
     listId: "",
@@ -76,30 +76,41 @@ export class PDFList extends React.Component {
         title: <strong> ម្លៃសេវា</strong>,
         dataIndex: "service_fee",
         key: "service_fee",
+        render:(text)=>{
+          return <span>${text}</span>
+      }
       },
 
       {
         title: <strong>តម្លៃទំនិញ</strong>,
         dataIndex: "pro_price",
         key: "pro_price",
-      },
-
-      {
-        title: <strong>ការបង់ថ្លៃទំនិញ</strong>,
-        dataIndex: "service_paid_by",
-        key: "service_paid_by",
+        render:(text)=>{
+          return <span>${text}</span>
+      }
       },
 
       {
         title: <strong>ការបង់ថ្លៃសេវា</strong>,
+        dataIndex: "service_paid_by",
+        key: "service_paid_by",
+        
+      },
+      
+      {
+        title: <strong>ការបង់ថ្លៃទំនិញ</strong>,
         dataIndex: "payment_method",
         key: "payment_method",
+        
       },
 
       // {
-      //   title: <strong>Delivery By</strong>,
-      //   dataIndex: "DeliveryID",
-      //   key: "DeliveryID",
+      //   title: <strong>ម្លៃកញ្ចប់</strong>,
+      //   dataIndex: "package_price",
+      //   key: "package_price",
+      //   render:(text)=>{
+      //     return <span>${text}</span>
+      // }
       // },
 
       // {

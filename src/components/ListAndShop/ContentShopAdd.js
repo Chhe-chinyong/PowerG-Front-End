@@ -53,6 +53,7 @@ function ContentShopAdd({
       });
       setTrigger(true);
       setTrigger(false);
+      setVisible(false);
     } catch (error) {
       const messageError = error.response.data.message;
 

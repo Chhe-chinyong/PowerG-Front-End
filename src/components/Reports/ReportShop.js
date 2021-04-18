@@ -61,6 +61,7 @@ function ReportShop() {
   const [shopPhone, setShopPhone] = useState();
   const [receiverPhone, setReceiverPhone] = useState();
   const [options, setOptions] = useState([]);
+  const [count, setCount] = useState(0);
   //Ref
   const clearRef = useRef('');
   const refPrint = useRef();
@@ -126,7 +127,11 @@ function ReportShop() {
       setDate(date)
       setShop(shop)
     };
-    fetchItem();
+
+    // Run fetch data 
+    if(count !== 0)
+      fetchItem();
+
     console.log("first", initialValue);
     return ()=> {
         setShop(null)
@@ -162,11 +167,19 @@ function ReportShop() {
         }
       );
 
-        setStatus(daily.data);
-        console.log('status',status)
+      setStatus(daily.data);
+      console.log('status',status)
 
     };
-    fetchItem();
+    // (!shop) ? fetchItem():null;
+    console.log('shop', shop)
+    // fetchItem()
+    if(shop !== undefined)
+    {
+      fetchItem()
+    }
+    
+    
     
     console.log("first", initialValue);
   }, [shop]);
@@ -181,6 +194,7 @@ function ReportShop() {
     console.log("date", date);
     console.log("dateString", dateString);
     setDate(dateString)
+    setCount(1);
   }
 
   const cancel = (e) => {

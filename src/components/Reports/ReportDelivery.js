@@ -7,12 +7,11 @@ import {
   Table,
   Button,
   Space,
-  Modal,
   Input,
-  Popconfirm,
   message,
-  Tooltip,
+  AutoComplete,
   Select,
+  Form
 } from "antd";
 import {
   UserAddOutlined,
@@ -27,71 +26,25 @@ import moment from "moment";
 import ContentProductAdd from "../Products/ContentProductAdd";
 import Chart from "../DashBoard/Chart";
 import { ProductContext } from "../../context/AuthContext";
-
+const { Item } = Form;
 const { Option } = Select;
+const layout = {
+  labelCol: {
+    span: 80,
+  },
+  wrapperCol: {
+    span: 80,
+  },
+};
+
+const { RangePicker } = DatePicker;
 
 function ReportDelivery() {
-  const data = [
-    {
-      key: "1",
-      product_id: "000001",
-      shop_owner: "Kok dara",
-      service_paid_by: "COD",
-      cust_location: "AEON2",
-      cust_name: "Yong",
-      status: "SUCCESS",
-      date: "30-july-2021",
-      DeliveryID: "0001",
-    },
-    {
-      key: "2",
-      product_id: "000002",
-      shop_owner: "totot",
-      service_paid_by: "COD",
-      cust_location: "borey penghout near AEON2",
-      cust_name: "Yong",
-      status: "ON GOING",
-      date: "30-july-2021",
-      DeliveryID: "0001",
-    },
-    {
-      key: "3",
-      product_id: "000003",
-      shop_owner: "yong yong",
-      service_paid_by: "COD",
-      cust_location: "borey penghout ",
-      cust_name: "Yong",
-      status: "ON GOING",
-      date: "30-july-2021",
-      DeliveryID: "0008",
-    },
-    {
-      key: "4",
-      product_id: "000003",
-      shop_owner: "yong yong",
-      service_paid_by: "COD",
-      cust_location: "borey penghout ",
-      cust_name: "Yong",
-      status: "UNSUCCESS",
-      date: "30-july-2021",
-      DeliveryID: "0008",
-    },
-  ];
-  // const object = Object.assign({}, datas, () => {
-  //   datas.map((data) => {
-  //     if (data.status === "SUCCESS") {
-  //       data.status;
-  //     }
-  //   });
-  // });
-  // const result = datas.map((data) => {
-  //   return data.status;
-  // });
+  
 
-  const dateFormat = "YYYY/MM/DD";
+  const dateFormat = "YYYY/M/D";
   //State
   const [Trigger, setTrigger] = useState(false);
-  const [initialValue, setInitialValue] = useState([]);
   const [visible, setVisible] = useState(false);
   const [visible1, setVisible1] = useState(false);
   const [searchText, setSearchText] = useState("");
@@ -104,35 +57,103 @@ function ReportDelivery() {
   const [location, setLocation] = useState();
   const [shopPhone, setShopPhone] = useState();
   const [receiverPhone, setReceiverPhone] = useState();
+  const [options, setOptions] = useState([]);
+  const [value, setValue] = useState([]);
+  // State for data to load
+
+  // const [startDate,setStartDate] = useState("");
+  // const [endDate, setEndDate] = useState("");
+  const [dateString, setDateString] = useState({startDate:"",
+                                                endDate: ""});
+  const [deliveryName, setDeliveryName] = useState("");
+  const [data, setData] = useState([]);
+  const [initialValue, setInitialValue] = useState([]);
+  const [initialStatus, setInitialStatus] = useState([]);
+  
 
   //UseEffect
+  // Display shop
+  useEffect(() => {
+    const fetchItem = async () => {
+      const result = await axios(`${process.env.REACT_APP_DOMAIN}/api/user/getallusers`, {
+        headers: {
+          "auth-token": localStorage.getItem("token"),
+        },
+      });
+      console.log(result);
+      const allData = result.data.data;
+      console.log(allData)
+      setData(allData);
+    };
+    fetchItem();
+    console.log(data)
+  }, []);
+
+
+
   //Display all packages
   useEffect(() => {
     const fetchItem = async () => {
-      const result = await axios(`http://165.22.252.116/api/user/getallusers`);
-      const allData = result.data.data;
-      const datas = allData.map((data) => {
-        const contact = data.contact.split("");
-        contact.splice(3, 0, "  ");
-        contact.splice(7, 0, "  ");
-        const contact_result = contact.join("");
-        console.log(contact_result);
-        const object = Object.assign({}, data, { contact: contact_result });
-        return object;
-      });
-      setInitialValue(datas);
+      const result = await axios(`${process.env.REACT_APP_DOMAIN}/delivery/commission`, 
+      {
+        params: {start:dateString.startDate, end:dateString.endDate, name:deliveryName, },
+        headers: { "auth-token": localStorage.getItem("token")}
+       })
+      
+      console.log('result', result)
+      setInitialValue(result.data.data);
+      setInitialStatus(result.data)
+      // console.log('hey:', initialStatus.report.total)
     };
-    fetchItem();
+    console.log(dateString.startDate)
+    if(deliveryName !== "" && dateString.startDate !== ""&& dateString.endDate !== "")
+      fetchItem();
     console.log("first", initialValue);
-  }, []);
+    console.log('hey:', initialStatus)
+  }, [deliveryName, dateString.startDate, dateString.endDate]);
 
   // Event
   // get data after change date
-  function onChange(date, dateString) {
-    console.log("date", date);
-    console.log("dateString", dateString);
-  }
+  const onSearch = (searchText) => {
+    console.log("search", searchText);
+    setOptions(
+      !searchText
+        ? []
+        : () => {
+            const regex = new RegExp(`^${value}`, "i");
+            const store = data.sort().filter((v) => regex.test(v.user_name));
 
+            // setValue(store);
+            const send = store.map((data) => {
+              return {
+                value: data.user_name,
+                key:data.user_id
+              };
+            });
+            console.log("send", send);
+            return send;
+          }
+    );
+  };
+
+  const onSelect = (data) => {
+    console.log("onSelect", data);
+    setDeliveryName(data);
+  };
+
+  const onChange = (data) => {
+    setValue(data);
+  };
+
+  const handleDate = (date, dateString) => {
+      setDateString({
+          startDate:dateString[0],
+          endDate: dateString[1]
+      })
+      // setStartDate(dateString[0]);
+      // setEndDate(dateString[])
+      console.log(dateString)
+  };
   const cancel = (e) => {
     console.log(e);
     message.error("Click on No");
@@ -272,7 +293,7 @@ function ReportDelivery() {
       //title is display on coulmn
       //dataIndex to match with datasouce to display
       title: <strong>ID</strong>,
-      dataIndex: "product_id",
+      dataIndex: "package_id",
       key: "id",
       // defaultSortOrder: "ascend",
 
@@ -314,14 +335,14 @@ function ReportDelivery() {
     },
     {
       title: <strong>Date</strong>,
-      dataIndex: "date",
-      key: "date",
+      dataIndex: "created_at",
+      key: "created_at",
     },
 
     {
       title: <strong>Delivery By</strong>,
-      dataIndex: "DeliveryID",
-      key: "DeliveryID",
+      dataIndex: "delivery_man_name",
+      key: "delivery_man_name",
     },
   ];
   return (
@@ -339,13 +360,55 @@ function ReportDelivery() {
         setReceiverPhone,
       }}
     >
+     
       <div>
-        <Chart />
+        <div className="header-delivery-report"> 
+     
+              <AutoComplete
+               style={{width:"50vh"}}
+                      
+                      options={options}
+                      onSelect={onSelect}
+                      onSearch={onSearch}
+                      onChange={onChange}
+                     
+                >
+                  <Input.Search size="large"  placeholder="Input name" enterButton />
+
+                </AutoComplete>
+            {/* </Item> */}
+          <RangePicker onChange={handleDate} size={"large"} format={dateFormat}/>
+        </div>
+     
+        {/* status and total_amount */}
+        {initialStatus && (
+        <div className="container-box">
+        <div className="box1">
+          <p>DELIVERED TOTAL</p>
+          <h3>{initialStatus.report  ?initialStatus.report.total : null}</h3>
+                  
+        </div>
+    
+        <div className="box2">
+          <p>SUCCESS</p>
+          <h3>{initialStatus.report?initialStatus.report.total_success:null}</h3>
+        </div>
+        <div className="box4">
+          <p>UNSUCCESS</p>
+          <h3>{initialStatus.report?initialStatus.report.total_unsuccess:null}</h3>
+        </div>
+        <div className="box3">
+          <p>TOTAL</p>
+          {initialStatus? <h3>៛ {initialStatus.totalAmount}</h3>:null}
+        </div>
+        
+      </div>)
+}
 
         {/* Table */}
         <Table
           columns={columns}
-          dataSource={data} /*dataSource={initialValue}*/
+          dataSource={initialValue}
         />
       </div>
     </ProductContext.Provider>

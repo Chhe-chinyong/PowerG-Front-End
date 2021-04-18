@@ -19,10 +19,7 @@ function ContentUserAdd({
 
   setTrigger,
 }) {
-  // State
-  // const [visible, setVisible] = useState(false);
-  // const [confirmLoading, setConfirmLoading] = useState(false);
-  // const [modalText, setModalText] = useState("Content of the modal");
+
 
   const onFinish = async (values) => {
     console.log("this is " + values.username);
@@ -51,8 +48,10 @@ function ContentUserAdd({
         duration: 5,
         className: "UserSuccessMessage",
       });
+      setVisible(false)
       setTrigger(true);
       setTrigger(false);
+      
     } catch (error) {
       const messageError = error.response.data.message;
 
@@ -170,42 +169,3 @@ function ContentUserAdd({
 
 export default ContentUserAdd;
 
-// const onFinishFailed = (values) => {
-//   console.log(values);
-// };
-// const handleSubmit = (e) => {
-//   e.preventDefault();
-
-//   const user = {
-//     name: this.state.name,
-//   };
-
-//   axios
-//     .post(`165.22.252.116/api/user/register`, { user })
-//     .then((res) => {
-//       console.log(res);
-//       console.log(res.data);
-//     })
-//     .catch(console.log("errro"));
-//   // action=""
-//   //     method="POST"
-//   console.log("hey");
-// };
-
-//   name={"contact"}
-//   label="Contact"
-//   rules={[
-//     {
-//       required: true,
-//       message: "Please input your contact!",
-//     },
-//   ]}
-// >
-//   <Input />
-
-// <Input
-//             addonBefore={prefixSelector}
-//             style={{
-//               width: "100%",
-//             }}
-//           />

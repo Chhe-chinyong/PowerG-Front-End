@@ -48,26 +48,26 @@ function ContentShop() {
     };
     fetchItem();
     // console.log("first", initialValue);
-  }, []);
+  }, [trigger]);
 
   // Fetch data again we anything change
-  useEffect(() => {
-    const fetchItem = async () => {
-      const result = await axios(
-        `${process.env.REACT_APP_DOMAIN}/shop/getAllShops`,
-        {
-          headers: {
-            "auth-token": localStorage.getItem("token"),
-          },
-        }
-      );
+  // useEffect(() => {
+  //   const fetchItem = async () => {
+  //     const result = await axios(
+  //       `${process.env.REACT_APP_DOMAIN}/shop/getAllShops`,
+  //       {
+  //         headers: {
+  //           "auth-token": localStorage.getItem("token"),
+  //         },
+  //       }
+  //     );
 
-      const allData = result.data.data;
-      setInitialValue(allData);
-    };
-    fetchItem();
-    // console.log("first", initialValue);
-  }, [trigger]);
+  //     const allData = result.data.data;
+  //     setInitialValue(allData);
+  //   };
+  //   fetchItem();
+  //   // console.log("first", initialValue);
+  // }, [trigger]);
 
   // searchBar
   const getColumnSearchProps = (dataIndex) => ({

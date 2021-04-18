@@ -1,9 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
 import logo from "../../images/favicon.ico";
 import axios from "axios";
-import {  Table } from "antd";
+import {  Empty, Table } from "antd";
+import { empty } from "uuidv4";
 
-export class PDFShop extends React.Component {
+export class PDFShop extends React.PureComponent {
   state = {
     value: null,
     status: {},
@@ -28,12 +29,12 @@ export class PDFShop extends React.Component {
       const deliveryManName = this.props.productList.deliveryManName;
       console.log(listId);
       console.log(this.props)
+        
       const filter =  products.filter((product)=> product.status === 'UNSUCCESS');
       this.setState({
         value: products,
         reasons:filter
       });
-
      
       // Fetch data
       const fetchItem = async () => {
@@ -54,7 +55,13 @@ export class PDFShop extends React.Component {
           console.log("error" + error);
         }
       };
-      fetchItem();
+      if(products !== Empty)
+      {
+        fetchItem();
+      }
+
+     
+       
     }
   }
 
@@ -65,7 +72,7 @@ export class PDFShop extends React.Component {
         //dataIndex to match with datasouce to display
         title: <strong>ល.រ</strong>,
         dataIndex: "package_id",
-        key: "package_id",
+        key: "id",
       },
 
       {
@@ -92,9 +99,15 @@ export class PDFShop extends React.Component {
 
       {
         title: <strong>ការបង់ថ្លៃទំនិញ</strong>,
-        dataIndex: "service_paid_by",
-        key: "service_paid_by",
+        dataIndex: "payment_method",
+        key: "payment_method",
       },
+
+      // {
+      //   title: <strong>ការបង់ថ្លៃទំនិញ</strong>,
+      //   dataIndex: "service_paid_by",
+      //   key: "service_paid_by",
+      // },
 
       {
         title: <strong> ម្លៃសេវា</strong>,
@@ -107,15 +120,11 @@ export class PDFShop extends React.Component {
 
       {
         title: <strong>ការបង់ថ្លៃសេវា</strong>,
-        dataIndex: "payment_method",
-        key: "payment_method",
+        dataIndex: "service_paid_by",
+        key: "service_paid_by",
       },
 
-      {
-        title: <strong>ការបង់ថ្លៃសេវា</strong>,
-        dataIndex: "payment_method",
-        key: "payment_method",
-      },
+     
 
       
       {
@@ -166,17 +175,17 @@ export class PDFShop extends React.Component {
             {/* Status success */}
             <div className="status-column">
                   <div className="status-box1">
-                    <p>DELIVERED TODAY</p>
+                    <p>សរុបការដឹក</p>
                     <h3>{this.state.status.total_package}</h3>
                   </div>
 
                   <div className="status-box2">
-                    <p>SUCCESS</p>
+                    <p>ដឺកជេាគជ័យ</p>
                     <h3>{this.state.status.success}</h3>
                   </div>
 
                   <div className="status-box4">
-                    <p>RETURNED </p>
+                    <p>ដឹកបរាជ័យ</p>
                     <h3>{this.state.status.unsuccess}</h3>
                   </div>
             </div>
@@ -202,7 +211,7 @@ export class PDFShop extends React.Component {
                 </div>
                 <div className="total_amount">
                     <p>
-                      TOTAL AMOUNT:{}
+                      សរុបទឹកប្រាក់:{}
                       <span style={{ color: "#e74c3c", fontSize: "1.25rem" }}  >
                       {"$"}{this.state.status.total_amount}
                       </span>

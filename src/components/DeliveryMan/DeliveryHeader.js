@@ -8,6 +8,7 @@ import {
   UsernameContext,
 } from "../../context/AuthContext";
 import { Redirect } from "react-router";
+import moment from "moment";
 
 function DeliveryHeader() {
   //State
@@ -63,7 +64,9 @@ function DeliveryHeader() {
           </Dropdown>
         </div>
       </div>
-      <p className="deliveryDate"> 21 January 2021</p>
+      {/* <p className="deliveryDate">{ moment().format('YYYY/MMMM/D')}</p> */}
+      <p className="deliveryDate">{moment().format('YYYY/M/D')}</p>
+
       <div className="listId">#{listId}</div>
     </header>
   );

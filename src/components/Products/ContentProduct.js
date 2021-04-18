@@ -272,17 +272,17 @@ function ContentProduct() {
       key: "shop_owner",
     },
 
-    {
-      title: <strong>COD</strong>,
-      dataIndex: "service_paid_by",
-      key: "service_paid_by",
-    },
+    // {
+    //   title: <strong>COD</strong>,
+    //   dataIndex: "service_paid_by",
+    //   key: "service_paid_by",
+    // },
 
-    {
-      title: <strong>Receiver</strong>,
-      dataIndex: "cust_name",
-      key: "cust_name",
-    },
+    // {
+    //   title: <strong>Receiver</strong>,
+    //   dataIndex: "cust_name",
+    //   key: "cust_name",
+    // },
     {
       title: <strong>Price</strong>,
       dataIndex: "pro_price",

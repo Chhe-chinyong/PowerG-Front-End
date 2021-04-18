@@ -151,12 +151,12 @@ function DeliveryDashBoard() {
     //     </Tooltip>
     //   ),
     // },
-    {
-      title: "CONTACT",
-      dataIndex: "cust_phone",
-      key: "cust_phone",
-      className: "columns",
-    },
+    // {
+    //   title: "CONTACT",
+    //   dataIndex: "cust_phone",
+    //   key: "cust_phone",
+    //   className: "columns",
+    // },
     // {
     //   title: "PRICE",
     //   dataIndex: "pro_price",
@@ -467,12 +467,12 @@ function DeliveryDashBoard() {
       </div>
       {/* Amount is dynamic value */}
       <div className="total-container">
-        <p>
+        {/* <p>
           TOTAL AMOUNT:{}
           <span style={{ color: "#e74c3c", fontSize: "1.25rem" }}>
             ${total}{" "}
           </span>{" "}
-        </p>
+        </p> */}
         <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <Button
             type="primary"

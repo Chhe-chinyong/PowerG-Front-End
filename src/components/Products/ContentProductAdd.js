@@ -32,6 +32,8 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
   const [options, setOptions] = useState([]);
   const [value, setValue] = useState("");
   const [serviceFee, setServiceFee] = useState("")
+  const [codValue, setCOD] = useState("");
+  const [transfererValue,setTransferer] = useState('')
   const mockVal = (str, repeat = 1) => ({
     value: str.repeat(repeat),
   });
@@ -84,6 +86,13 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
     console.log(`selected ${value}`);
     setServiceFee(value)
   }
+  const handleChangeCOD = (value) => {
+    setCOD(value)
+  }
+
+  const handleChangeTransferer= (value) => {
+    setTransferer(value)
+  }
 
   const handleCancel = () => {
     console.log("Clicked cancel button");
@@ -101,6 +110,8 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
     // var service_fee = values.service_fee;
     // var service_fee = serviceFee;
     var store_fee = serviceFee;
+    var cod = codValue;
+    var transferer = transfererValue;
     var service_paid_by = values.service_paid_by;
     console.log(values);
     if (values.service_fee === undefined) {
@@ -108,10 +119,12 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
       store_fee = 1;
     }
     if (values.service_paid_by === undefined) {
-      service_paid_by = "Transferer";
+      // service_paid_by = "Transferer";
+      transferer="Transferer"
     }
     if (values.payment_method === undefined) {
-      payment_method = "COD";
+      // payment_method = "COD";
+      cod = "COD";
     }
     console.log('value')
     console.log(store_fee,'asd')
@@ -124,9 +137,9 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
           cust_location: cust_location,
           cust_phone: cust_phone,
           pro_price: pro_price,
-          payment_method: payment_method,
-          service_fee: parseFloat(store_fee),
-          service_paid_by: service_paid_by,
+          payment_method: cod,
+          service_fee:store_fee,
+          service_paid_by: transferer,
         },
         {
           headers: {
@@ -151,9 +164,9 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
         cust_location: cust_location,
         cust_phone: cust_phone,
         pro_price: pro_price,
-        payment_method: payment_method,
+        payment_method: cod,
         service_fee: store_fee,
-        service_paid_by: service_paid_by,
+        service_paid_by: transferer,
       });
       // setVisible(false);
     } catch (error) {
@@ -311,7 +324,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
             <Select
               defaultValue="Transferer"
               style={{ width: 116 }}
-              onChange={handleChange}
+              onChange={handleChangeTransferer}
             >
               <Option value="Transferer">Transferer</Option>
               <Option value="Receiver">Receiver</Option>
@@ -336,7 +349,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
             <Select
               defaultValue="COD"
               style={{ width: 116 }}
-              onChange={handleChange}
+              onChange={handleChangeCOD}
             >
               <Option value="COD">COD</Option>
               <Option value="Paid">Paid</Option>

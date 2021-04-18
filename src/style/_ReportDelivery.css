@@ -1,0 +1,8 @@
+.header-delivery-report
+{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 2.5rem;
+    align-items: center;
+    height: 64px;
+}
