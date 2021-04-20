@@ -399,7 +399,7 @@ function ReportDelivery() {
         </div>
         <div className="box3">
           <p>TOTAL</p>
-          {initialStatus? <h3>៛ {initialStatus.totalAmount}</h3>:null}
+          {initialStatus? <h3>$ {initialStatus.totalAmount}</h3>:null}
         </div>
         
       </div>)

@@ -22,13 +22,13 @@ export class PDFShop extends React.PureComponent {
     console.log(products)
    
     
-    console.log("prevProps", prevProps);
+    // console.log("prevProps", prevProps);
     // console.log(this.props.click);
     if (this.props.productList !== prevProps.productList) {
       const listId = this.props.productList.listId;
       const deliveryManName = this.props.productList.deliveryManName;
       console.log(listId);
-      console.log(this.props)
+      console.log(this.props.shop)
         
       const filter =  products.filter((product)=> product.status === 'UNSUCCESS');
       this.setState({
@@ -55,11 +55,20 @@ export class PDFShop extends React.PureComponent {
           console.log("error" + error);
         }
       };
-      if(products !== Empty)
-      {
-        fetchItem();
-      }
+      // if (!this.props.shop  )
+      // {
+      //   console.log('hi')
+      //   fetchItem();
+      // }
 
+      console.log(this.props.productList)
+      // if(products !== Empty)
+      // {
+      //   fetchItem();
+      // }
+
+      if (this.props.productList)
+        fetchItem();
      
        
     }

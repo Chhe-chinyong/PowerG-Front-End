@@ -137,7 +137,7 @@ function ReportShop() {
         setShop(null)
     }
   }, [date]);
-//
+
   useEffect(() => {
     const fetchItem = async () => {
       const result = await axios.get(
@@ -174,14 +174,17 @@ function ReportShop() {
     // (!shop) ? fetchItem():null;
     console.log('shop', shop)
     // fetchItem()
-    if(shop !== undefined)
+    // if(shop !== undefined)
+    // {
+    //   fetchItem()
+    // }
+
+    if(shop)
     {
       fetchItem()
-    }
+    }  
     
-    
-    
-    console.log("first", initialValue);
+    // console.log("first", initialValue);
   }, [shop]);
   // Event
 
@@ -233,13 +236,16 @@ function ReportShop() {
   };
 
   function handleChange(value) {
-      
       setShop(value);
   }
 
-  const handleDownload = () => {
-    console.log("Download");
-  };
+ const handleStatus = (value) => {
+   console.log('status',value)
+    const statusChange = initialValue.filter((data) => {
+        return  data.status === value;
+    })
+    setInitialValue(statusChange)
+ }
 
   // Delete user
 
@@ -434,7 +440,7 @@ function ReportShop() {
             icon={<ShopOutlined />}
             defaultValue="Status"
             style={{ width: 120 }}
-            onChange={handleChange}
+            onChange={handleStatus}
             size="default"
           >
             <Option value="SUCCESS" style={{ color: "#52c41a" }}>

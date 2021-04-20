@@ -78,16 +78,7 @@ function ContentProduct() {
       DeliveryID: "0008",
     },
   ];
-  // const object = Object.assign({}, datas, () => {
-  //   datas.map((data) => {
-  //     if (data.status === "SUCCESS") {
-  //       data.status;
-  //     }
-  //   });
-  // });
-  // const result = datas.map((data) => {
-  //   return data.status;
-  // });
+
 
   const dateFormat = "YYYY/MM/DD";
   //State
@@ -105,6 +96,7 @@ function ContentProduct() {
   const [location, setLocation] = useState();
   const [shopPhone, setShopPhone] = useState();
   const [receiverPhone, setReceiverPhone] = useState();
+  const [track,setTrack] = useState(false);
 
   //UseEffect
   //Display all packages
@@ -127,6 +119,7 @@ function ContentProduct() {
     
       const allData = result.data.data;
       setInitialValue(allData);
+      setTrack(true);
     };
     fetchItem();
     console.log("first", initialValue);
@@ -349,8 +342,9 @@ function ContentProduct() {
       }}
     >
       <div>
-        <Chart />
-
+        {track&&
+          <Chart track={track}/>
+        }
         {/* Table */}
         <Table
           columns={columns}

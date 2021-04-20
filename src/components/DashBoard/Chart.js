@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import moment from "moment";
-import { Divider } from "antd";
 
-function Chart() {
+
+const Chart = React.memo(({track}) =>  {
+
   // State
   const [initialValue, setInitialValue] = useState({});
+  const firstUpdate = useRef(true);
+
   useEffect(() => {
     const fetchItem = async () => {
       try {
@@ -17,7 +20,6 @@ function Chart() {
               date:tgai
             },
               headers: { "auth-token": localStorage.getItem("token")
-             
           }
           }
         );
@@ -41,7 +43,20 @@ function Chart() {
       }
      
     };
-    fetchItem();
+    // First component load not render
+    // if (firstUpdate.current) {
+    //   firstUpdate.current = false;
+    //   return;
+    // }
+    // Render component 
+    console.log(track)
+    if(track)
+    {
+      console.log(track)
+      fetchItem();
+      console.log("hi")
+    }
+     
     console.log("first", initialValue);
   }, []);
   return (
@@ -61,13 +76,14 @@ function Chart() {
           <h3>{initialValue.success}</h3>
         </div>
         <div className="box4">
-          <p>RETURNED </p>
+          <p>UNSUCCESS </p>
           <h3>{initialValue.unsuccess}</h3>
         </div>
       </div>
 
   );
-}
+  })
+
 
 export default Chart;
 
