@@ -5,6 +5,7 @@
 }
 
 html {
+  box-sizing: border-box;
   font-family: sans-serif;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
@@ -27,6 +28,7 @@ nav,
 section {
   display: block;
 } */
+
 .backup {
   background-color: #fd5757;
   height: 35;

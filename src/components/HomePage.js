@@ -1,10 +1,20 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { Link } from "react-router-dom";
 import { BackTop } from "antd";
 import section1 from "../images/section1.1.jpg";
 import section3 from "../images/section3.jpg";
 import { UpOutlined } from "@ant-design/icons";
+
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+
 function HomePage() {
+  useEffect(() => {
+    AOS.init({
+      duration : 2000
+    });
+  }, []);
   const style = {
     height: 35,
     width: 35,
@@ -107,12 +117,13 @@ function HomePage() {
             Service
           </h2>
           <div class="row align-items-center no-gutters mb-4 mb-lg-5">
-            <div class="col-xl-8 col-lg-7">
+            <div class="col-xl-8 col-lg-7" >
               <img
                 class="img-fluid mb-3 mb-lg-0"
                 loading="lazy"
                 src={section1}
                 alt="Poster"
+                data-aos="zoom-in-down"
               />
             </div>
             <div class="col-xl-4 col-lg-5">
@@ -127,15 +138,18 @@ function HomePage() {
           </div>
           {/* <!-- Project One Row--> */}
           <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
-            <div class="col-lg-6">
+            <div class="col-lg-6" >
               <img
                 loading="lazy"
                 class="img-fluid"
                 src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&h=500&q=80"
                 alt="product to customer"
+                data-aos={"fade-down"}
               />
-            </div>
-            <div class="col-lg-6">
+              </div>
+             
+              
+            <div class="col-lg-6" data-aos={"fade-up"} >
               <div class="bg-black text-center h-100 project">
                 <div class="d-flex h-100">
                   <div class="project-text w-100 my-auto text-center text-lg-left">
@@ -152,7 +166,7 @@ function HomePage() {
           </div>
           {/* <!-- Project Two Row--> */}
           <div class="row justify-content-center no-gutters">
-            <div class="col-lg-6">
+            <div class="col-lg-6" data-aos="fade-up">
               <img
                 class="img-fluid"
                 src={section3}
@@ -160,7 +174,7 @@ function HomePage() {
                 loading="lazy"
               />
             </div>
-            <div class="col-lg-6 order-lg-first">
+            <div class="col-lg-6 order-lg-first" data-aos="fade-down">
               <div class="bg-black text-center h-100 project">
                 <div class="d-flex h-100">
                   <div class="project-text w-100 my-auto text-center text-lg-right">
@@ -203,7 +217,7 @@ function HomePage() {
       <section class="contact-section bg-black">
         <div class="container">
           <div class="row">
-            <div class="col-md-4 mb-3 mb-md-0">
+            <div class="col-md-4 mb-3 mb-md-0" >
               <div class="card py-4 h-100">
                 <div class="card-body text-center">
                   <i class="fas fa-map-marked-alt text-primary mb-2"></i>

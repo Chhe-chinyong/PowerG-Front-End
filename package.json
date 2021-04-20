@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.1.10",
     "ant-design-pro": "^2.3.2",
     "antd": "^4.12.2",
+    "aos": "^2.3.4",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "moment": "^2.29.1",
