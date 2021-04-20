@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import axios from "axios";
-import Highlighter from "react-highlight-words";
+import {GetColumnSearchProps} from "../../includes/external"
 import {
   DatePicker,
   Table,
@@ -26,6 +26,7 @@ import moment from "moment";
 // Component
 import ContentProductAdd from "../Products/ContentProductAdd";
 import { ProductContext } from "../../context/AuthContext";
+
 function ContentProduct() {
 
   const dateFormat = "YYYY/M/D";
@@ -181,71 +182,71 @@ function ContentProduct() {
   };
 
   // searchBar
-  const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-    }) => (
-      <div style={{ padding: 8 }}>
-        <Input
-          inputId="select-input"
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{ width: 188, marginBottom: 8, display: "block" }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => handleReset(clearFilters)}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Reset
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => (
-      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex]
-        ? record[dataIndex]
-            .toString()
-            .toLowerCase()
-            .includes(value.toLowerCase())
-        : "",
-    onFilterDropdownVisibleChange: (visible) => {
-      if (visible) {
-        // setTimeout(() => searchRef.current.select.inputRef.select(), 100);
-      }
-    },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ""}
-        />
-      ) : (
-        text
-      ),
-  });
+  // const getColumnSearchProps = (dataIndex) => ({
+  //   filterDropdown: ({
+  //     setSelectedKeys,
+  //     selectedKeys,
+  //     confirm,
+  //     clearFilters,
+  //   }) => (
+  //     <div style={{ padding: 8 }}>
+  //       <Input
+  //         inputId="select-input"
+  //         placeholder={`Search ${dataIndex}`}
+  //         value={selectedKeys[0]}
+  //         onChange={(e) =>
+  //           setSelectedKeys(e.target.value ? [e.target.value] : [])
+  //         }
+  //         onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+  //         style={{ width: 188, marginBottom: 8, display: "block" }}
+  //       />
+  //       <Space>
+  //         <Button
+  //           type="primary"
+  //           onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+  //           icon={<SearchOutlined />}
+  //           size="small"
+  //           style={{ width: 90 }}
+  //         >
+  //           Search
+  //         </Button>
+  //         <Button
+  //           onClick={() => handleReset(clearFilters)}
+  //           size="small"
+  //           style={{ width: 90 }}
+  //         >
+  //           Reset
+  //         </Button>
+  //       </Space>
+  //     </div>
+  //   ),
+  //   filterIcon: (filtered) => (
+  //     <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+  //   ),
+  //   onFilter: (value, record) =>
+  //     record[dataIndex]
+  //       ? record[dataIndex]
+  //           .toString()
+  //           .toLowerCase()
+  //           .includes(value.toLowerCase())
+  //       : "",
+  //   onFilterDropdownVisibleChange: (visible) => {
+  //     if (visible) {
+  //       // setTimeout(() => searchRef.current.select.inputRef.select(), 100);
+  //     }
+  //   },
+  //   render: (text) =>
+  //     searchedColumn === dataIndex ? (
+  //       <Highlighter
+  //         highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+  //         searchWords={[searchText]}
+  //         autoEscape
+  //         textToHighlight={text ? text.toString() : ""}
+  //       />
+  //     ) : (
+  //       text
+  //     ),
+  // });
 
   // showModal
   const showModal = () => {
@@ -263,7 +264,7 @@ function ContentProduct() {
       key: "package_id",
       // defaultSortOrder: "ascend",
 
-      ...getColumnSearchProps("package_id"),
+      ...GetColumnSearchProps("package_id"),
       sorter: (a, b) => a.package_id - b.package_id,
     },
     {
@@ -272,17 +273,6 @@ function ContentProduct() {
       key: "shop_owner",
     },
 
-    // {
-    //   title: <strong>COD</strong>,
-    //   dataIndex: "service_paid_by",
-    //   key: "service_paid_by",
-    // },
-
-    // {
-    //   title: <strong>Receiver</strong>,
-    //   dataIndex: "cust_name",
-    //   key: "cust_name",
-    // },
     {
       title: <strong>Price</strong>,
       dataIndex: "pro_price",
@@ -315,12 +305,7 @@ function ContentProduct() {
       key: "cust_location",
       className: "pro-location",
     },
-    // {
-    //   title: <strong>Delivery By</strong>,
-    //   dataIndex: "DeliveryID",
-    //   key: "DeliveryID",
-    // },
-
+ 
     {
       title: <strong>Date</strong>,
       dataIndex: "created_at",
@@ -348,15 +333,6 @@ function ContentProduct() {
                 icon={<DeleteOutlined />}
               ></Button>
             </Popconfirm>
-
-            {/* <Button
-              className="noOutLine editUser"
-              icon={<EditOutlined />}
-              // onClick={() => handleEdit(text, record)}
-              onClick={() => {
-                handleEdit(record);
-              }}
-            ></Button> */}
           </Space>
         );
       },

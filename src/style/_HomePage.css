@@ -92,33 +92,7 @@ abbr[data-original-title] {
   /* color: rgba(43, 43, 43, 0.48) !important; */
   color: rgb(201, 201, 201) !important;
 }
-/* 
-img {
-  vertical-align: middle;
-  border-style: none;
-}
 
-svg {
-  overflow: hidden;
-  vertical-align: middle;
-} */
-
-/* table {
-  border-collapse: collapse;
-}
-
-caption {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  color: #6c757d;
-  text-align: left;
-  caption-side: bottom;
-}
-
-th {
-  text-align: inherit;
-  text-align: -webkit-match-parent;
-} */
 
 button:focus {
   outline: 1px dotted;
@@ -135,12 +109,7 @@ textarea {
   font-size: inherit;
   line-height: inherit;
 }
-/* .btnLogin-homePage a {
-  color: #f74a4a !important;
-  font-weight: bold;
-  border-bottom: 2px solid #f74a4a;
- 
-} */
+
 #leaveBlank {
   color: #f74a4a !important;
   font-weight: bold;
@@ -148,11 +117,7 @@ textarea {
   border-bottom: 2px solid #f74a4a;
   border-radius: 50% !important;
 }
-/* #btnLogin-homePage {
-  color: #f74a4a !important;
-  font-weight: bold;
-  border-bottom: 2px solid #f74a4a;
-} */
+
 .nav-link {
   padding: 0 !important;
 }
@@ -169,66 +134,6 @@ select {
 [role="button"] {
   cursor: pointer;
 }
-
-/* select {
-  word-wrap: normal;
-}
-
-button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
-  -webkit-appearance: button;
-}
-
-button:not(:disabled),
-[type="button"]:not(:disabled),
-[type="reset"]:not(:disabled),
-[type="submit"]:not(:disabled) {
-  cursor: pointer;
-}
-
-button::-moz-focus-inner,
-[type="button"]::-moz-focus-inner,
-[type="reset"]::-moz-focus-inner,
-[type="submit"]::-moz-focus-inner {
-  padding: 0;
-  border-style: none;
-} */
-/* 
-input[type="radio"],
-input[type="checkbox"] {
-  box-sizing: border-box;
-  padding: 0;
-}
-
-[type="number"]::-webkit-inner-spin-button,
-[type="number"]::-webkit-outer-spin-button {
-  height: auto;
-}
-
-[type="search"] {
-  outline-offset: -2px;
-  -webkit-appearance: none;
-}
-
-[type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none;
-}
-
-::-webkit-file-upload-button {
-  font: inherit;
-  -webkit-appearance: button;
-}
-
-output {
-  display: inline-block;
-}
-
-summary {
-  display: list-item;
-  cursor: pointer;
-} */
 
 h1,
 h2,
