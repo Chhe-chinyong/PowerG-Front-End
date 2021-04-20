@@ -445,14 +445,14 @@ function DeliveryDashBoard() {
       <div className="content">
         <div className="contentHeaderWrap">
           <p className="content-header">TO BE DELIVER </p>
-          <Button
+          {/* <Button
             size="default"
             className="generateList"
             icon={<FileAddOutlined />}
             onClick={generateList}
           >
             Generate
-          </Button>
+          </Button> */}
         </div>
 
         <Table
