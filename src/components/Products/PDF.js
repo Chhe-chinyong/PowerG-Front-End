@@ -106,7 +106,7 @@ const PDF = ({ productData, package_id }) => {
             </div>
             <figure>
               <QRCode
-                value={`https://shing.tellsela.com/qr/${package_id}`}
+                value={`https://powergdelivery.com/qr/${package_id}`}
                 size={120}
               />
               <figcaption>Scan me</figcaption>

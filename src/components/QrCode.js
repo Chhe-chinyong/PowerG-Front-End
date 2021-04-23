@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
+import { Link} from "react-router-dom";
 import axios from "axios";
 import logo from "../images/favicon.ico";
 import bg from "../images/qr-submit.png";
+
 import { Button, Form, Input, message, Col, Row, Select } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { UserOutlined, LeftOutlined ,LeftSquareOutlined ,RollbackOutlined ,LockOutlined, HomeOutlined  } from "@ant-design/icons";
 const { Item } = Form;
 const layout = {
   labelCol: {
@@ -84,10 +86,21 @@ function QrCode({ match }) {
   return (
     <div className="qr-cover">
       <div className="userContainer">
+        
         {/* Logo */}
         <div className="qr-code-logo">
-          <img src={logo} alt="Logo" />
-          <h5>បញ្ចាក់ការដឹក</h5>
+          <div class="iconQR icons-list ">
+          {/* <LeftOutlined  class="iconQR-icon"/>  */}
+          {/* <Button className=" backQR" icon={<LeftOutlined/>}>
+              
+          </Button> */}
+          </div>
+
+        {/* <HomeOutlined /> */}
+          <Link to="/">
+            <img src={logo} alt="Logo" />
+          </Link>
+          <h5 className="khmer-font">បញ្ចាក់ការដឹក</h5>
         </div>
         {/* Form */}
         <Form
@@ -131,6 +144,9 @@ function QrCode({ match }) {
             <Button htmlType="submit" className="userSubmitButton">
               Submit
             </Button>
+            {/* <Button className=" backQR" icon={<LeftOutlined/>}>
+                back
+            </Button> */}
           </Item>
         </Form>
       </div>

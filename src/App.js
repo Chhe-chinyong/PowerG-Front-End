@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import "ant-design-pro/dist/ant-design-pro.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Layout, Button } from "antd";
@@ -24,6 +24,7 @@ import ReportDelivery from "./components/Reports/ReportDelivery";
 import ReportShop from "./components/Reports/ReportShop";
 import HomePage from "./components/HomePage";
 import ContentList from "./components/ListAndShop/ContentList";
+
 // Style
 import "./style/app.css";
 // import ReportDelivery from "./components/Reports/ReportDelivery";
@@ -72,7 +73,7 @@ function App() {
           <Router>
             <div className="App">
               <Switch>
-                {/* <Route path="/" exact component={HomePage} /> */}
+                {/* Home Page */}
                 <PrivateLogin
                   path="/"
                   exact
@@ -80,7 +81,7 @@ function App() {
                   auth={loginStatus}
                   role={roleStatus}
                 />
-                {/* Login */}
+                {/* Login page*/}
                 <PrivateLogin
                   path="/login"
                   exact
@@ -94,13 +95,8 @@ function App() {
                   component={DeliveryDashBoard}
                   auth={loginStatus}
                 />
-                {/* Delivery man */}
-                {/* <Route
-                  path="/delivery"
-                  component={DeliveryDashBoard}
-                  auth={loginStatus}
-                /> */}
-                <Route path="/qr/:pro_id" component={QrCode} />
+                {/* Scan QR code page */}
+                <Route path="/qr/:pro_id" component={QrCode}  />
 
                 <Layout>
                   <Sider
@@ -130,7 +126,7 @@ function App() {
                           title={title}
                           exact
                         />
-                        <Route path="/products" component={Products} />
+                        <PrivateRoute path="/products" component={Products} auth={loginStatus}/>
                         <PrivateRoute
                           path="/reportDelivery"
                           component={ReportDelivery}
@@ -143,10 +139,10 @@ function App() {
                           auth={loginStatus}
                         />
                         {/* List & Shop */}
-                        <Route
+                        <PrivateRoute
                           path="/listAndShop"
                           component={ContentList}
-                          // auth={loginStatus}
+                          auth={loginStatus}
                         />
                         {/* <Route path="/users" component={Users} /> */}
                         <PrivateRoute
@@ -154,27 +150,17 @@ function App() {
                           component={Users}
                           auth={loginStatus}
                         />
-                        <Route path="*" exact>
-                          <Exception
-                            type="404"
-                            title="Page not found"
-                            actions={
-                              <div>
-                                <Button type="primary" r>
-                                  <a href="/">Home</a>
-                                </Button>
-                              </div>
-                            }
-                            desc="please click on button to redirect to homepage"
-                          />
-                        </Route>
+                        <Redirect from="*" to="/" />
+
                       </Switch>
-                    </Content>
+                  
+                    </Content>      
+                       
                   </Layout>
                 </Layout>
-
-                {/* Error */}
+                  
               </Switch>
+              
             </div>
           </Router>
         </UsernameContext.Provider>

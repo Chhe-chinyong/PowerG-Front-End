@@ -10,10 +10,55 @@
   justify-content: center;
   text-align: center;
 }
-
+.
 .qrCode .qrSubmit {
   text-align: center;
   /* justify-content: center; */
+  /* .iconQR{
+    position: relative;
+    display: inline-block;
+
+  } */
+  .khmer-font {
+    margin-top: 0.5rem;
+    font-family: 'Nokora', serif;
+    font-weight: bold;
+    }
+  .qr-code-logo {
+    text-align: center;
+    margin: 3rem 0;
+    height: 100%;
+    position: relative;
+  }
+
+  .iconQR {
+    position: absolute;
+    left: 0%;
+    display: inline-block;
+    opacity: 50%;
+  }
+
+  .icons-list > .anticon {
+    margin-right: 6px;
+    font-size: 32px;
+    opacity: 80%;
+    
+  }
+  .ant-row-rtl .icons-list > .anticon {
+    margin-right: 0;
+    margin-left: 6px;
+    opacity: 80%;
+  }
+
+  .backQR {
+
+  }
+  /* .iconQR-icon svg {
+    /* position: absolute; */
+    /* left: 100px; */
+    /* width: 1000px;
+    /* height: auto; */
+  
 .disabledByMe {
   pointer-events: none;
   font-weight: bold;
@@ -28,6 +73,7 @@
   background-color: white;
   overflow: hidden;
   min-height: 100vh;
+  
 }
 .qr-code-logo h5 {
   font-weight: bold;
@@ -47,10 +93,7 @@
 
   /* top: 70%; */
 }
-.qr-code-logo {
-  text-align: center;
-  margin: 3rem 0;
-}
+
 .qr-code-logo img {
   width: 144px;
   height: auto;

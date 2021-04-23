@@ -117,12 +117,24 @@ function ContentProduct() {
         }
       );
       console.log(result)
-    
+     
+
       const allData = result.data.data;
+      console.log('alldata', allData)
+   
       setInitialValue(allData);
-      setTrack(true);
+      if (allData != []   )
+      {
+        setTrack(true);
+        console.log(true)
+        
+      }
     };
     fetchItem();
+    console.log(track)
+    // if (!initialValue)
+    // {
+    // }
     console.log("first", initialValue);
   }, []);
 
@@ -343,8 +355,8 @@ function ContentProduct() {
       }}
     >
       <div>
-        {track&&
-          <Chart track={track}/>
+        { track&&
+          <Chart tracker={initialValue}/>
         }
         {/* Table */}
         <Table

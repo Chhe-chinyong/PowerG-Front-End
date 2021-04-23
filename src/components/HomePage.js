@@ -12,7 +12,8 @@ import 'aos/dist/aos.css';
 function HomePage() {
   useEffect(() => {
     AOS.init({
-      duration : 2000
+      duration : 2000,
+      once: true
     });
   }, []);
   const style = {
@@ -88,8 +89,7 @@ function HomePage() {
           <div class="mx-auto text-center">
             <h1 class="mx-auto my-0 text-uppercase">Power-G Delivery</h1>
             <h2 class="text-white-50 mx-auto mt-2 mb-5">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa,
-              obcaecati.
+                 Reliability, Flexibility and Quality are our values.
             </h2>
             <a class="btn btn-primary js-scroll-trigger" href="#about">
               Learn more
@@ -130,8 +130,8 @@ function HomePage() {
               <div class="featured-text text-center text-lg-left">
                 <h4>Why us?</h4>
                 <p class="text-black-50 mb-0">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Nesciunt error unde explicabo sunt adipisci sed!
+                We help our clients delivering products to their customers in no more than one day. Thus, with our
+                daily report system, our clients are more accessible and more transparent with our whole delivery process.
                 </p>
               </div>
             </div>
@@ -153,10 +153,9 @@ function HomePage() {
               <div class="bg-black text-center h-100 project">
                 <div class="d-flex h-100">
                   <div class="project-text w-100 my-auto text-center text-lg-left">
-                    <h4 class="text-white">Something</h4>
+                    <h4 class="text-white">Mission</h4>
                     <p class="mb-0 text-white-50">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Repellendus ea, in necessitatibus eius voluptate facere!
+                    our company’s mission is to provide reliable, variety and high-speed delivery service to our clients. By variety, we mean to serve and be flexible with our clients’ needs and requests. With our professional delivery team, customers are fully satisfied in using the service we provide.
                     </p>
                     <hr class="d-none d-lg-block mb-0 ml-0" />
                   </div>
@@ -180,8 +179,7 @@ function HomePage() {
                   <div class="project-text w-100 my-auto text-center text-lg-right">
                     <h4 class="text-white">Join us now</h4>
                     <p class="mb-0 text-white-50">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Sunt suscipit facilis rem natus. Repellendus, dolorum.
+                        Join us now and become one of our partner to receive conclusive benifits.
                     </p>
                     <hr class="d-none d-lg-block mb-0 mr-0" />
                   </div>

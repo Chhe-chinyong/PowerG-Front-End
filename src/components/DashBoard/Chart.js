@@ -3,7 +3,7 @@ import axios from "axios";
 import moment from "moment";
 
 
-const Chart = React.memo(({track}) =>  {
+const Chart = React.memo(({tracker}) =>  {
 
   // State
   const [initialValue, setInitialValue] = useState({});
@@ -49,12 +49,21 @@ const Chart = React.memo(({track}) =>  {
     //   return;
     // }
     // Render component 
-    console.log(track)
-    if(track)
+    console.log(tracker.length)
+    if(tracker.length != 0 && tracker[0]['status'] != 'PENDING')
     {
-      console.log(track)
+      console.log(tracker)
       fetchItem();
       console.log("hi")
+    }
+    else {
+      setInitialValue({
+        total_package:'0',
+        success: '0',
+        unsuccess:'0',
+        ongoing:'0',
+        total_amount:'0'
+      });
     }
      
     console.log("first", initialValue);

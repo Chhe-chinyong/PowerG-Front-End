@@ -427,8 +427,7 @@ function ReportShop() {
             defaultValue="Shop"
             style={{ width: 120 }}
             onChange={handleChange}
-            size="default"
-           
+            size="default"  
           >
              {options.map((option) => (
               <Option key={option.shop_owner} value={option.value}  >

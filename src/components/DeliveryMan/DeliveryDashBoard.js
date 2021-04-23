@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Form, Table, Select, Button, message, Input } from "antd";
+import React, { useState, useEffect, useRef } from "react";
+import { Form, Table, Select, Button, message, Input, Modal } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import DeliveryHeader from "../DeliveryMan/DeliveryHeader";
 import axios from "axios";
 import { getAllByDisplayValue } from "@testing-library/dom";
 import { FileAddOutlined } from "@ant-design/icons";
-const { Option } = Select;
+import moment from "moment";
 
+const { Option } = Select;
+const { Item } = Form;
 function DeliveryDashBoard() {
   // state
   const [total, setTotal] = useState(0);
@@ -14,9 +16,13 @@ function DeliveryDashBoard() {
   const [initialValue, setInitialValue] = useState([]);
   const [trigger, setTrigger] = useState(false);
   const [visible, setVisible] = useState(false);
-
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState("Content of the modal");
+  const [dataListId, setDataListId] = useState("");
   // useRef
-  // const statusRef = useRef(null);
+  const ListIdRef = useRef(null);
+  const dateFormat = "YYYY/M/D";
+
   //UseEffect
   useEffect(() => {
     const listId = localStorage.getItem("listId");
@@ -34,18 +40,19 @@ function DeliveryDashBoard() {
       const allData = result.data.data;
       setInitialValue(allData);
     };
-    fetchItem();
+    if(listId)
+      fetchItem();
   }, []);
 
-  const generateList = async () => {
-    const listId = localStorage.getItem("listId");
-    // if (listId) {
-    //   return console.log("u have already generate list");
-    // }
-    // const uuid_store = await uuidv4();
-    // localStorage.setItem("listId", uuid_store.substring(0, 12));
-    // // return console.log(uuid_store.substring(0, 8));
-  };
+  // const generateList = async () => {
+  //   const listId = localStorage.getItem("listId");
+  //   // if (listId) {
+  //   //   return console.log("u have already generate list");
+  //   // }
+  //   // const uuid_store = await uuidv4();
+  //   // localStorage.setItem("listId", uuid_store.substring(0, 12));
+  //   // // return console.log(uuid_store.substring(0, 8));
+  // };
   const hide = () => {
     setVisible(false);
   };
@@ -54,6 +61,78 @@ function DeliveryDashBoard() {
     setVisible(visible);
     console.log(visible);
   };
+
+  const handleOk = () => {
+    setModalText("The modal will be closed after two seconds");
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setVisible(false);
+  };
+
+  // Function to get ListId 
+  const handleGetList = async() => {
+
+
+    const tgai = await moment().format('YYYY/M/D');
+    const name = localStorage.getItem('u_username');
+    const id = localStorage.getItem('u_id');
+    console.log(tgai)
+    console.log(name)
+    console.log(id)
+    try {
+      const result = await axios.get(`${process.env.REACT_APP_DOMAIN}/packageList/getListByDateId`,
+          {
+            headers: { "auth-token": localStorage.getItem("token") },
+            params: {
+              date: tgai,
+              id:id,
+              name:name
+             },
+          }
+      )
+      console.log(result)
+      // setListId(listId);
+      // localStorage.setItem('listId', result);
+
+      message.success({
+        content: "" + "Created successfully",
+        duration: 5,
+        className: "UserSuccessMessage",
+      });
+
+    } catch (error) {
+      message.error({
+        content: "" + 'Can not get list',
+        className: "UserErrorMessage",
+        duration: 5,
+      });
+    }
+  }
+
+  const handleClickList = () => {
+      if (listId) {
+        message.error({
+          content: "" + 'u have already generate list',
+          className: "UserErrorMessage",
+          duration: 5,
+        });
+        return;
+      }
+      else {
+        handleGetList();
+      }
+  }
+
 
   const handleTextChange = (e,record) => {
     console.log('record change',record);
@@ -428,10 +507,7 @@ function DeliveryDashBoard() {
       render: (text, record) => (<Input placeholder="write" onChange={(e)=> {
         handleTextChange(e, record);
       }}/>)
-        // return (<Input placeholder={record} onChange={(record,key)=> {
-        //     console.log('record input',record);
-        //     console.log('text input',);
-        // }}/>)
+      
       
     },
   ];
@@ -445,16 +521,35 @@ function DeliveryDashBoard() {
       <div className="content">
         <div className="contentHeaderWrap">
           <p className="content-header">TO BE DELIVER </p>
-          {/* <Button
+          <Button
             size="default"
             className="generateList"
             icon={<FileAddOutlined />}
-            onClick={generateList}
+            // onClick={generateList}
+            onClick={showModal}
           >
-            Generate
-          </Button> */}
+            ListID
+          </Button>
         </div>
 
+        {/* show modal */}
+        <Modal
+        title="List"
+        visible={visible}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        footer={null}
+        onCancel={handleCancel}
+      >
+          <Item >
+            {/* <Input ref={ListIdRef} onChange={(e)=> {setDataListId(e.target.value)}}/> */}
+            <Button style={{marginTop:"1.2rem", marginRight:"1rem" }} type="primary"
+            size="default" onClick={handleClickList}>Submit</Button>
+             <Button type="default" onClick={handleCancel}>
+              Cancel
+            </Button>
+          </Item>
+      </Modal>
         <Table
           columns={columns}
           // dataSource={data}
