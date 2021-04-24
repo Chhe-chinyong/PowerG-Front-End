@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
 import logo from "../../images/favicon.ico";
-import { Avatar, Image, Menu, Dropdown, Button } from "antd";
+import { Avatar, Menu, Dropdown, Button } from "antd";
 import { UserOutlined, DownOutlined, LogoutOutlined } from "@ant-design/icons";
 import {
   AuthContext,
   RoleContext,
   UsernameContext,
 } from "../../context/AuthContext";
-import { Redirect } from "react-router";
 import moment from "moment";
 
 function DeliveryHeader() {

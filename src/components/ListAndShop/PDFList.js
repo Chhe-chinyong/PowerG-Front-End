@@ -2,8 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import ReactToPrint, { useReactToPrint } from "react-to-print";
 import logo from "../../images/favicon.ico";
 import axios from "axios";
-import { Button, Table } from "antd";
-import moment from "moment";
+import {Table } from "antd";
+
 
 export class PDFList extends React.PureComponent{
   state = {

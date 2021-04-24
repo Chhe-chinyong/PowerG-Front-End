@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Table, Button, Space, Modal, Input, Popconfirm, message } from "antd";
+import { Table, Button, Space,  message } from "antd";
 import ReactToPrint, { useReactToPrint } from "react-to-print";
 import {GetColumnSearchProps} from "../../includes/external"
 import Highlighter from "react-highlight-words";
@@ -13,9 +13,7 @@ import {
 } from "@ant-design/icons";
 import "antd/dist/antd.css";
 
-// Component;
-import ContentUserAdd from "../ContentUserAdd";
-import ContentUserEdit from "../ContentUserEdit";
+
 import { PDFList } from "./PDFList";
 function ContentPrintList() {
   const data = [

@@ -4,8 +4,7 @@ import axios from "axios";
 import logo from "../images/favicon.ico";
 import bg from "../images/qr-submit.png";
 
-import { Button, Form, Input, message, Col, Row, Select } from "antd";
-import { UserOutlined, LeftOutlined ,LeftSquareOutlined ,RollbackOutlined ,LockOutlined, HomeOutlined  } from "@ant-design/icons";
+import { Button, Form, Input, message } from "antd";
 const { Item } = Form;
 const layout = {
   labelCol: {

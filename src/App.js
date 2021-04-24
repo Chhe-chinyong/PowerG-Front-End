@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import "ant-design-pro/dist/ant-design-pro.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Layout, Button } from "antd";
+import { Layout } from "antd";
 // Components
 import NavBar from "./components/NavBar";
 import DashBoard from "./components/DashBoard";
@@ -18,7 +18,6 @@ import {
   RoleContext,
   UsernameContext,
 } from "./context/AuthContext";
-import Exception from "ant-design-pro/lib/Exception";
 import DeliveryDashBoard from "./components/DeliveryMan/DeliveryDashBoard";
 import ReportDelivery from "./components/Reports/ReportDelivery";
 import ReportShop from "./components/Reports/ReportShop";

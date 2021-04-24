@@ -1,49 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "antd/dist/antd.css";
-import axios from "axios";
 import Highlighter from "react-highlight-words";
 import {
-  DatePicker,
-  Table,
   Button,
   Space,
-  Modal,
   Input,
-  Popconfirm,
-  message,
-  Tooltip,
-  Select,
 } from "antd";
 import {
-  UserAddOutlined,
-  DeleteOutlined,
-  EditOutlined,
   SearchOutlined,
-  SyncOutlined,
 } from "@ant-design/icons";
-import moment from "moment";
+
 
 
 
 const GetColumnSearchProps = (dataIndex) => {
-    
-  const dateFormat = "YYYY/MM/DD";
+   
   //State
-  const [Trigger, setTrigger] = useState(false);
-  const [initialValue, setInitialValue] = useState([]);
-  const [visible, setVisible] = useState(false);
-  const [visible1, setVisible1] = useState(false);
+  // const [Trigger, setTrigger] = useState(false);
+  // const [initialValue, setInitialValue] = useState([]);
+  // const [visible, setVisible] = useState(false);
+  // const [visible1, setVisible1] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, SetSearchedColumn] = useState("");
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState("Content of the modal");
+  // const [confirmLoading, setConfirmLoading] = useState(false);
+  // const [modalText, setModalText] = useState("Content of the modal");
   //State for Product
-  const [packageId, setPackageId] = useState();
-  const [date, setDate] = useState();
-  const [location, setLocation] = useState();
-  const [shopPhone, setShopPhone] = useState();
-  const [receiverPhone, setReceiverPhone] = useState();
-  const [track,setTrack] = useState(false);
+  // const [packageId, setPackageId] = useState();
+  // const [date, setDate] = useState();
+  // const [location, setLocation] = useState();
+  // const [shopPhone, setShopPhone] = useState();
+  // const [receiverPhone, setReceiverPhone] = useState();
+  // const [track,setTrack] = useState(false);
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);

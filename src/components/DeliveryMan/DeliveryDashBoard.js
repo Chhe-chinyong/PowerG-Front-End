@@ -3,7 +3,7 @@ import { Form, Table, Select, Button, message, Input, Modal } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import DeliveryHeader from "../DeliveryMan/DeliveryHeader";
 import axios from "axios";
-import { getAllByDisplayValue } from "@testing-library/dom";
+// import { getAllByDisplayValue } from "@testing-library/dom";
 import { FileAddOutlined } from "@ant-design/icons";
 import moment from "moment";
 
