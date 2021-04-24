@@ -42,7 +42,7 @@ function DeliveryDashBoard() {
     };
     if(listId)
       fetchItem();
-  }, []);
+  }, [listId]);
 
   // const generateList = async () => {
   //   const listId = localStorage.getItem("listId");
@@ -101,11 +101,14 @@ function DeliveryDashBoard() {
           }
       )
       console.log(result)
-      // setListId(listId);
-      // localStorage.setItem('listId', result);
+      const lastIndex = result.data.data.length - 1
+      console.log(result.data.data[lastIndex].listId);
+      const ListIdBack = result.data.data[lastIndex].listId
+      setListId(ListIdBack);
+      localStorage.setItem('listId', ListIdBack);
 
       message.success({
-        content: "" + "Created successfully",
+        content: "" + result.data.message,
         duration: 5,
         className: "UserSuccessMessage",
       });
@@ -170,11 +173,20 @@ function DeliveryDashBoard() {
           },
         };
       }
-      const data = initialValue
-      // console.log('data',data)
+      const dataValue = initialValue
+      console.log(listId)
+      console.log('data',dataValue)
       const result = await axios.post(
         `${process.env.REACT_APP_DOMAIN}/package/finalUpdate`,
-        data,
+        {
+          listId: listId,
+          data: dataValue
+        },
+        // {
+        //   listId:listId,
+        //   data:data
+        // },
+        // dataValue,
         {
           headers: {
             "auth-token": localStorage.getItem("token"),
@@ -182,7 +194,7 @@ function DeliveryDashBoard() {
         }
       );
       console.log("data", initialValue);
-      console.log("data1", data);
+      console.log("data1", dataValue);
       console.log(result);
       localStorage.removeItem("listId");
       message.success({
