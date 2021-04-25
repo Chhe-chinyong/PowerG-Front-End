@@ -20,7 +20,7 @@ function DeliveryHeader() {
     setRoleStatus("");
     localStorage.removeItem("token");
     localStorage.removeItem("u_role");
-    // localStorage.removeItem("listId");
+    localStorage.removeItem("listId");
     localStorage.removeItem("u_id");
     localStorage.removeItem("u_username");
   };

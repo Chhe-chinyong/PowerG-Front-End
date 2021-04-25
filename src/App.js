@@ -25,7 +25,7 @@ import HomePage from "./components/HomePage";
 import ContentList from "./components/ListAndShop/ContentList";
 
 // Style
-import "./style/app.css";
+import styling from "./style/app.css";
 // import ReportDelivery from "./components/Reports/ReportDelivery";
 // import { UserLogin } from "./components/Users/UserLogin";
 
@@ -152,7 +152,7 @@ function App() {
                         <Redirect from="*" to="/" />
 
                       </Switch>
-                  
+                     
                     </Content>      
                        
                   </Layout>

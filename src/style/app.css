@@ -10,6 +10,10 @@ body {
   font-family: "Roboto", sans-serif !important;
 }
 
+.styleH1 {
+    color:red;
+    background-color:red;
+}
 @import "./_NavBar.css";
 @import "./_ContentUser.css";
 @import "./_UserLogin.css";
