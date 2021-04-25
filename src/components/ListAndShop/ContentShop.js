@@ -41,13 +41,13 @@ function ContentShop() {
           },
         }
       );
-      console.log(result);
+    
       const allData = result.data.data;
 
       setInitialValue(allData);
     };
     fetchItem();
-    // console.log("first", initialValue);
+   
   }, [trigger]);
 
   // Fetch data again we anything change
@@ -66,7 +66,7 @@ function ContentShop() {
   //     setInitialValue(allData);
   //   };
   //   fetchItem();
-  //   // console.log("first", initialValue);
+
   // }, [trigger]);
 
   // searchBar
@@ -120,7 +120,7 @@ function ContentShop() {
             .includes(value.toLowerCase())
         : "",
     onFilterDropdownVisibleChange: (visible) => {
-      console.log("search", searchRef);
+    
       if (visible) {
         // setTimeout(() => searchRef.current.select.inputRef.select(), 100);
       }
@@ -167,20 +167,16 @@ function ContentShop() {
   };
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setVisible(false);
   };
 
-  const handleCancel1 = () => {
-    console.log("Clicked cancel button");
+  const handleCancel1 = () => {  
     setVisible1(false);
   };
 
   // Delete user
   const confirm = async (record) => {
-    console.log(record);
     const id = record.id;
-    console.log(id);
     try {
       // Delete Data
       const result = await axios.delete(
@@ -191,7 +187,6 @@ function ContentShop() {
           },
         }
       );
-      console.log(initialValue);
       setInitialValue(initialValue.filter((value) => value.user_id !== id));
       message.success({
         content: "" + result.data.message,
@@ -209,7 +204,6 @@ function ContentShop() {
   };
 
   const cancel = (e) => {
-    console.log(e);
     message.error("Click on No");
   };
 

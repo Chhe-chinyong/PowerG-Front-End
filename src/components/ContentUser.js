@@ -36,21 +36,21 @@ function ContentUser() {
           "auth-token": localStorage.getItem("token"),
         },
       });
-      console.log(result);
+    
       const allData = result.data.data;
       const datas = allData.map((data) => {
         const contact = data.contact.split("");
         contact.splice(3, 0, "  ");
         contact.splice(7, 0, "  ");
         const contact_result = contact.join("");
-        console.log(contact_result);
+        
         const object = Object.assign({}, data, { contact: contact_result });
         return object;
       });
       setInitialValue(datas);
     };
     fetchItem();
-    // console.log("first", initialValue);
+   
   }, []);
 
   // Fetch data again we anything change
@@ -71,85 +71,16 @@ function ContentUser() {
         contact.splice(3, 0, "  ");
         contact.splice(7, 0, "  ");
         const contact_result = contact.join("");
-        console.log(contact_result);
         const object = Object.assign({}, data, { contact: contact_result });
         return object;
       });
       setInitialValue(datas);
     };
     fetchItem();
-    // console.log("first", initialValue);
+
   }, [trigger]);
 
-  // searchBar
-  // const getColumnSearchProps = (dataIndex) => ({
-  //   filterDropdown: ({
-  //     setSelectedKeys,
-  //     selectedKeys,
-  //     confirm,
-  //     clearFilters,
-  //   }) => (
-  //     <div style={{ padding: 8 }}>
-  //       <Input
-  //         inputId="select-input"
-  //         ref={searchRef}
-  //         placeholder={`Search ${dataIndex}`}
-  //         value={selectedKeys[0]}
-  //         onChange={(e) =>
-  //           setSelectedKeys(e.target.value ? [e.target.value] : [])
-  //         }
-  //         onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-  //         style={{ width: 188, marginBottom: 8, display: "block" }}
-  //       />
-  //       <Space>
-  //         <Button
-  //           type="primary"
-  //           onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-  //           icon={<SearchOutlined />}
-  //           size="small"
-  //           style={{ width: 90 }}
-  //         >
-  //           Search
-  //         </Button>
-  //         <Button
-  //           onClick={() => handleReset(clearFilters)}
-  //           size="small"
-  //           style={{ width: 90 }}
-  //         >
-  //           Reset
-  //         </Button>
-  //       </Space>
-  //     </div>
-  //   ),
-  //   filterIcon: (filtered) => (
-  //     <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
-  //   ),
-  //   onFilter: (value, record) =>
-  //     record[dataIndex]
-  //       ? record[dataIndex]
-  //           .toString()
-  //           .toLowerCase()
-  //           .includes(value.toLowerCase())
-  //       : "",
-  //   onFilterDropdownVisibleChange: (visible) => {
-  //     console.log("search", searchRef);
-  //     if (visible) {
-  //       // setTimeout(() => searchRef.current.select.inputRef.select(), 100);
-  //     }
-  //   },
-  //   render: (text) =>
-  //     searchedColumn === dataIndex ? (
-  //       <Highlighter
-  //         highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-  //         searchWords={[searchText]}
-  //         autoEscape
-  //         textToHighlight={text ? text.toString() : ""}
-  //       />
-  //     ) : (
-  //       text
-  //     ),
-  // });
-
+  
 
   const showModal = () => {
     setVisible(true);
@@ -169,12 +100,12 @@ function ContentUser() {
   };
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
+ 
     setVisible(false);
   };
 
   const handleCancel1 = () => {
-    console.log("Clicked cancel button");
+ 
     setVisible1(false);
   };
 
@@ -182,13 +113,12 @@ function ContentUser() {
     setVisible1(true);
     setUser(record);
 
-    console.log(record);
   };
 
   // Delete user
   const confirm = async (record) => {
     const id = record.user_id;
-    console.log(id);
+   
     try {
       // Delete Data
       const result = await axios.delete(
@@ -199,7 +129,7 @@ function ContentUser() {
           },
         }
       );
-      console.log(initialValue);
+      
       setInitialValue(initialValue.filter((value) => value.user_id !== id));
       message.success({
         content: "" + result.data.message,
@@ -217,7 +147,7 @@ function ContentUser() {
   };
 
   const cancel = (e) => {
-    console.log(e);
+   
     message.error("Click on No");
   };
 
@@ -306,6 +236,7 @@ function ContentUser() {
         className="userAdd "
         icon={<UserAddOutlined />}
         onClick={showModal}
+        // style={{marginRight:"3.1rem"}}
       >
         ADD
       </Button>

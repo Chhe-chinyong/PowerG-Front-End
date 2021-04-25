@@ -25,8 +25,6 @@ function ContentShopAdd({
   // const [modalText, setModalText] = useState("Content of the modal");
 
   const onFinish = async (values) => {
-    console.log("this is " + values.username);
-    console.log("this is " + values.password);
     const shopName = values.shopName.toUpperCase();
     const shopContact = values.shopContact;
     const shopAddress = values.shopAddress;
@@ -44,7 +42,7 @@ function ContentShopAdd({
           },
         }
       );
-      console.log(result);
+    
 
       message.success({
         content: "" + result.data.message,
@@ -57,7 +55,7 @@ function ContentShopAdd({
     } catch (error) {
       const messageError = error.response.data.message;
 
-      // console.log(messageError);
+     
       message.error({
         content: "" + messageError,
         className: "UserErrorMessage",
@@ -67,11 +65,10 @@ function ContentShopAdd({
   };
   // EventHandler
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed hey", errorInfo);
+   
   };
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setVisible(false);
   };
 
@@ -156,43 +153,3 @@ function ContentShopAdd({
 }
 
 export default ContentShopAdd;
-
-// const onFinishFailed = (values) => {
-//   console.log(values);
-// };
-// const handleSubmit = (e) => {
-//   e.preventDefault();
-
-//   const user = {
-//     name: this.state.name,
-//   };
-
-//   axios
-//     .post(`165.22.252.116/api/user/register`, { user })
-//     .then((res) => {
-//       console.log(res);
-//       console.log(res.data);
-//     })
-//     .catch(console.log("errro"));
-//   // action=""
-//   //     method="POST"
-//   console.log("hey");
-// };
-
-//   name={"contact"}
-//   label="Contact"
-//   rules={[
-//     {
-//       required: true,
-//       message: "Please input your contact!",
-//     },
-//   ]}
-// >
-//   <Input />
-
-// <Input
-//             addonBefore={prefixSelector}
-//             style={{
-//               width: "100%",
-//             }}
-//           />

@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Form, Input, message } from "antd";
-
 import axios from "axios";
 import "antd/dist/antd.css";
 const { Item } = Form;
@@ -16,7 +15,6 @@ const layout = {
 const ContentUserEdit = ({ setVisible, user, visible1, setTrigger }) => {
   // Object
   const { user_name, user_password, contact } = user;
-  console.log("user" + user);
   const id = user.user_id;
 
   // State
@@ -28,7 +26,6 @@ const ContentUserEdit = ({ setVisible, user, visible1, setTrigger }) => {
 
   // EventHandler
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setVisible(false);
   };
 

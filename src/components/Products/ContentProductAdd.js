@@ -47,15 +47,14 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
         }
       );
       const allData = result.data.data;
-      console.log("all", allData);
+   
       setData(allData);
     };
     fetchItem();
-    console.log("first", data);
+  
   }, []);
 
   const onSearch = (searchText) => {
-    console.log("search", searchText);
     setOptions(
       !searchText
         ? []
@@ -69,21 +68,20 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
                 value: data.shopName,
               };
             });
-            console.log("send", send);
+           
             return send;
           }
     );
   };
 
   const onSelect = (data) => {
-    console.log("onSelect", data);
   };
 
   const onChange = (data) => {
     setValue(data);
   };
   const handleChange=(value) => {
-    console.log(`selected ${value}`);
+   
     setServiceFee(value)
   }
   const handleChangeCOD = (value) => {
@@ -95,12 +93,11 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
   }
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setVisible(false);
   };
   //Event
   const onFinish = async (values) => {
-    console.log('value',values)
+ 
     const shop_owner = values.shop_owner;
     const cust_name = values.cust_name;
     const cust_location = values.cust_location;
@@ -113,7 +110,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
     var cod = codValue;
     var transferer = transfererValue;
     var service_paid_by = values.service_paid_by;
-    console.log(values);
+
     if (values.service_fee === undefined) {
       //  setServiceFee(1)
       store_fee = 1;
@@ -126,8 +123,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
       // payment_method = "COD";
       cod = "COD";
     }
-    console.log('value')
-    console.log(store_fee,'asd')
+
     try {
       const result = await axios.post(
         `${process.env.REACT_APP_DOMAIN}/package/addpackage`,
@@ -147,7 +143,6 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
           },
         }
       );
-      console.log('result',result);
 
       message.success({
         content: "" + result.data.message,
@@ -170,8 +165,6 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
       });
       // setVisible(false);
     } catch (error) {
-      console.log(error);
-      // console.log("error", error.response);
       const messageError = error.response.data.message;
 
       message.error({
@@ -183,7 +176,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
   };
   return (
     <div>
-      {console.log("options", options)}
+
       {!redirect ? (
         <Form
           // onSubmit={handleSubmit}

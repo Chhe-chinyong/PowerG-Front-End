@@ -17,19 +17,18 @@ export class PDFList extends React.PureComponent{
   }
   componentDidUpdate(prevProps, prevState) {
     // Runs after the first render() lifecycle
-    console.log("prevProps", prevProps);
-    console.log(this.props.click);
+  
     if (this.props.productList !== prevProps.productList) {
       const listId = this.props.productList.listId;
       const deliveryManName = this.props.productList.deliveryManName;
-      console.log(listId);
+
       const fetchItem = async () => {
         try {
           const result = await axios.get(
             `${process.env.REACT_APP_DOMAIN}/packageList/getListById/${listId}`
           );
           // setProductList(result);
-          console.log(result.data.data);
+     
           this.setState({
             listValue: listId,
             value: result.data.data,
@@ -40,7 +39,7 @@ export class PDFList extends React.PureComponent{
         }
       };
       fetchItem();
-      console.log("fectch api");
+   
     }
   }
 
@@ -119,9 +118,6 @@ export class PDFList extends React.PureComponent{
       //   key: "date",
       // },
     ];
-    // console.log(this.props);
-    // console.log(this.props.productList.listId);
-    // console.log(this.state.value);
     return (
       <>
         {/* <div className="pdf-header">

@@ -52,7 +52,6 @@ function ContentProduct() {
   useEffect(() => {
     const fetchItem = async () => {
       const tgai =  moment().format('YYYY/M/D');
-      console.log(tgai)
       const result = await axios(
         `${process.env.REACT_APP_DOMAIN}/package/getAllPackageByDate`,
        
@@ -66,12 +65,12 @@ function ContentProduct() {
         }
       );
      
-      console.log('data',result.data);
+     
       const datas = result.data.data;
       setInitialValue(datas);
     };
     fetchItem();
-    console.log("first", initialValue);
+   
   }, [Trigger]);
 
 
@@ -90,14 +89,13 @@ function ContentProduct() {
          },
         }
       );
-      console.log("result inside" + result.data.data);
+     
       const datas = result.data.data;
       setInitialValue(datas);
     };
-    console.log('date from state',date)
+ 
     if(date!==undefined)
     {
-      console.log('from inside')
       fetchItem();
     }
     
@@ -106,21 +104,16 @@ function ContentProduct() {
   // Event
   // get data after change date
   function onChange(date, dateString) {
-    console.log("date", date);
-    console.log("dateString", dateString);
     setDate(dateString)
 
   }
 
   const cancel = (e) => {
-    console.log(e);
     message.error("Click on No");
   };
 
   const handleEdit = (record) => {
     setVisible1(true);
-    // setUser(record);
-    console.log(record);
   };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -143,14 +136,12 @@ function ContentProduct() {
     }, 2000);
   };
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setVisible(false);
   };
 
   // Delete user
   const confirm = async (record) => {
     const id = record.package_id;
-    console.log(id);
     try {
       // Delete Data
       const result = await axios.delete(
@@ -161,7 +152,6 @@ function ContentProduct() {
           },
         }
       );
-      console.log(initialValue);
       setInitialValue(initialValue.filter((value) => value.user_id != id));
       // setTrigger(!Trigger? true:false);
       setTrigger(true);
@@ -362,6 +352,7 @@ function ContentProduct() {
           className="userAdd "
           icon={<UserAddOutlined />}
           onClick={showModal}
+          style={{marginRight:"3rem"}}
         >
           ADD
         </Button>

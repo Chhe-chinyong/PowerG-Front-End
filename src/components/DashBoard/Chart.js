@@ -25,9 +25,6 @@ const Chart = React.memo(({tracker}) =>  {
         );
   
         const status = delivery_report.data;
-        console.log(delivery_report.data)
-       
-        console.log('status',status)
         setInitialValue(status);
       } catch (error) {
 
@@ -49,12 +46,10 @@ const Chart = React.memo(({tracker}) =>  {
     //   return;
     // }
     // Render component 
-    console.log(tracker.length)
+   
     if(tracker.length != 0 && tracker[0]['status'] != 'PENDING')
     {
-      console.log(tracker)
-      fetchItem();
-      console.log("hi")
+      fetchItem();   
     }
     else {
       setInitialValue({
@@ -66,7 +61,7 @@ const Chart = React.memo(({tracker}) =>  {
       });
     }
      
-    console.log("first", initialValue);
+   
   }, []);
   return (
 

@@ -12,7 +12,6 @@ const options = {
   format: [4, 2],
 };
 const PDF = ({ productData, package_id }) => {
-  console.log(productData);
   if (productData.service_fee === undefined) {
     productData.service_fee = 4000;
   }
@@ -39,16 +38,7 @@ const PDF = ({ productData, package_id }) => {
   const handlePrint = useReactToPrint({
     content: () => refPrint.current,
   });
-  // useEffect(() => {
-  //   const fetchItem = () => {
-  //     try {
-  //       // const result = axios.get(`15605.94949/get/${pro_id}`);
-  //     } catch (error) {
-  //       console.log("error" + error);
-  //     }
-  //   };
-  //   fetchItem();
-  // }, []);
+
   return (
     <>
       <div className="btnPdf-container" ref={refPrint}>

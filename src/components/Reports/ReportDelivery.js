@@ -1,28 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import axios from "axios";
-import Highlighter from "react-highlight-words";
 import {GetColumnSearchProps} from "../../includes/external"
 
 import {
   DatePicker,
   Table,
-  Button,
-  Space,
   Input,
   message,
   AutoComplete,
   Select,
   Form
 } from "antd";
-import {
-  UserAddOutlined,
-  DeleteOutlined,
-  EditOutlined,
-  SearchOutlined,
-  SyncOutlined,
-} from "@ant-design/icons";
-import moment from "moment";
+
 
 // Component
 import ContentProductAdd from "../Products/ContentProductAdd";
@@ -82,13 +72,11 @@ function ReportDelivery() {
           "auth-token": localStorage.getItem("token"),
         },
       });
-      console.log(result);
       const allData = result.data.data;
-      console.log(allData)
       setData(allData);
     };
     fetchItem();
-    console.log(data)
+
   }, []);
 
 
@@ -102,22 +90,22 @@ function ReportDelivery() {
         headers: { "auth-token": localStorage.getItem("token")}
        })
       
-      console.log('result', result)
+      
       setInitialValue(result.data.data);
       setInitialStatus(result.data)
-      // console.log('hey:', initialStatus.report.total)
+   
     };
-    console.log(dateString.startDate)
+   
     if(deliveryName !== "" && dateString.startDate !== ""&& dateString.endDate !== "")
       fetchItem();
-    console.log("first", initialValue);
-    console.log('hey:', initialStatus)
+   
+      
   }, [deliveryName, dateString.startDate, dateString.endDate]);
 
   // Event
   // get data after change date
   const onSearch = (searchText) => {
-    console.log("search", searchText);
+  
     setOptions(
       !searchText
         ? []
@@ -132,14 +120,14 @@ function ReportDelivery() {
                 key:data.user_id
               };
             });
-            console.log("send", send);
+        
             return send;
           }
     );
   };
 
   const onSelect = (data) => {
-    console.log("onSelect", data);
+
     setDeliveryName(data);
   };
 
@@ -152,17 +140,16 @@ function ReportDelivery() {
           startDate:dateString[0],
           endDate: dateString[1]
       })
-      console.log(dateString)
+  
   };
   const cancel = (e) => {
-    console.log(e);
     message.error("Click on No");
   };
 
   const handleEdit = (record) => {
     setVisible1(true);
-    // setUser(record);
-    console.log(record);
+    
+  
   };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -185,20 +172,20 @@ function ReportDelivery() {
     }, 2000);
   };
   const handleCancel = () => {
-    console.log("Clicked cancel button");
+   
     setVisible(false);
   };
 
   // Delete user
   const confirm = async (record) => {
     const id = record.product_id;
-    console.log(id);
+ 
     try {
       // Delete Data
       const result = await axios.delete(
         `http://165.22.252.116/api/user/deleteuserbyid/${id}`
       );
-      console.log(initialValue);
+    
       setInitialValue(initialValue.filter((value) => value.user_id != id));
       message.success({
         content: "" + result.data.message,
@@ -215,72 +202,6 @@ function ReportDelivery() {
     }
   };
 
-  // searchBar
-  // const getColumnSearchProps = (dataIndex) => ({
-  //   filterDropdown: ({
-  //     setSelectedKeys,
-  //     selectedKeys,
-  //     confirm,
-  //     clearFilters,
-  //   }) => (
-  //     <div style={{ padding: 8 }}>
-  //       <Input
-  //         inputId="select-input"
-  //         placeholder={`Search ${dataIndex}`}
-  //         value={selectedKeys[0]}
-  //         onChange={(e) =>
-  //           setSelectedKeys(e.target.value ? [e.target.value] : [])
-  //         }
-  //         onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-  //         style={{ width: 188, marginBottom: 8, display: "block" }}
-  //       />
-  //       <Space>
-  //         <Button
-  //           type="primary"
-  //           onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-  //           icon={<SearchOutlined />}
-  //           size="small"
-  //           style={{ width: 90 }}
-  //         >
-  //           Search
-  //         </Button>
-  //         <Button
-  //           onClick={() => handleReset(clearFilters)}
-  //           size="small"
-  //           style={{ width: 90 }}
-  //         >
-  //           Reset
-  //         </Button>
-  //       </Space>
-  //     </div>
-  //   ),
-  //   filterIcon: (filtered) => (
-  //     <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
-  //   ),
-  //   onFilter: (value, record) =>
-  //     record[dataIndex]
-  //       ? record[dataIndex]
-  //           .toString()
-  //           .toLowerCase()
-  //           .includes(value.toLowerCase())
-  //       : "",
-  //   onFilterDropdownVisibleChange: (visible) => {
-  //     if (visible) {
-  //       // setTimeout(() => searchRef.current.select.inputRef.select(), 100);
-  //     }
-  //   },
-  //   render: (text) =>
-  //     searchedColumn === dataIndex ? (
-  //       <Highlighter
-  //         highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-  //         searchWords={[searchText]}
-  //         autoEscape
-  //         textToHighlight={text ? text.toString() : ""}
-  //       />
-  //     ) : (
-  //       text
-  //     ),
-  // });
 
   // showModal
   const showModal = () => {

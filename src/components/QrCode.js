@@ -22,13 +22,11 @@ function QrCode({ match }) {
   useEffect(() => {}, []);
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
+   
     // setVisible(false);
   };
   //Event
   const onFinish = async (values) => {
-    // console.log("this is " + values.username);
-    // console.log("this is " + values.password);
     // const shop_owner = values.shop_owner;
     if (values.product_id === undefined) {
       var pro_id = match.params.pro_id;
@@ -38,9 +36,7 @@ function QrCode({ match }) {
     }
 
     const list_id = localStorage.getItem("listId");
-    console.log(list_id);
-    console.log(pro_id);
-    console.log(user_id);
+   
     // if (!list_id) {
     //   message.error({
     //     content: "" + "Please create a list before you scan",
@@ -61,7 +57,7 @@ function QrCode({ match }) {
       );
       if (!list_id) {
         localStorage.setItem("listId", result.data.listId);
-        console.log(localStorage.getItem("listId"));
+        
       }
 
       // localStorage.setItem("listId", listId);
@@ -73,7 +69,7 @@ function QrCode({ match }) {
 
       // setVisible(false);
     } catch (error) {
-      console.log(error);
+      
       const messageError = error.response.data.message;
       message.error({
         content: "" + messageError,

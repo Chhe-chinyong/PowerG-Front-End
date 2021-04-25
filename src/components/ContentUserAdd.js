@@ -22,8 +22,6 @@ function ContentUserAdd({
 
 
   const onFinish = async (values) => {
-    console.log("this is " + values.username);
-    console.log("this is " + values.password);
     const username = values.username;
     const password = values.password;
     const contact = values.contact;
@@ -41,7 +39,7 @@ function ContentUserAdd({
           },
         }
       );
-      console.log(result);
+    
 
       message.success({
         content: "" + result.data.message,
@@ -55,7 +53,7 @@ function ContentUserAdd({
     } catch (error) {
       const messageError = error.response.data.message;
 
-      // console.log(messageError);
+      
       message.error({
         content: "" + messageError,
         className: "UserErrorMessage",
@@ -65,11 +63,10 @@ function ContentUserAdd({
   };
   // EventHandler
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed hey", errorInfo);
   };
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
+  
     setVisible(false);
   };
 

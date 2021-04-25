@@ -46,18 +46,15 @@ function App() {
   // const [title, setTitle] = useState(path);
   const [title, setTitle] = useState("Dashboard");
   const handleCollapse = (collapsed) => {
-    console.log(collapsed);
     setCollapse(collapsed);
   };
-  console.log("login status", loginStatus);
 
   // UseEffect
   useEffect(() => {
     const user = localStorage.getItem("token");
     const role = localStorage.getItem("u_role");
     const username = localStorage.getItem("u_username");
-    console.log("token", user);
-    console.log("role", role);
+    
     if (user) {
       setLoginStatus(true);
       setRoleStatus(role);

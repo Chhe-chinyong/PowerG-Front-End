@@ -5,13 +5,10 @@ const PrivateLogin = ({ component: Component, auth, role, ...rest }) => (
     {...rest}
     render={(props) => {
       if (auth === false) {
-        console.log("hi");
         return <Component {...props} />;
       } else if (role === "user") {
-        console.log("user");
         return <Redirect to="/delivery" />;
       } else if (role === "admin") {
-        console.log("admin");
         return <Redirect to="/dashboard" />;
       }
     }}
@@ -19,15 +16,3 @@ const PrivateLogin = ({ component: Component, auth, role, ...rest }) => (
 );
 
 export default PrivateLogin;
-
-// <>
-//         {(() => {
-//           console.log(roleStatus, "role from me");
-//           if (roleStatus === "user") {
-//             <Redirect to="/delivery" />;
-//           }
-//           if (roleStatus === "admin") {
-//             <Redirect to="/dashboard" />;
-//           }
-//         })()}
-//       </>

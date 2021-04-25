@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from "react";
 import logo from "../../images/favicon.ico";
 import axios from "axios";
 import {  Empty, Table } from "antd";
-import { empty } from "uuidv4";
 
 export class PDFShop extends React.PureComponent {
   state = {
@@ -11,24 +10,20 @@ export class PDFShop extends React.PureComponent {
     reasons: {}
   };
 
-  // componentDidMount() {
-  //   console.log(this.props.productList)
-  // }
+
   
   componentDidUpdate(prevProps, prevState) {
     // Runs after the first render() lifecycle
-    console.log(this.props.productList)
+ 
     const products = this.props.productList;
-    console.log(products)
+   
    
     
-    // console.log("prevProps", prevProps);
-    // console.log(this.props.click);
+   
     if (this.props.productList !== prevProps.productList) {
       const listId = this.props.productList.listId;
       const deliveryManName = this.props.productList.deliveryManName;
-      console.log(listId);
-      console.log(this.props.shop)
+      
         
       const filter =  products.filter((product)=> product.status === 'UNSUCCESS');
       this.setState({
@@ -45,14 +40,12 @@ export class PDFShop extends React.PureComponent {
               params: {date:this.props.date, shop:this.props.shop},
               headers: { "auth-token": localStorage.getItem("token")}
              }
-          );
-      
-          console.log(result.data.data);
+          ); 
           this.setState({
             status:result.data
           });
         } catch (error) {
-          console.log("error" + error);
+            console.error('error from fetch data')
         }
       };
       // if (!this.props.shop  )
@@ -61,7 +54,7 @@ export class PDFShop extends React.PureComponent {
       //   fetchItem();
       // }
 
-      console.log(this.props.productList)
+     
       // if(products !== Empty)
       // {
       //   fetchItem();
@@ -153,7 +146,6 @@ export class PDFShop extends React.PureComponent {
 
     ];
    
-    console.log(this.state.reasons)
     return (
       <>
         {this.state.value && this.state.reasons && (

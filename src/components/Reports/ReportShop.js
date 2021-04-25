@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "antd/dist/antd.css";
 import axios from "axios";
-import Highlighter from "react-highlight-words";
-import { v4 as uuid_v4 } from "uuid";
 import ReactToPrint, { useReactToPrint } from "react-to-print";
 import  {PDFShop} from './PDFShop';
 import {GetColumnSearchProps} from "../../includes/external"
@@ -12,20 +10,10 @@ import {
   DatePicker,
   Table,
   Button,
-  Space,
-  Modal,
-  Input,
-  Popconfirm,
   message,
-  Tooltip,
   Select,
 } from "antd";
 import {
-  UserAddOutlined,
-  DeleteOutlined,
-  EditOutlined,
-  SearchOutlined,
-  SyncOutlined,
   ShopOutlined,
   DownloadOutlined,
 } from "@ant-design/icons";
@@ -86,19 +74,19 @@ function ReportShop() {
       );
       setDate(tgai);
       const allData = result.data.data;
-      console.log('reportShop',allData);
+     
       if (allData === undefined)
           return;
       
       setOptions(allData);
     };
     fetchItem();
-    console.log("first", initialValue);
+   
   }, []);
   //
   useEffect(() => {
     const fetchItem = async () => {
-      console.log('date',date)
+  
       const result = await axios.get(
         `${process.env.REACT_APP_DOMAIN}/shop/getShopByDate`,
         { 
@@ -113,11 +101,9 @@ function ReportShop() {
       
       const allData = result.data.data;
     
-      console.log('change',result.data)
-      console.log('reportShop',allData);
       if (allData === undefined)
       {
-        console.log(clearRef)
+      
           // clearRef.current.innerText = status.total_amount;
           setOptions([])
           setInitialValue([])
@@ -134,7 +120,7 @@ function ReportShop() {
     if(count !== 0)
       fetchItem();
 
-    console.log("first", initialValue);
+ 
     return ()=> {
         setShop(null)
     }
@@ -154,7 +140,7 @@ function ReportShop() {
         }
       );
       const allData = result.data.data;
-      console.log('reportShop',allData);
+ 
       setInitialValue(allData)
       setProductList(allData)
       const daily = await axios.get(
@@ -170,23 +156,15 @@ function ReportShop() {
       );
 
       setStatus(daily.data);
-      console.log('status',status)
+    
 
     };
-    // (!shop) ? fetchItem():null;
-    console.log('shop', shop)
-    // fetchItem()
-    // if(shop !== undefined)
-    // {
-    //   fetchItem()
-    // }
-
+   
     if(shop)
     {
       fetchItem()
     }  
-    
-    // console.log("first", initialValue);
+   
   }, [shop]);
   // Event
 
@@ -196,21 +174,18 @@ function ReportShop() {
   });
   // get data after change date
   function onChange(date, dateString) {
-    console.log("date", date);
-    console.log("dateString", dateString);
     setDate(dateString)
     setCount(1);
   }
 
   const cancel = (e) => {
-    console.log(e);
+
     message.error("Click on No");
   };
 
   const handleEdit = (record) => {
     setVisible1(true);
-    // setUser(record);
-    console.log(record);
+
   };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -233,7 +208,7 @@ function ReportShop() {
     }, 2000);
   };
   const handleCancel = () => {
-    console.log("Clicked cancel button");
+
     setVisible(false);
   };
 
@@ -242,81 +217,11 @@ function ReportShop() {
   }
 
  const handleStatus = (value) => {
-   console.log('status',value)
     const statusChange = initialValue.filter((data) => {
         return  data.status === value;
     })
     setInitialValue(statusChange)
  }
-
-  // Delete user
-
-  // searchBar
-  // const getColumnSearchProps = (dataIndex) => ({
-  //   filterDropdown: ({
-  //     setSelectedKeys,
-  //     selectedKeys,
-  //     confirm,
-  //     clearFilters,
-  //   }) => (
-  //     <div style={{ padding: 8 }}>
-  //       <Input
-  //         inputId="select-input"
-  //         placeholder={`Search ${dataIndex}`}
-  //         value={selectedKeys[0]}
-  //         onChange={(e) =>
-  //           setSelectedKeys(e.target.value ? [e.target.value] : [])
-  //         }
-  //         onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-  //         style={{ width: 188, marginBottom: 8, display: "block" }}
-  //       />
-  //       <Space>
-  //         <Button
-  //           type="primary"
-  //           onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-  //           icon={<SearchOutlined />}
-  //           size="small"
-  //           style={{ width: 90 }}
-  //         >
-  //           Search
-  //         </Button>
-  //         <Button
-  //           onClick={() => handleReset(clearFilters)}
-  //           size="small"
-  //           style={{ width: 90 }}
-  //         >
-  //           Reset
-  //         </Button>
-  //       </Space>
-  //     </div>
-  //   ),
-  //   filterIcon: (filtered) => (
-  //     <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
-  //   ),
-  //   onFilter: (value, record) =>
-  //     record[dataIndex]
-  //       ? record[dataIndex]
-  //           .toString()
-  //           .toLowerCase()
-  //           .includes(value.toLowerCase())
-  //       : "",
-  //   onFilterDropdownVisibleChange: (visible) => {
-  //     if (visible) {
-  //       // setTimeout(() => searchRef.current.select.inputRef.select(), 100);
-  //     }
-  //   },
-  //   render: (text) =>
-  //     searchedColumn === dataIndex ? (
-  //       <Highlighter
-  //         highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-  //         searchWords={[searchText]}
-  //         autoEscape
-  //         textToHighlight={text ? text.toString() : ""}
-  //       />
-  //     ) : (
-  //       text
-  //     ),
-  // });
 
   // showModal
   const showModal = () => {
@@ -332,7 +237,6 @@ function ReportShop() {
       dataIndex: "package_id",
       key: "id",
       // defaultSortOrder: "ascend",
-
       ...GetColumnSearchProps("product_id"),
       sorter: (a, b) => a.package_id - b.package_id,
     },
@@ -425,7 +329,7 @@ function ReportShop() {
           <Select
             icon={<ShopOutlined />}
             defaultValue="Shop"
-            style={{ width: 120 }}
+            style={{ width: 160 }}
             onChange={handleChange}
             size="default"  
           >
@@ -436,21 +340,7 @@ function ReportShop() {
             ))} 
 
           </Select>
-          {/* Status */}
-          {/* <Select
-            icon={<ShopOutlined />}
-            defaultValue="Status"
-            style={{ width: 120 }}
-            onChange={handleStatus}
-            size="default"
-          >
-            <Option value="SUCCESS" style={{ color: "#52c41a" }}>
-              SUCCESS
-            </Option>
-            <Option value="UNSUCCESS" style={{ color: "#ff4d4f" }}>
-              UNSUCCESS
-            </Option>
-          </Select> */}
+        
 
           {/* Download */}
           <Button

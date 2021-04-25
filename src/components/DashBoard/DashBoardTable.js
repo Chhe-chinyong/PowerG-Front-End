@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import axios from "axios";
-import Highlighter from "react-highlight-words";
+
 import {GetColumnSearchProps} from "../../includes/external"
 import {
   DatePicker,
@@ -25,10 +25,10 @@ import {
 import moment from "moment";
 
 // Component
-import ContentProductAdd from "../Products/ContentProductAdd";
+
 import Chart from "../../components/DashBoard/Chart";
 import { ProductContext } from "../../context/AuthContext";
-import { empty } from "uuidv4";
+
 
 const { Option } = Select;
 
@@ -116,44 +116,42 @@ function ContentProduct() {
          },
         }
       );
-      console.log(result)
+  
      
 
       const allData = result.data.data;
-      console.log('alldata', allData)
+   
    
       setInitialValue(allData);
       if (allData != []   )
       {
         setTrack(true);
-        console.log(true)
+     
         
       }
     };
     fetchItem();
-    console.log(track)
+  
     // if (!initialValue)
     // {
     // }
-    console.log("first", initialValue);
+ 
   }, []);
 
   // Event
   // get data after change date
   function onChange(date, dateString) {
-    console.log("date", date);
-    console.log("dateString", dateString);
+
   }
 
   const cancel = (e) => {
-    console.log(e);
+    
     message.error("Click on No");
   };
 
   const handleEdit = (record) => {
     setVisible1(true);
-    // setUser(record);
-    console.log(record);
+    
   };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -176,20 +174,20 @@ function ContentProduct() {
     }, 2000);
   };
   const handleCancel = () => {
-    console.log("Clicked cancel button");
+  
     setVisible(false);
   };
 
   // Delete user
   const confirm = async (record) => {
     const id = record.product_id;
-    console.log(id);
+ 
     try {
       // Delete Data
       const result = await axios.delete(
         `${process.env.REACT_APP_DOMAIN}/api/user/deleteuserbyid/${id}`
       );
-      console.log(initialValue);
+    
       setInitialValue(initialValue.filter((value) => value.user_id != id));
       message.success({
         content: "" + result.data.message,

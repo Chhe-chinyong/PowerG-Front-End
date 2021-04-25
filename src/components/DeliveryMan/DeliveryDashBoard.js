@@ -36,7 +36,7 @@ function DeliveryDashBoard() {
           },
         }
       );
-      console.log(result);
+     
       const allData = result.data.data;
       setInitialValue(allData);
     };
@@ -44,22 +44,14 @@ function DeliveryDashBoard() {
       fetchItem();
   }, [listId]);
 
-  // const generateList = async () => {
-  //   const listId = localStorage.getItem("listId");
-  //   // if (listId) {
-  //   //   return console.log("u have already generate list");
-  //   // }
-  //   // const uuid_store = await uuidv4();
-  //   // localStorage.setItem("listId", uuid_store.substring(0, 12));
-  //   // // return console.log(uuid_store.substring(0, 8));
-  // };
+ 
   const hide = () => {
     setVisible(false);
   };
   const handleVisibleChange = (visible) => {
-    console.log(visible);
+
     setVisible(visible);
-    console.log(visible);
+
   };
 
   const handleOk = () => {
@@ -75,7 +67,7 @@ function DeliveryDashBoard() {
   };
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
+   
     setVisible(false);
   };
 
@@ -86,9 +78,7 @@ function DeliveryDashBoard() {
     const tgai = await moment().format('YYYY/M/D');
     const name = localStorage.getItem('u_username');
     const id = localStorage.getItem('u_id');
-    console.log(tgai)
-    console.log(name)
-    console.log(id)
+  
     try {
       const result = await axios.get(`${process.env.REACT_APP_DOMAIN}/packageList/getListByDateId`,
           {
@@ -100,9 +90,9 @@ function DeliveryDashBoard() {
              },
           }
       )
-      console.log(result)
+
       const lastIndex = result.data.data.length - 1
-      console.log(result.data.data[lastIndex].listId);
+    
       const ListIdBack = result.data.data[lastIndex].listId
       setListId(ListIdBack);
       localStorage.setItem('listId', ListIdBack);
@@ -138,17 +128,16 @@ function DeliveryDashBoard() {
 
 
   const handleTextChange = (e,record) => {
-    console.log('record change',record);
-    console.log(e.target.value);
+ 
     // update messaget to data
     record.others = e.target.value;
-    console.log(record)
+   
   }
 
   function checkStatus(values) {
     values.forEach((value) => {
       if (value.status === "ON GOING") {
-        console.log("please change all status whether success or unsuccess");
+      
 
         throw {
           response: {
@@ -162,7 +151,7 @@ function DeliveryDashBoard() {
   }
   const onFinish = async () => {
     try {
-      console.log("data", initialValue);
+     
       checkStatus(initialValue);
       if (!localStorage.getItem("listId")) {
         throw {
@@ -174,8 +163,7 @@ function DeliveryDashBoard() {
         };
       }
       const dataValue = initialValue
-      console.log(listId)
-      console.log('data',dataValue)
+     
       const result = await axios.post(
         `${process.env.REACT_APP_DOMAIN}/package/finalUpdate`,
         {
@@ -193,9 +181,7 @@ function DeliveryDashBoard() {
           },
         }
       );
-      console.log("data", initialValue);
-      console.log("data1", dataValue);
-      console.log(result);
+     
       localStorage.removeItem("listId");
       message.success({
         content: "" + result.data.message,
@@ -203,8 +189,6 @@ function DeliveryDashBoard() {
         className: "UserSuccessMessage",
       });
     } catch (error) {
-      console.log("error:", error);
-      // console.log("error", error.response);
       const messageError = error.response.data.message;
 
       message.error({
@@ -228,35 +212,7 @@ function DeliveryDashBoard() {
       className: "columns",
       render: (text) => <a>{text}</a>,
     },
-    // {
-    //   title: "LOCATION",
-    //   dataIndex: "location",
-    //   key: "location",
-    //   className: "columns",
-    //   ellipsis: {
-    //     showTitle: false,
-    //   },
-    //   render: (address) => (
-    //     <Tooltip placement="topLeft" title={address}>
-    //       {address}
-    //     </Tooltip>
-    //   ),
-    // },
-    // {
-    //   title: "CONTACT",
-    //   dataIndex: "cust_phone",
-    //   key: "cust_phone",
-    //   className: "columns",
-    // },
-    // {
-    //   title: "PRICE",
-    //   dataIndex: "pro_price",
-    //   key: "pro_price",
-    //   className: "columns",
-    //   render: (record) => {
-    //     return <span className="priceDelivery">${record}</span>;
-    //   },
-    // },
+
     {
       title: "STATUS",
       dataIndex: "status",
@@ -265,9 +221,9 @@ function DeliveryDashBoard() {
 
       // Testing
       render: (text, record) => {
-        console.log("reocrd", record);
+    
         if (record.status === "ON GOING") {
-          console.log("hey on going");
+       
           return (
             <>
               <Select
@@ -280,17 +236,16 @@ function DeliveryDashBoard() {
                 // ref={statusRef}
                 onChange={(value) => {
                   // handleChange(text, record);
-                  console.log("value", value);
-                  console.log("record", record);
+                
                   // Set key to state
                   // setKeyIndex(record.key);
                   const preStatus = record.status;
-                  console.log("pre", preStatus);
+                  
                   var price;
 
                   if (value === "SUCCESS") {
                     price = parseFloat(record.price);
-                    console.log("hey");
+                
                     setTotal(total + price);
                     trigger ? setTrigger(false) : setTrigger(true);
                   }
@@ -300,7 +255,7 @@ function DeliveryDashBoard() {
                   }
                   if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
                     price = parseFloat(record.price);
-                    console.log("hi ");
+                   
                     setTotal(total - price);
                     trigger ? setTrigger(false) : setTrigger(true);
                   }
@@ -311,7 +266,7 @@ function DeliveryDashBoard() {
                     trigger ? setTrigger(false) : setTrigger(true);
                   }
 
-                  console.log(record);
+               
                   // Change status to data
                   record.status = value;
                 }}
@@ -350,7 +305,7 @@ function DeliveryDashBoard() {
             </>
           );
         } else if (record.status === "UNSUCCESS") {
-          console.log("hey UNSUCCESS");
+         
           return (
             <>
               <Select
@@ -361,24 +316,23 @@ function DeliveryDashBoard() {
                 }}
                 onChange={(value) => {
                   // handleChange(text, record);
-                  console.log("value", value);
-                  console.log("record", record);
+                  
                   // Set key to state
                   // setKeyIndex(record.key);
                   const preStatus = record.status;
-                  console.log(preStatus);
+                 
                   var price;
 
                   if (value === "SUCCESS") {
                     price = parseFloat(record.price);
-                    console.log("hey");
+                    
                     setTotal(total + price);
                     trigger ? setTrigger(false) : setTrigger(true);
                   }
 
                   if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
                     price = parseFloat(record.price);
-                    console.log("hi ");
+                   
                     setTotal(total - price);
                     trigger ? setTrigger(false) : setTrigger(true);
                   }
@@ -389,7 +343,7 @@ function DeliveryDashBoard() {
                     trigger ? setTrigger(false) : setTrigger(true);
                   }
 
-                  console.log(record);
+      
                   // Change status to data
                   record.status = value;
                 }}
@@ -428,7 +382,7 @@ function DeliveryDashBoard() {
             </>
           );
         } else if (record.status === "SUCCESS") {
-          console.log("hey success");
+         
           return (
             <>
               <Select
@@ -441,24 +395,23 @@ function DeliveryDashBoard() {
                 // ref={statusRef}
                 onChange={(value) => {
                   // handleChange(text, record);
-                  console.log("value", value);
-                  console.log("record", record);
+                  
                   // Set key to state
                   // setKeyIndex(record.key);
                   const preStatus = record.status;
-                  console.log(preStatus);
+             
                   var price;
 
                   if (value === "SUCCESS") {
                     price = parseFloat(record.price);
-                    console.log("hey");
+              
                     setTotal(total + price);
                     trigger ? setTrigger(false) : setTrigger(true);
                   }
 
                   if (preStatus === "SUCCESS" && value === "UNSUCCESS") {
                     price = parseFloat(record.price);
-                    console.log("hi ");
+                
                     setTotal(total - price);
                     trigger ? setTrigger(false) : setTrigger(true);
                   }
@@ -469,7 +422,7 @@ function DeliveryDashBoard() {
                     trigger ? setTrigger(false) : setTrigger(true);
                   }
 
-                  console.log(record);
+              
                   // Change status to data
                   record.status = value;
                 }}
@@ -526,8 +479,7 @@ function DeliveryDashBoard() {
 
   return (
     <div>
-      {/* {console.log(data)}
-      {console.log(total)} */}
+     
 
       <DeliveryHeader />
       <div className="content">

@@ -15,7 +15,6 @@ function HeaderBar({ title }) {
   const { userNameStatus, setUsernameStatus } = useContext(UsernameContext);
   // Event
   const handleLogout = () => {
-    console.log("hi there");
     setLoginStatus(false);
     setRoleStatus("");
     localStorage.removeItem("token");

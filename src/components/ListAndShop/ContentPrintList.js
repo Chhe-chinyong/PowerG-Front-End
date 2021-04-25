@@ -52,14 +52,13 @@ function ContentPrintList() {
           },
         }
       );
-      console.log(result);
+
       const allData = result.data.data;
-      console.log(allData);
 
       setInitialValue(allData.reverse());
     };
     fetchItem();
-    // console.log("first", initialValue);
+
   }, []);
 
   // Fetch data again we anything change
@@ -79,88 +78,8 @@ function ContentPrintList() {
       setInitialValue(allData.reverse());
     };
     fetchItem();
-    // console.log("first", initialValue);
   }, [trigger]);
 
-  // searchBar
-  // const getColumnSearchProps = (dataIndex) => ({
-  //   filterDropdown: ({
-  //     setSelectedKeys,
-  //     selectedKeys,
-  //     confirm,
-  //     clearFilters,
-  //   }) => (
-  //     <div style={{ padding: 8 }}>
-  //       <Input
-  //         inputId="select-input"
-  //         ref={searchRef}
-  //         placeholder={`Search ${dataIndex}`}
-  //         value={selectedKeys[0]}
-  //         onChange={(e) =>
-  //           setSelectedKeys(e.target.value ? [e.target.value] : [])
-  //         }
-  //         onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-  //         style={{ width: 188, marginBottom: 8, display: "block" }}
-  //       />
-  //       <Space>
-  //         <Button
-  //           type="primary"
-  //           onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-  //           icon={<SearchOutlined />}
-  //           size="small"
-  //           style={{ width: 90 }}
-  //         >
-  //           Search
-  //         </Button>
-  //         <Button
-  //           onClick={() => handleReset(clearFilters)}
-  //           size="small"
-  //           style={{ width: 90 }}
-  //         >
-  //           Reset
-  //         </Button>
-  //       </Space>
-  //     </div>
-  //   ),
-  //   filterIcon: (filtered) => (
-  //     <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
-  //   ),
-  //   onFilter: (value, record) =>
-  //     record[dataIndex]
-  //       ? record[dataIndex]
-  //           .toString()
-  //           .toLowerCase()
-  //           .includes(value.toLowerCase())
-  //       : "",
-  //   onFilterDropdownVisibleChange: (visible) => {
-  //     console.log("search", searchRef);
-  //     if (visible) {
-  //       // setTimeout(() => searchRef.current.select.inputRef.select(), 100);
-  //     }
-  //   },
-  //   render: (text) =>
-  //     searchedColumn === dataIndex ? (
-  //       <Highlighter
-  //         highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-  //         searchWords={[searchText]}
-  //         autoEscape
-  //         textToHighlight={text ? text.toString() : ""}
-  //       />
-  //     ) : (
-  //       text
-  //     ),
-  // });
-
-  // const handleSearch = (selectedKeys, confirm, dataIndex) => {
-  //   confirm();
-  //   setSearchText(selectedKeys[0]);
-  //   SetSearchedColumn(dataIndex);
-  // };
-
-  // const handleReset = (clearFilters) => {
-  //   clearFilters();
-  //   setSearchText("");
-  // };
 
   const showModal = () => {
     setVisible(true);
@@ -180,17 +99,14 @@ function ContentPrintList() {
   };
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setVisible(false);
   };
 
   const handleCancel1 = () => {
-    console.log("Clicked cancel button");
     setVisible1(false);
   };
 
   const handleDownload = (record) => {
-    console.log(record);
     setProductList(record);
     // return <PDFList productList={productList} />;
     // handlePrint();
@@ -208,7 +124,7 @@ function ContentPrintList() {
   // Delete user
   const confirm = async (record) => {
     const id = record.user_id;
-    console.log(id);
+  
     try {
       // Delete Data
       const result = await axios.delete(
@@ -219,7 +135,7 @@ function ContentPrintList() {
           },
         }
       );
-      console.log(initialValue);
+      
       setInitialValue(initialValue.filter((value) => value.user_id !== id));
       message.success({
         content: "" + result.data.message,
@@ -237,7 +153,7 @@ function ContentPrintList() {
   };
 
   const cancel = (e) => {
-    console.log(e);
+ 
     message.error("Click on No");
   };
 
@@ -246,17 +162,6 @@ function ContentPrintList() {
   // }
   // Data
   const columns = [
-    // {
-    //   //title is display on coulmn
-    //   //dataIndex to match with datasouce to display
-    //   title: <strong>ID</strong>,
-    //   dataIndex: "id",
-    //   key: "id",
-    //   defaultSortOrder: "ascend",
-
-    //   ...getColumnSearchProps("user_id"),
-    //   sorter: (a, b) => a.user_id - b.user_id,
-    // },
     {
       title: <strong>ListId</strong>,
       dataIndex: "listId",

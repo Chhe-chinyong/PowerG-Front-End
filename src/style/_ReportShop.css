@@ -5,6 +5,7 @@
   width: 420px;
   float: right;
   justify-content: space-around;
+  margin-right: 1.6rem;
 }
 
 .ant-btn-icon-only svg {
