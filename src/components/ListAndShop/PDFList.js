@@ -142,7 +142,7 @@ export class PDFList extends React.PureComponent{
                 <h1>តារាងដឹកជញ្ចួន</h1>
                 {/* <p>ការបរិច្ជេទ: {this.state.value[0].created_at}</p> */}
                 <p className="listDate">
-                  ការបរិច្ជេទ:{" "}
+                  កាលបរិច្ជេទ:{" "}
                   {this.state.value[0] ? this.state.value[0].created_at : null}
                 </p>
                 <p className="listPhone">
