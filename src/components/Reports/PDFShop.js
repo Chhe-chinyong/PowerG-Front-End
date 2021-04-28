@@ -151,7 +151,6 @@ export class PDFShop extends React.PureComponent {
         {this.state.value && this.state.reasons && (
           <div
             className="center-pdf"
-          
           >
             <div className="pdf-list-header">
               <div>
@@ -162,7 +161,7 @@ export class PDFShop extends React.PureComponent {
                 <h1 className="invoice">Invoice</h1>
                 {/* <p>ការបរិច្ជេទ: {this.state.value[0].created_at}</p> */}
                 <p className="listDate">
-                  ការបរិច្ជេទ:{" "}
+                  កាលបរិច្ជេទ:{" "}
                   {this.state.value[0] ? this.state.value[0].created_at : null}
                 </p>
                 <p className="listPhone">
