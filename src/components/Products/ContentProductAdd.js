@@ -12,6 +12,7 @@ import {
   Row,
   Select,
   AutoComplete,
+  InputNumber,
 } from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
 const { Item } = Form;
@@ -31,9 +32,10 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
   const [data, setData] = useState([]);
   const [options, setOptions] = useState([]);
   const [value, setValue] = useState("");
-  const [serviceFee, setServiceFee] = useState("")
+  const [serviceFee, setServiceFee] = useState("");
   const [codValue, setCOD] = useState("");
-  const [transfererValue,setTransferer] = useState('')
+  const [transfererValue, setTransferer] = useState("");
+  const [changeNumber, setChangeNumber] = useState();
   const mockVal = (str, repeat = 1) => ({
     value: str.repeat(repeat),
   });
@@ -47,11 +49,10 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
         }
       );
       const allData = result.data.data;
-   
+
       setData(allData);
     };
     fetchItem();
-  
   }, []);
 
   const onSearch = (searchText) => {
@@ -68,36 +69,39 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
                 value: data.shopName,
               };
             });
-           
+
             return send;
           }
     );
   };
 
-  const onSelect = (data) => {
-  };
+  const onSelect = (data) => {};
 
   const onChange = (data) => {
     setValue(data);
   };
-  const handleChange=(value) => {
-   
-    setServiceFee(value)
-  }
+  const handleChange = (value) => {
+    setServiceFee(value);
+  };
   const handleChangeCOD = (value) => {
-    setCOD(value)
-  }
+    setCOD(value);
+  };
 
-  const handleChangeTransferer= (value) => {
-    setTransferer(value)
-  }
+  const handleChangeTransferer = (value) => {
+    setTransferer(value);
+  };
 
   const handleCancel = () => {
     setVisible(false);
   };
+
+  const onChangeNumber = (value) => {
+    console.log(value);
+    setChangeNumber(value);
+    console.log(changeNumber);
+  };
   //Event
   const onFinish = async (values) => {
- 
     const shop_owner = values.shop_owner;
     const cust_name = values.cust_name;
     const cust_location = values.cust_location;
@@ -106,18 +110,18 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
     var payment_method = values.payment_method;
     // var service_fee = values.service_fee;
     // var service_fee = serviceFee;
-    var store_fee = serviceFee;
+    // var store_fee = serviceFee;
     var cod = codValue;
     var transferer = transfererValue;
     var service_paid_by = values.service_paid_by;
 
-    if (values.service_fee === undefined) {
-      //  setServiceFee(1)
-      store_fee = 1;
-    }
+    // if (values.service_fee === undefined) {
+    //   //  setServiceFee(1)
+    //   store_fee = 1;
+    // }
     if (values.service_paid_by === undefined) {
       // service_paid_by = "Transferer";
-      transferer="Transferer"
+      transferer = "Transferer";
     }
     if (values.payment_method === undefined) {
       // payment_method = "COD";
@@ -134,7 +138,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
           cust_phone: cust_phone,
           pro_price: pro_price,
           payment_method: cod,
-          service_fee:store_fee,
+          service_fee: values.service_fee,
           service_paid_by: transferer,
         },
         {
@@ -160,7 +164,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
         cust_phone: cust_phone,
         pro_price: pro_price,
         payment_method: cod,
-        service_fee: store_fee,
+        service_fee: values.service_fee,
         service_paid_by: transferer,
       });
       // setVisible(false);
@@ -176,7 +180,6 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
   };
   return (
     <div>
-
       {!redirect ? (
         <Form
           // onSubmit={handleSubmit}
@@ -278,25 +281,28 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
             name={"service_fee"}
             label="service_fee ($)"
             style={{ textAlign: "left" }}
-            rules={[
-              // {
-              //   required: true,
-              //   message: "please input your servie_fee!",
-              // },
-              {
-                whitespace: true,
-                message: "No whitespace",
-              },
-            ]}
+            rules={
+              [
+                // {
+                //   required: true,
+                //   message: "please input your servie_fee!",
+                // },
+                // {
+                //   whitespace: true,
+                //   message: "No whitespace",
+                // },
+              ]
+            }
           >
-            <Select
+            {/* <Select
               defaultValue="1"
               style={{ width: 116 }}
               onChange={handleChange}
             >
               <Option value="1">1</Option>
               <Option value="1.25">1.25</Option>
-            </Select>
+            </Select> */}
+            <InputNumber min={1} />
           </Item>
 
           <Item

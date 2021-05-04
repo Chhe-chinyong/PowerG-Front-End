@@ -1,19 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Table, Button, Space,  message } from "antd";
+import { Table, Button, Space, message, Modal } from "antd";
 import ReactToPrint, { useReactToPrint } from "react-to-print";
-import {GetColumnSearchProps} from "../../includes/external"
+import { GetColumnSearchProps } from "../../includes/external";
 import Highlighter from "react-highlight-words";
 import axios from "axios";
-import {
-  UserAddOutlined,
-  DeleteOutlined,
-  EditOutlined,
-  SearchOutlined,
-  PrinterOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, PrinterOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 
-
+import ContentUserEdit from "../ContentUserEdit";
+import ListEdit from "./ListEdit";
 import { PDFList } from "./PDFList";
 function ContentPrintList() {
   const data = [
@@ -38,6 +33,7 @@ function ContentPrintList() {
   const [trigger, setTrigger] = useState(false);
   const [modalText, setModalText] = useState("Content of the modal");
   const [click, setClick] = useState(false);
+  const [listId, setListId] = useState();
   const handlePrint = useReactToPrint({
     content: () => refPrint.current,
   });
@@ -58,7 +54,6 @@ function ContentPrintList() {
       setInitialValue(allData.reverse());
     };
     fetchItem();
-
   }, []);
 
   // Fetch data again we anything change
@@ -79,7 +74,6 @@ function ContentPrintList() {
     };
     fetchItem();
   }, [trigger]);
-
 
   const showModal = () => {
     setVisible(true);
@@ -124,7 +118,7 @@ function ContentPrintList() {
   // Delete user
   const confirm = async (record) => {
     const id = record.user_id;
-  
+
     try {
       // Delete Data
       const result = await axios.delete(
@@ -135,7 +129,7 @@ function ContentPrintList() {
           },
         }
       );
-      
+
       setInitialValue(initialValue.filter((value) => value.user_id !== id));
       message.success({
         content: "" + result.data.message,
@@ -153,13 +147,14 @@ function ContentPrintList() {
   };
 
   const cancel = (e) => {
- 
     message.error("Click on No");
   };
 
-  // function refreshPage() {
-  //   window.location.reload();
-  // }
+  const handleEdit = (record) => {
+    setVisible1(true);
+    setUser(record);
+  };
+
   // Data
   const columns = [
     {
@@ -188,9 +183,7 @@ function ContentPrintList() {
               // onClick={() => handleEdit(text, record)}
               onClick={() => {
                 // handleDownload(record);
-
                 setProductList(record);
-
                 setTimeout(() => {
                   setClick(true);
                   handlePrint();
@@ -199,6 +192,18 @@ function ContentPrintList() {
                 // handlePrint
               }}
               // onClick={handleDownload}
+            ></Button>
+
+            <Button
+              className="noOutLine editUser"
+              icon={<EditOutlined />}
+              // onClick={() => handleEdit(text, record)}
+              onClick={() => {
+                // handleEdit(record);
+                console.log(record);
+                setListId(record.listId);
+                showModal();
+              }}
             ></Button>
           </Space>
         );
@@ -228,6 +233,19 @@ function ContentPrintList() {
       {/* {click ? (
         <PDFList ref={refPrint} productList={productList} className="PDFLIST" />
       ) : null} */}
+      {/* Edit */}
+
+      <Modal
+        title="List Edit"
+        visible={visible}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        footer={null}
+        onCancel={handleCancel}
+        width={1200}
+      >
+        <ListEdit listIdPass={listId} />
+      </Modal>
     </>
   );
 }

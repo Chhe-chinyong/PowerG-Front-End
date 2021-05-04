@@ -30,9 +30,9 @@ export const UserLogin = () => {
           password: password,
         }
       );
-      console.log("result", result);
+      // console.log("result", result);
       const role = result.data.role;
-      console.log("role", role);
+      // console.log("role", role);
       const token = result.data.token;
       const userId = result.data.user_log_id;
       console.log(token);

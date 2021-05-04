@@ -100,16 +100,16 @@ figcaption {
   flex-direction: column;
 }
 
-.product_payment{
-  margin-top: 1rem;
+.product_payment {
+  /* margin-top: 1rem; */
   margin-bottom: 0;
   font-size: xx-large;
   font-weight: bold;
 }
 
 .product_price {
-    font-size: medium;
-    font-weight: bold;   
+  font-size: medium;
+  font-weight: bold;
 }
 
 .product_paid_by {
@@ -142,4 +142,9 @@ figcaption {
   margin: 5rem auto;
   margin-bottom: 0;
   text-align: center;
+}
+.pdf-cod-title {
+  font-size: small;
+  margin-bottom: 0;
+  margin-top: 1.2rem;
 }

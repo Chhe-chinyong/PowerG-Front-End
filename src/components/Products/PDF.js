@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import  { useReactToPrint } from "react-to-print";
+import { useReactToPrint } from "react-to-print";
 import { Button } from "antd";
 import QRCode from "react-qr-code";
 import logo from "../../images/favicon.ico";
@@ -15,24 +15,23 @@ const PDF = ({ productData, package_id }) => {
   if (productData.service_fee === undefined) {
     productData.service_fee = 4000;
   }
- 
-  
-  const check = ( productData) => {
-    if(productData.service_paid_by === 'Transferer')
-        productData.service_paid_by = 'អ្នកផ្ញេី'
-    if(productData.service_paid_by === 'Receiver')
-        productData.service_paid_by = 'អ្នកទទួល'
-  }
+
+  const check = (productData) => {
+    if (productData.service_paid_by === "Transferer")
+      productData.service_paid_by = "អ្នកផ្ញេី";
+    if (productData.service_paid_by === "Receiver")
+      productData.service_paid_by = "អ្នកទទួល";
+  };
 
   const padToEight = (number) => {
     if (number < 9999999) {
-      number = ("0000000" + number ).slice(-8);
+      number = ("0000000" + number).slice(-8);
     }
     return number;
-  }
-   // change data to khmer
-   check(productData);
-  var id =  padToEight(package_id)
+  };
+  // change data to khmer
+  check(productData);
+  var id = padToEight(package_id);
 
   const refPrint = useRef();
   const handlePrint = useReactToPrint({
@@ -57,7 +56,7 @@ const PDF = ({ productData, package_id }) => {
             <img src={logo} alt="Logo" className="pdf-logo" />
             <p>
               {/* Change*/}
-                ID: <span>{id }</span>
+              ID: <span>{id}</span>
             </p>
           </div>
 
@@ -86,13 +85,24 @@ const PDF = ({ productData, package_id }) => {
 
           <div className="pdf-price">
             <div className="pdf-priceTag">
-              <p>តម្លៃដឹកជញ្ជួន</p>
+              <p>តម្លៃទំនិញ</p>
+              {/* <p>តម្លៃដឹកជញ្ជួន</p> */}
               {/* Change */}
-              <h3 className="price">$ {productData.service_fee} <span className="product_paid_by">({productData.service_paid_by})</span> </h3>
-              
+              <h3 className="price">
+                $ {productData.pro_price}{" "}
+                <span className="product_paid_by">
+                  ({productData.payment_method})
+                  {/* ({productData.pro_price}) */}
+                </span>{" "}
+              </h3>
+              {/* <h3 className="price">$ {productData.service_fee} <span className="product_paid_by">({productData.service_paid_by})</span> </h3> */}
             </div>
             <div className="pdf-cod">
-              <p className="product_payment">{productData.payment_method} </p> <p className="product_price"> (${productData.pro_price}) </p>
+              <p className="pdf-cod-title">តម្លៃដឹកជញ្ជួន</p>
+              <p className="product_payment">
+                ${productData.service_fee}{" "}
+              </p>{" "}
+              <p className="product_price"> ({productData.service_paid_by})</p>
             </div>
             <figure>
               <QRCode

@@ -472,15 +472,11 @@ function DeliveryDashBoard() {
       render: (text, record) => (<Input placeholder="write" onChange={(e)=> {
         handleTextChange(e, record);
       }}/>)
-      
-      
     },
   ];
 
   return (
     <div>
-     
-
       <DeliveryHeader />
       <div className="content">
         <div className="contentHeaderWrap">

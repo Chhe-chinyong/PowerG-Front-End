@@ -140,7 +140,7 @@ function ReportShop() {
         }
       );
       const allData = result.data.data;
- 
+      console.log(allData)
       setInitialValue(allData)
       setProductList(allData)
       const daily = await axios.get(
