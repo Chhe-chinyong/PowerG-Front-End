@@ -2,10 +2,9 @@ import React, { useRef, useEffect, useState } from "react";
 import ReactToPrint, { useReactToPrint } from "react-to-print";
 import logo from "../../images/favicon.ico";
 import axios from "axios";
-import {Table } from "antd";
+import { Table } from "antd";
 
-
-export class PDFList extends React.PureComponent{
+export class PDFList extends React.PureComponent {
   state = {
     value: [],
     listId: "",
@@ -17,7 +16,7 @@ export class PDFList extends React.PureComponent{
   }
   componentDidUpdate(prevProps, prevState) {
     // Runs after the first render() lifecycle
-  
+
     if (this.props.productList !== prevProps.productList) {
       const listId = this.props.productList.listId;
       const deliveryManName = this.props.productList.deliveryManName;
@@ -28,7 +27,7 @@ export class PDFList extends React.PureComponent{
             `${process.env.REACT_APP_DOMAIN}/packageList/getListById/${listId}`
           );
           // setProductList(result);
-     
+
           this.setState({
             listValue: listId,
             value: result.data.data,
@@ -38,8 +37,31 @@ export class PDFList extends React.PureComponent{
           console.log("error" + error);
         }
       };
+
+      const fetchTotalAmount = async () => {
+        try {
+          const result = await axios.get(
+            `${process.env.REACT_APP_DOMAIN}/packageList/getListAndGenerateTotal/${listId}`,
+            {
+              headers: {
+                "auth-token": localStorage.getItem("token"),
+              },
+            }
+          );
+          // setProductList(result);
+          console.log("amount", result.data.total_amount);
+          // this.setState({
+          //   listValue: listId,
+          //   value: result.data.data,
+          //   deliveryManName: deliveryManName,
+          // });
+        } catch (error) {
+          console.log("error" + error);
+        }
+      };
+
       fetchItem();
-   
+      // fetchTotalAmount();
     }
   }
 
@@ -75,32 +97,30 @@ export class PDFList extends React.PureComponent{
         title: <strong> ម្លៃសេវា</strong>,
         dataIndex: "service_fee",
         key: "service_fee",
-        render:(text)=>{
-          return <span>${text}</span>
-      }
+        render: (text) => {
+          return <span>${text}</span>;
+        },
       },
 
       {
         title: <strong>តម្លៃទំនិញ</strong>,
         dataIndex: "pro_price",
         key: "pro_price",
-        render:(text)=>{
-          return <span>${text}</span>
-      }
+        render: (text) => {
+          return <span>${text}</span>;
+        },
       },
 
       {
         title: <strong>ការបង់ថ្លៃសេវា</strong>,
         dataIndex: "service_paid_by",
         key: "service_paid_by",
-        
       },
-      
+
       {
         title: <strong>ការបង់ថ្លៃទំនិញ</strong>,
         dataIndex: "payment_method",
         key: "payment_method",
-        
       },
 
       // {
@@ -127,10 +147,7 @@ export class PDFList extends React.PureComponent{
 
         {/* </p> */}
         {this.state.value && (
-          <div
-            className="center-pdf"
-          
-          >
+          <div className="center-pdf">
             <div className="pdf-list-header">
               <div>
                 <img src={logo} alt="Logo" className="pdf-list-header-logo" />

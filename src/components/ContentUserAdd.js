@@ -19,8 +19,6 @@ function ContentUserAdd({
 
   setTrigger,
 }) {
-
-
   const onFinish = async (values) => {
     const username = values.username;
     const password = values.password;
@@ -39,21 +37,20 @@ function ContentUserAdd({
           },
         }
       );
-    
+
+      console.log(result.data.message);
 
       message.success({
         content: "" + result.data.message,
         duration: 5,
         className: "UserSuccessMessage",
       });
-      setVisible(false)
+      setVisible(false);
       setTrigger(true);
       setTrigger(false);
-      
     } catch (error) {
       const messageError = error.response.data.message;
 
-      
       message.error({
         content: "" + messageError,
         className: "UserErrorMessage",
@@ -62,11 +59,9 @@ function ContentUserAdd({
     }
   };
   // EventHandler
-  const onFinishFailed = (errorInfo) => {
-  };
+  const onFinishFailed = (errorInfo) => {};
 
   const handleCancel = () => {
-  
     setVisible(false);
   };
 
@@ -165,4 +160,3 @@ function ContentUserAdd({
 }
 
 export default ContentUserAdd;
-

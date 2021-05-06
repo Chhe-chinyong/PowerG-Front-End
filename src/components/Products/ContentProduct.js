@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import axios from "axios";
-import {GetColumnSearchProps} from "../../includes/external"
+import { GetColumnSearchProps } from "../../includes/external";
 import {
   DatePicker,
   Table,
@@ -28,7 +28,6 @@ import ContentProductAdd from "../Products/ContentProductAdd";
 import { ProductContext } from "../../context/AuthContext";
 
 function ContentProduct() {
-
   const dateFormat = "YYYY/M/D";
   //State
   const [Trigger, setTrigger] = useState(false);
@@ -51,61 +50,51 @@ function ContentProduct() {
   //Display all packages
   useEffect(() => {
     const fetchItem = async () => {
-      const tgai =  moment().format('YYYY/M/D');
+      const tgai = moment().format("YYYY/M/D");
+      console.log(tgai);
       const result = await axios(
         `${process.env.REACT_APP_DOMAIN}/package/getAllPackageByDate`,
-       
+
         {
           params: {
-            date: tgai
+            date: tgai,
           },
-          headers: { "auth-token": localStorage.getItem("token"),
-        
-         },
+          headers: { "auth-token": localStorage.getItem("token") },
         }
       );
-     
-     
+
       const datas = result.data.data;
+      console.log(datas);
       setInitialValue(datas);
     };
     fetchItem();
-   
   }, [Trigger]);
-
-
 
   useEffect(() => {
     const fetchItem = async () => {
-     
       const result = await axios(
         `${process.env.REACT_APP_DOMAIN}/package/getAllPackageByDate`,
-        { 
+        {
           params: {
-          date: date
-         },
-          headers: { "auth-token": localStorage.getItem("token"),
-         
-         },
+            date: date,
+          },
+          headers: { "auth-token": localStorage.getItem("token") },
         }
       );
-     
+
       const datas = result.data.data;
       setInitialValue(datas);
     };
- 
-    if(date!==undefined)
-    {
+
+    if (date !== undefined) {
       fetchItem();
     }
-    
   }, [date]);
 
   // Event
   // get data after change date
   function onChange(date, dateString) {
-    setDate(dateString)
-
+    setDate(dateString);
   }
 
   const cancel = (e) => {
@@ -295,7 +284,7 @@ function ContentProduct() {
       key: "cust_location",
       className: "pro-location",
     },
- 
+
     {
       title: <strong>Date</strong>,
       dataIndex: "created_at",
@@ -329,7 +318,6 @@ function ContentProduct() {
     },
   ];
   return (
-    
     <ProductContext.Provider
       value={{
         packageId,
@@ -345,51 +333,50 @@ function ContentProduct() {
       }}
     >
       {initialValue && (
-      <div>
-        {/* ADD*/}
+        <div>
+          {/* ADD*/}
 
-        <Button
-          className="userAdd "
-          icon={<UserAddOutlined />}
-          onClick={showModal}
-          style={{marginRight:"3rem"}}
-        >
-          ADD
-        </Button>
-        <Modal
-          title="Add New Product"
-          visible={visible}
-          onOk={handleOk}
-          confirmLoading={confirmLoading}
-          footer={null}
-          onCancel={handleCancel}
-          width={800}
-        >
-          <ContentProductAdd
-            setVisible={setVisible}
-            initialValue={initialValue}
-            setInitialValue={setInitialValue}
-            setTrigger={setTrigger}
-            redirect={redirect}
-            setRedirect={setRedirect}
+          <Button
+            className="userAdd "
+            icon={<UserAddOutlined />}
+            onClick={showModal}
+            style={{ marginRight: "3rem" }}
+          >
+            ADD
+          </Button>
+          <Modal
+            title="Add New Product"
+            visible={visible}
+            onOk={handleOk}
+            confirmLoading={confirmLoading}
+            footer={null}
+            onCancel={handleCancel}
+            width={800}
+          >
+            <ContentProductAdd
+              setVisible={setVisible}
+              initialValue={initialValue}
+              setInitialValue={setInitialValue}
+              setTrigger={setTrigger}
+              redirect={redirect}
+              setRedirect={setRedirect}
+            />
+          </Modal>
+
+          <DatePicker
+            defaultValue={moment()}
+            format={dateFormat}
+            onChange={onChange}
+            className="date"
           />
-        </Modal>
-
-        <DatePicker
-          defaultValue={moment()}
-          format={dateFormat}
-          onChange={onChange}
-          className="date"
-        />
-        {/* Table */}
-        <Table
-          columns={columns}
-          /* dataSource={data} */ dataSource={initialValue}
-        />
-      </div>
-        )}
+          {/* Table */}
+          <Table
+            columns={columns}
+            /* dataSource={data} */ dataSource={initialValue}
+          />
+        </div>
+      )}
     </ProductContext.Provider>
- 
   );
 }
 

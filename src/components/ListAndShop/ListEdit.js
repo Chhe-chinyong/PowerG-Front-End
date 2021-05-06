@@ -32,7 +32,7 @@ function ListEdit({ listIdPass }) {
   const [payment, setPayment] = useState("");
   const [others, setOthers] = useState("");
   const [status, setStatus] = useState("");
-
+  const [amount, setAmount] = useState("");
   // Editable State
   const [form] = Form.useForm();
   const [data, setData] = useState(initialValue);
@@ -44,8 +44,8 @@ function ListEdit({ listIdPass }) {
 
   //UseEffect
   useEffect(() => {
-    const listId = localStorage.getItem("listId");
-    setListId(listId);
+    // const listId = localStorage.getItem("listId");
+    // setListId(listId);
     const fetchItem = async () => {
       const result = await axios(
         `${process.env.REACT_APP_DOMAIN}/packageList/getListById/${listIdPass}`,
@@ -62,9 +62,29 @@ function ListEdit({ listIdPass }) {
       setData(allData);
       console.log(initialValue);
     };
+
+    const fetchTotalAmount = async () => {
+      try {
+        const result = await axios.get(
+          `${process.env.REACT_APP_DOMAIN}/packageList/getListAndGenerateTotal/${listIdPass}`,
+          {
+            headers: {
+              "auth-token": localStorage.getItem("token"),
+            },
+          }
+        );
+        // setProductList(result);
+        console.log("amount", result.data.total_amount);
+        setAmount(result.data.total_amount);
+      } catch (error) {
+        console.log("error" + error);
+      }
+    };
     // if(listId)
+    // console.log("fetchTotal", fetchTotalAmount);
     fetchItem();
-  }, [listIdPass]);
+    fetchTotalAmount();
+  }, [listIdPass, trigger]);
 
   const hide = () => {
     setVisible(false);
@@ -234,15 +254,48 @@ function ListEdit({ listIdPass }) {
         const returnedTarget = Object.assign(item, row);
         console.log(row);
         console.log(returnedTarget);
-        // const a = (newData.others = "hello world");
-        // console.log(a);
+        try {
+          const result = await axios.put(
+            `${process.env.REACT_APP_DOMAIN}/package/updatePackageById`,
+            returnedTarget,
+            {
+              headers: {
+                "auth-token": localStorage.getItem("token"),
+              },
+            }
+          );
 
-        console.log("newData", item);
-        newData.splice(index, 1, { ...item, ...row });
+          console.log(result);
 
-        setData(newData);
-        console.log(data);
-        setEditingKey("");
+          message.success({
+            content: "" + result.data.message,
+            duration: 5,
+            className: "UserSuccessMessage",
+          });
+
+          console.log("newData", item);
+          newData.splice(index, 1, { ...item, ...row });
+
+          setData(newData);
+          console.log(data);
+          setEditingKey("");
+          setTrigger(true);
+        } catch (error) {
+          console.log("back-end", error);
+          const messageError = error.response.data.message;
+          message.error({
+            content: "" + messageError,
+            className: "UserErrorMessage",
+            duration: 5,
+          });
+        }
+
+        // console.log("newData", item);
+        // newData.splice(index, 1, { ...item, ...row });
+
+        // setData(newData);
+        // console.log(data);
+        // setEditingKey("");
       } else {
         newData.push(row);
         setData(newData);
@@ -280,12 +333,12 @@ function ListEdit({ listIdPass }) {
             style={{
               margin: 0,
             }}
-            rules={[
-              {
-                required: true,
-                message: `Please Input ${title}!`,
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: `Please Input ${title}!`,
+            //   },
+            // ]}
           >
             {inputNode}
           </Form.Item>
@@ -643,15 +696,16 @@ function ListEdit({ listIdPass }) {
       <div className="content">
         <div className="contentHeaderWrap">
           <p className="content-header">LIST: {listIdPass}</p>
-          {/* <Button
-            size="default"
-            className="generateList"
-            icon={<FileAddOutlined />}
-            // onClick={generateList}
-            onClick={showModal}
-          >
-            ListID
-          </Button> */}
+
+          <div className="total-container-report">
+            <p>
+              TOTAL AMOUNT:{}
+              <span style={{ color: "#e74c3c", fontSize: "1.25rem" }}>
+                {" "}
+                ${amount}{" "}
+              </span>{" "}
+            </p>
+          </div>
         </div>
 
         {/* show modal */}
