@@ -290,13 +290,6 @@ function ListEdit({ listIdPass }) {
             duration: 5,
           });
         }
-
-        // console.log("newData", item);
-        // newData.splice(index, 1, { ...item, ...row });
-
-        // setData(newData);
-        // console.log(data);
-        // setEditingKey("");
       } else {
         newData.push(row);
         setData(newData);
