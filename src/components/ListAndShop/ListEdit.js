@@ -209,8 +209,8 @@ function ListEdit({ listIdPass }) {
     if (inputType === "service_paid_by")
       return (
         <Select>
-          <Option value="transferer">Transferer</Option>
-          <Option value="receiver">Receiver</Option>
+          <Option value="Transferer">Transferer</Option>
+          <Option value="Receiver">Receiver</Option>
         </Select>
       );
 
@@ -279,7 +279,8 @@ function ListEdit({ listIdPass }) {
           setData(newData);
           console.log(data);
           setEditingKey("");
-          setTrigger(true);
+          trigger ? setTrigger(false) : setTrigger(true);
+          console.log(trigger);
         } catch (error) {
           console.log("back-end", error);
           const messageError = error.response.data.message;
