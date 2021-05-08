@@ -202,7 +202,7 @@ function ListEdit({ listIdPass }) {
       return (
         <Select onChange={handleChangePayment}>
           <Option value="COD">COD</Option>
-          <Option value="PAID">PAID</Option>
+          <Option value="Paid">PAID</Option>
         </Select>
       );
 
