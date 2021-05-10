@@ -248,7 +248,7 @@ function ListEdit({ listIdPass }) {
       const row = await form.validateFields();
       const newData = [...data];
       const index = newData.findIndex((item) => key === item.package_id);
-
+      console.log(row);
       if (index > -1) {
         const item = newData[index];
         const returnedTarget = Object.assign(item, row);
