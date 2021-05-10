@@ -41,8 +41,8 @@ const Chart = React.memo(({ tracker }) => {
     //   return;
     // }
     // Render component
-    console.log(tracker[0]["status"]);
-    console.log(tracker.length);
+    // console.log(tracker[0]["status"]);
+    // console.log(tracker.length);
     if (tracker.length !== 0) {
       fetchItem();
     } else {
