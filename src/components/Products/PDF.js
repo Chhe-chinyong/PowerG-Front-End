@@ -120,7 +120,7 @@ const PDF = ({ productData, package_id }) => {
                 value={`https://powergdelivery.com/qr/${package_id}`}
                 size={120}
               />
-              <figcaption>Scan me</figcaption>
+              <figcaption className="scan">Scan me</figcaption>
             </figure>
           </div>
 

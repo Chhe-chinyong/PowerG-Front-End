@@ -119,7 +119,7 @@ figcaption {
 }
 
 .product_paid_by {
-  font-size: 1rem;
+  font-size: 1.3rem;
   font-weight: bold;
 }
 
@@ -127,6 +127,8 @@ figcaption {
   text-align: center;
   margin: 1rem;
   font-weight: lighter;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .btnPdf {
@@ -148,13 +150,17 @@ figcaption {
   margin: 5rem auto;
   margin-bottom: 0;
   text-align: center;
-  font-size: larger;
+
   font-weight: bolder;
 }
 .pdf-cod-title {
   font-size: 1.2rem;
   margin-bottom: 0;
   margin-top: 1.2rem;
+}
+
+.scan {
+  font-size: 1.3rem;
 }
 
 @media print {
