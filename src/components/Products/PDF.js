@@ -3,6 +3,7 @@ import { useReactToPrint } from "react-to-print";
 import { Button } from "antd";
 import QRCode from "react-qr-code";
 import logo from "../../images/favicon.ico";
+// import logo from "../../images/power.png";
 import packagePng from "../../images/package.png";
 import location from "../../images/location.png";
 import moment from "moment";

@@ -23,7 +23,8 @@
   padding: 1rem;
   width: 100%;
   /* height: 150px; */
-  border: 1px solid rgb(199, 197, 197);
+  /* border: 1px solid rgb(199, 197, 197); */
+  border: 2px solid black;
 }
 .pdf-date {
   font-weight: bold;
@@ -64,12 +65,14 @@
   display: flex;
   align-items: center;
   font-size: 100%;
+  /* border: 2px solid black; */
 }
 
 .pdf-priceTag {
   width: 54%;
   border: 1px solid rgb(199, 197, 197);
   text-align: center;
+  border: 2px solid black;
 }
 .pdf-priceTag p {
   margin-top: 0.5rem;
@@ -79,7 +82,7 @@
 
 figure {
   text-align: center;
-  margin-left: 2rem;
+  margin-left: 2.5rem;
   margin-top: 2.5rem;
 }
 figcaption {
@@ -94,7 +97,9 @@ figcaption {
 }
 
 .pdf-cod {
-  border: 1px solid rgb(196, 196, 196);
+  /* border: 1px solid rgb(196, 196, 196); */
+  border: 2px solid black;
+
   height: 56%;
   width: 128px;
   text-align: center;
