@@ -119,7 +119,7 @@ const PDF = ({ productData, package_id }) => {
             <figure>
               <QRCode
                 value={`https://powergdelivery.com/qr/${package_id}`}
-                size={120}
+                size={140}
               />
               <figcaption className="scan">Scan me</figcaption>
             </figure>
