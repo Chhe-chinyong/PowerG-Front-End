@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Nokora:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nokora:wght@400;700&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -9,7 +9,6 @@
 body {
   font-family: "Roboto", sans-serif !important;
 }
-
 
 @import "./_NavBar.css";
 @import "./_ContentUser.css";
@@ -25,3 +24,5 @@ body {
 @import "./_HomePage.css";
 @import "./_ContentList.css";
 @import "./_ReportDelivery.css";
+
+

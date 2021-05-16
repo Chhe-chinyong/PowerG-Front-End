@@ -6,11 +6,21 @@ import logo from "../../images/favicon.ico";
 import packagePng from "../../images/package.png";
 import location from "../../images/location.png";
 import moment from "moment";
-const options = {
-  orientation: "landscape",
-  unit: "in",
-  format: [4, 2],
-};
+// const options = {
+//   orientation: "landscape",
+//   unit: "in",
+//   format: [4, 2],
+// };
+
+// const pageStyle = `
+//   @media page {
+//     .pdf-header p{
+//       color:red;
+//     }
+
+//   }
+
+// `;
 const PDF = ({ productData, package_id }) => {
   if (productData.service_fee === undefined) {
     productData.service_fee = 4000;
@@ -36,6 +46,7 @@ const PDF = ({ productData, package_id }) => {
   const refPrint = useRef();
   const handlePrint = useReactToPrint({
     content: () => refPrint.current,
+    // pageStyle: () => pageStyle,
   });
 
   return (

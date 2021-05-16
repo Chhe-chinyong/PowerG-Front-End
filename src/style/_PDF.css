@@ -15,6 +15,10 @@
   justify-content: space-between;
 }
 
+.pdf-header p {
+  font-size: 1.3rem;
+}
+
 .pdf-information {
   padding: 1rem;
   width: 100%;
@@ -23,11 +27,13 @@
 }
 .pdf-date {
   font-weight: bold;
+  font-size: 1.4rem;
 }
 
 .pdf-sender,
 .pdf-receiver {
   display: flex;
+  font-size: 1.4rem;
 }
 
 .pdf-receiver {
@@ -54,7 +60,7 @@
 }
 
 .pdf-price {
-  height: 200px;
+  height: 215px;
   display: flex;
   align-items: center;
   font-size: 100%;
@@ -67,7 +73,7 @@
 }
 .pdf-priceTag p {
   margin-top: 0.5rem;
-  font-size: 100%;
+  font-size: 1.3rem;
   font-family: "Khmer", cursive;
 }
 
@@ -108,7 +114,7 @@ figcaption {
 }
 
 .product_price {
-  font-size: medium;
+  font-size: 1.3rem;
   font-weight: bold;
 }
 
@@ -142,9 +148,51 @@ figcaption {
   margin: 5rem auto;
   margin-bottom: 0;
   text-align: center;
+  font-size: larger;
+  font-weight: bolder;
 }
 .pdf-cod-title {
-  font-size: small;
+  font-size: 1.2rem;
   margin-bottom: 0;
   margin-top: 1.2rem;
 }
+
+@media print {
+  /* .pdf-container {
+    width: 100% !important;
+    height: 100px !important;
+    font-size: large;
+  }
+
+  .pdf-header p span {
+    color: red !important;
+  } */
+  /* p {
+    color: red !important;
+  } */
+}
+
+@page {
+  size: 5.5in 8.5in;
+}
+
+/* @page {
+  /* size: 100% 50mm !important; */
+/* background: white;
+  width: 21cm;
+  height: 29.7cm;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5); */
+
+/* 
+page[size="46"] {
+  background: white;
+  width: 21cm;
+  height: 29.7cm;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+} */
