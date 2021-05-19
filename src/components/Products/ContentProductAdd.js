@@ -302,7 +302,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
               <Option value="1">1</Option>
               <Option value="1.25">1.25</Option>
             </Select> */}
-            <InputNumber min={1} />
+            <InputNumber min={0} />
           </Item>
 
           <Item
