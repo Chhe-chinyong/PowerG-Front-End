@@ -10,6 +10,16 @@ body {
   font-family: "Roboto", sans-serif !important;
 }
 
+@media print {
+  @page {
+    size: 75mm 50mm;
+    /* border: 1px solid red; */
+    margin: 0rem;
+    padding-top: 1rem;
+    /* margin-top: 1rem; */
+  }
+}
+
 @import "./_NavBar.css";
 @import "./_ContentUser.css";
 @import "./_UserLogin.css";
@@ -24,5 +34,3 @@ body {
 @import "./_HomePage.css";
 @import "./_ContentList.css";
 @import "./_ReportDelivery.css";
-
-

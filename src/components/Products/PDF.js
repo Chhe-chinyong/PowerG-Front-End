@@ -20,6 +20,7 @@ import moment from "moment";
 //     }
 
 //   }
+const pageStyle = `{ size: 2.5in 4in}`;
 
 // `;
 const PDF = ({ productData, package_id }) => {
@@ -47,21 +48,11 @@ const PDF = ({ productData, package_id }) => {
   const refPrint = useRef();
   const handlePrint = useReactToPrint({
     content: () => refPrint.current,
-    // pageStyle: () => pageStyle,
   });
 
   return (
     <>
       <div className="btnPdf-container" ref={refPrint}>
-        {/* <ReactToPdf
-          targetRef={refPrint}
-          filename="qr-package.pdf"
-          options={options}
-          //   x={0.5}
-          //   y={0.5}
-        >
-          {({ toPdf }) => <button onClick={toPdf}>Generate pdf</button>}
-        </ReactToPdf> */}
         <div ref={refPrint} className="pdf-container">
           {/* Header */}
           <div className="pdf-header">
@@ -120,16 +111,13 @@ const PDF = ({ productData, package_id }) => {
               <QRCode
                 value={`https://powergdelivery.com/qr/${package_id}`}
                 size={140}
+                className="qrcode"
               />
               <figcaption className="scan">Scan me</figcaption>
             </figure>
           </div>
 
           <p className="pdf-website">www.powergdelivery.com</p>
-
-          {/* <h2>shop's Owner:{productData.shop_owner}</h2>
-          <p>Location: {productData.cust_location}</p>
-          <h2>Product-ID convert to QR code</h2> */}
         </div>
 
         {/* <ReactToPdf

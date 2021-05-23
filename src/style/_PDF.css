@@ -169,42 +169,47 @@ figcaption {
   font-size: 1.3rem;
 }
 
+/* printing  */
 @media print {
-  /* .pdf-container {
-    width: 100% !important;
-    height: 100px !important;
-    font-size: large;
+  .pdf-logo {
+    width: 42px;
+    height: 42px;
+    /* margin-bottom: 1rem; */
+  }
+  .pdf-cod {
+    /* display: none; */
+  }
+  .pdf-priceTag {
+    /* display: none; */
+  }
+  .scan {
+    /* display: none; */
+  }
+  .pdf-information {
+    /* width: 100%; */
+    width: 100%;
+    height: fit-content;
+    /* display: none; */
+    margin: 0;
+  }
+  .pdf-website {
+    /* display: none; */
+  }
+  .qrcode {
+    /* display: none; */
+  }
+  .pdf-header p {
+    /* display: none; */
+  }
+  .pdf-header {
+    padding-top: 3rem;
   }
 
-  .pdf-header p span {
-    color: red !important;
-  } */
-  /* p {
-    color: red !important;
-  } */
+  .btnPdf-container {
+    width: 90%;
+    margin: 0;
+    /* margin-bottom: 0; */
+    text-align: center;
+    font-weight: bolder;
+  }
 }
-
-@page {
-  size: 5.5in 8.5in;
-}
-
-/* @page {
-  /* size: 100% 50mm !important; */
-/* background: white;
-  width: 21cm;
-  height: 29.7cm;
-  display: block;
-  margin: 0 auto;
-  margin-bottom: 0.5cm;
-  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5); */
-
-/* 
-page[size="46"] {
-  background: white;
-  width: 21cm;
-  height: 29.7cm;
-  display: block;
-  margin: 0 auto;
-  margin-bottom: 0.5cm;
-  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-} */
