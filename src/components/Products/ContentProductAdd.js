@@ -167,6 +167,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
         service_fee: values.service_fee,
         service_paid_by: transferer,
       });
+
       // setVisible(false);
     } catch (error) {
       const messageError = error.response.data.message;
@@ -380,7 +381,11 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
           </Item>
         </Form>
       ) : (
-        <PDF productData={productData} package_id={packageId} />
+        <PDF
+          productData={productData}
+          package_id={packageId}
+          className="PdfFinal"
+        />
       )}
     </div>
   );

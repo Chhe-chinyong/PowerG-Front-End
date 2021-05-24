@@ -169,6 +169,17 @@ figcaption {
   font-size: 1.3rem;
 }
 
+/* Change size printing dynamic */
+
+@page pdfFinal {
+  size: 75mm 48mm;
+  margin: 0rem;
+  padding-top: 1rem;
+}
+.PdfFinal {
+  page: pdfFinal;
+}
+
 /* printing  */
 @media print {
   .pdf-logo {
@@ -176,15 +187,7 @@ figcaption {
     height: 42px;
     /* margin-bottom: 1rem; */
   }
-  .pdf-cod {
-    /* display: none; */
-  }
-  .pdf-priceTag {
-    /* display: none; */
-  }
-  .scan {
-    /* display: none; */
-  }
+
   .pdf-information {
     /* width: 100%; */
     width: 100%;
@@ -192,15 +195,7 @@ figcaption {
     /* display: none; */
     margin: 0;
   }
-  .pdf-website {
-    /* display: none; */
-  }
-  .qrcode {
-    /* display: none; */
-  }
-  .pdf-header p {
-    /* display: none; */
-  }
+
   .pdf-header {
     padding-top: 3rem;
   }

@@ -147,7 +147,7 @@ export class PDFList extends React.PureComponent {
 
         {/* </p> */}
         {this.state.value && (
-          <div className="center-pdf ">
+          <div className=" center-pdf">
             <div className="pdf-list-header">
               <div>
                 <img src={logo} alt="Logo" className="pdf-list-header-logo" />

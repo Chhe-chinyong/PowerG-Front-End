@@ -9,14 +9,29 @@
 body {
   font-family: "Roboto", sans-serif !important;
 }
+/* 
+page[size="A4"] {
+  size: 75mm 48mm;
+  margin: 0rem;
+  padding-top: 1rem;
+} */
 
 @media print {
-  @page {
-    size: 75mm 50mm;
-    /* border: 1px solid red; */
+  /* @page { */
+  /* size: A4;
+    margin: 0rem;
+    padding-top: 1rem; */
+  /* size: 75mm 48mm;
+    margin: 0rem;
+    padding-top: 1rem; */
+  /* } */
+  /* page[size="A4"] {
+    size: 75mm 48mm;
     margin: 0rem;
     padding-top: 1rem;
-    /* margin-top: 1rem; */
+  } */
+  @page {
+    size: auto;
   }
 }
 

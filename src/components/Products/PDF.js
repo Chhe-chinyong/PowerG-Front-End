@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
-import { useReactToPrint } from "react-to-print";
+import { useReactToPrint, ReactToPrint } from "react-to-print";
+// import ReactToPrint from "react-to-print";
 import { Button } from "antd";
 import QRCode from "react-qr-code";
 import logo from "../../images/favicon.ico";
@@ -7,22 +8,8 @@ import logo from "../../images/favicon.ico";
 import packagePng from "../../images/package.png";
 import location from "../../images/location.png";
 import moment from "moment";
-// const options = {
-//   orientation: "landscape",
-//   unit: "in",
-//   format: [4, 2],
-// };
-
-// const pageStyle = `
-//   @media page {
-//     .pdf-header p{
-//       color:red;
-//     }
-
-//   }
 const pageStyle = `{ size: 2.5in 4in}`;
 
-// `;
 const PDF = ({ productData, package_id }) => {
   if (productData.service_fee === undefined) {
     productData.service_fee = 4000;
@@ -52,7 +39,8 @@ const PDF = ({ productData, package_id }) => {
 
   return (
     <>
-      <div className="btnPdf-container" ref={refPrint}>
+      {/* <div className="btnPdf-container" ref={refPrint}> */}
+      <page size="A4" className="btnPdf-container" ref={refPrint}>
         <div ref={refPrint} className="pdf-container">
           {/* Header */}
           <div className="pdf-header">
@@ -119,21 +107,7 @@ const PDF = ({ productData, package_id }) => {
 
           <p className="pdf-website">www.powergdelivery.com</p>
         </div>
-
-        {/* <ReactToPdf
-          targetRef={refPrint}
-          filename="qr-package.pdf"
-          scale={1}
-          x={30}
-          y={5}
-        >
-          {({ toPdf }) => (
-            <Button type="primary" onClick={toPdf} className="btnPdf">
-              Generate pdf
-            </Button>
-          )}
-        </ReactToPdf> */}
-      </div>
+      </page>
       <div className="pdfBtnContainer">
         <Button type="primary" onClick={handlePrint} className="btnPdf">
           Generate pdf
