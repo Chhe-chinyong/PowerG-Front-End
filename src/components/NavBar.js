@@ -58,8 +58,13 @@ function NavBar({ title, setTitle }) {
               List And Shop
             </Link>
           </Item>
+          <Item key="6" className="icon" icon={<FileSearchOutlined />}>
+            <Link to="/dailyShop" onClick={handleClick}>
+              View Daily shop
+            </Link>
+          </Item>
 
-          <Item key="6" className="icon" icon={<UserOutlined />} title="User">
+          <Item key="7" className="icon" icon={<UserOutlined />} title="User">
             <Link to="/users" onClick={handleClick}>
               Users
             </Link>

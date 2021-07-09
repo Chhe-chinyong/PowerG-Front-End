@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "antd/dist/antd.css";
 import axios from "axios";
 import ReactToPrint, { useReactToPrint } from "react-to-print";
-import { PDFShop } from "./PDFShop";
+
 import { GetColumnSearchProps } from "../../includes/external";
 
 import { DatePicker, Table, Button, message, Select } from "antd";
@@ -15,7 +15,7 @@ import { ProductContext } from "../../context/AuthContext";
 
 const { Option } = Select;
 
-function ReportShop() {
+function ViewDailyShop() {
   const dateFormat = "YYYY/M/D";
   //State
   const [Trigger, setTrigger] = useState(false);
@@ -321,12 +321,12 @@ function ReportShop() {
         </div>
         {/* Table */}
         <Table columns={columns} dataSource={initialValue} />
-        <PDFShop
+        {/* <PDFShop
           ref={refPrint}
           productList={productList}
           date={date}
           shop={shop}
-        />
+        /> */}
         {/* Amount is dynamic value */}
         {/* Amount is dynamic value */}
         {/* <div className="total-container-report">
@@ -343,4 +343,4 @@ function ReportShop() {
   );
 }
 
-export default ReportShop;
+export default ViewDailyShop;

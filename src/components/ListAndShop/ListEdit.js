@@ -353,6 +353,12 @@ function ListEdit({ listIdPass }) {
 
       render: (text) => <a>{text}</a>,
     },
+    {
+      title: "Price",
+      dataIndex: "package_price",
+      key: "package_price",
+      editable: true,
+    },
 
     {
       title: "payment_method",

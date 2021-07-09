@@ -27,10 +27,16 @@ export class PDFList extends React.PureComponent {
             `${process.env.REACT_APP_DOMAIN}/packageList/getListById/${listId}`
           );
           // setProductList(result);
-
+          var i = 1;
+          var result_all = result.data.data;
+          result_all.map((ele) => {
+            ele.id = i++;
+          });
+          // console.log(result);
           this.setState({
             listValue: listId,
-            value: result.data.data,
+            // value: result.data.data,
+            value: result_all,
             deliveryManName: deliveryManName,
           });
         } catch (error) {
@@ -71,9 +77,10 @@ export class PDFList extends React.PureComponent {
         //title is display on coulmn
         //dataIndex to match with datasouce to display
         title: <strong>ល.រ</strong>,
-        dataIndex: "package_id",
-        key: "package_id",
+        dataIndex: "id",
+        key: "id",
       },
+
       {
         title: <strong>អតិថិជន</strong>,
         dataIndex: "shop_owner",
@@ -121,6 +128,13 @@ export class PDFList extends React.PureComponent {
         title: <strong>ការបង់ថ្លៃទំនិញ</strong>,
         dataIndex: "payment_method",
         key: "payment_method",
+      },
+      {
+        //title is display on coulmn
+        //dataIndex to match with datasouce to display
+        title: <strong>ល.រ.អី</strong>,
+        dataIndex: "package_id",
+        key: "package_id",
       },
 
       // {

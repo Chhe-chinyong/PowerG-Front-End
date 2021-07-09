@@ -232,7 +232,7 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
             label="Customer's name"
             rules={[
               {
-                required: true,
+               
                 message: "please input your customer name!",
               },
               {

@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import "ant-design-pro/dist/ant-design-pro.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Layout } from "antd";
@@ -21,6 +26,7 @@ import {
 import DeliveryDashBoard from "./components/DeliveryMan/DeliveryDashBoard";
 import ReportDelivery from "./components/Reports/ReportDelivery";
 import ReportShop from "./components/Reports/ReportShop";
+import ViewDailyShop from "./components/dailyShops/ViewDailyShop";
 import HomePage from "./components/HomePage";
 import ContentList from "./components/ListAndShop/ContentList";
 
@@ -54,7 +60,7 @@ function App() {
     const user = localStorage.getItem("token");
     const role = localStorage.getItem("u_role");
     const username = localStorage.getItem("u_username");
-    
+
     if (user) {
       setLoginStatus(true);
       setRoleStatus(role);
@@ -92,7 +98,7 @@ function App() {
                   auth={loginStatus}
                 />
                 {/* Scan QR code page */}
-                <Route path="/qr/:pro_id" component={QrCode}  />
+                <Route path="/qr/:pro_id" component={QrCode} />
 
                 <Layout>
                   <Sider
@@ -122,7 +128,11 @@ function App() {
                           title={title}
                           exact
                         />
-                        <PrivateRoute path="/products" component={Products} auth={loginStatus}/>
+                        <PrivateRoute
+                          path="/products"
+                          component={Products}
+                          auth={loginStatus}
+                        />
                         <PrivateRoute
                           path="/reportDelivery"
                           component={ReportDelivery}
@@ -132,6 +142,12 @@ function App() {
                         <PrivateRoute
                           path="/reportShop"
                           component={ReportShop}
+                          auth={loginStatus}
+                        />
+
+                        <PrivateRoute
+                          path="/dailyShop"
+                          component={ViewDailyShop}
                           auth={loginStatus}
                         />
                         {/* List & Shop */}
@@ -147,16 +163,11 @@ function App() {
                           auth={loginStatus}
                         />
                         <Redirect from="*" to="/" />
-
                       </Switch>
-                     
-                    </Content>      
-                       
+                    </Content>
                   </Layout>
                 </Layout>
-                  
               </Switch>
-              
             </div>
           </Router>
         </UsernameContext.Provider>
@@ -166,4 +177,3 @@ function App() {
 }
 
 export default App;
-
