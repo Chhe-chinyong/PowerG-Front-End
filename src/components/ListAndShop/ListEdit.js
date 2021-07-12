@@ -48,7 +48,7 @@ function ListEdit({ listIdPass }) {
     // setListId(listId);
     const fetchItem = async () => {
       const result = await axios(
-        `${process.env.REACT_APP_DOMAIN}/packageList/getListById/${listIdPass}`,
+        `${process.env.REACT_APP_DOMAIN}/packageList/admin/getListById/${listIdPass}`,
         {
           headers: {
             "auth-token": localStorage.getItem("token"),
@@ -57,7 +57,7 @@ function ListEdit({ listIdPass }) {
       );
 
       const allData = result.data.data;
-      console.log(allData);
+      console.log("clg", allData);
       // setInitialValue(allData);
       setData(allData);
       console.log(initialValue);
@@ -354,9 +354,15 @@ function ListEdit({ listIdPass }) {
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "Price",
-      dataIndex: "package_price",
-      key: "package_price",
+      title: "Price ($)",
+      dataIndex: "pro_price",
+      key: "pro_price",
+      editable: true,
+    },
+    {
+      title: "service_fee",
+      dataIndex: "service_fee",
+      key: "service_fee",
       editable: true,
     },
 
