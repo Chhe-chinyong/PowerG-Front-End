@@ -1,0 +1,44 @@
+.dailyShop-container {
+  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 20%);
+  margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1.2rem;
+  width: 100%;
+  /* justify-content: ; */
+}
+
+.shop-box {
+  display: flex;
+  justify-content: space-between;
+
+  width: 20%;
+  border: 1px solid #ededed;
+  /* flex: 1 1 auto; */
+  min-height: 1px;
+  padding: 1.25rem;
+  background-color: white;
+  align-items: center;
+}
+
+.shop-box .image {
+  background-color: rgba(255, 155, 68, 0.2);
+  border-radius: 100%;
+  color: #ff9b44;
+  display: inline-block;
+  float: left;
+  font-size: 30px;
+  height: 60px;
+  line-height: 60px;
+  margin-right: 10px;
+  text-align: center;
+  width: 60px;
+}
+
+.shop-box-container h4 {
+  font-weight: bold;
+}
+
+.shop-box-container span {
+  font-weight: bold;
+}

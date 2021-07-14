@@ -232,7 +232,6 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
             label="Customer's name"
             rules={[
               {
-               
                 message: "please input your customer name!",
               },
               {
@@ -282,27 +281,17 @@ function ContentProductAdd({ setTrigger, setVisible, redirect, setRedirect }) {
             name={"service_fee"}
             label="service_fee ($)"
             style={{ textAlign: "left" }}
-            rules={
-              [
-                // {
-                //   required: true,
-                //   message: "please input your servie_fee!",
-                // },
-                // {
-                //   whitespace: true,
-                //   message: "No whitespace",
-                // },
-              ]
-            }
+            rules={[
+              {
+                required: true,
+                message: "please input your servie_fee!",
+              },
+              // {
+              //   whitespace: true,
+              //   message: "No whitespace",
+              // },
+            ]}
           >
-            {/* <Select
-              defaultValue="1"
-              style={{ width: 116 }}
-              onChange={handleChange}
-            >
-              <Option value="1">1</Option>
-              <Option value="1.25">1.25</Option>
-            </Select> */}
             <InputNumber min={0} />
           </Item>
 

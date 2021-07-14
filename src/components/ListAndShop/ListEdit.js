@@ -360,7 +360,7 @@ function ListEdit({ listIdPass }) {
       editable: true,
     },
     {
-      title: "service_fee",
+      title: "service_fee ($)",
       dataIndex: "service_fee",
       key: "service_fee",
       editable: true,

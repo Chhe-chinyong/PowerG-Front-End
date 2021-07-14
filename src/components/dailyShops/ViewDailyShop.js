@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import "antd/dist/antd.css";
 import axios from "axios";
 import ReactToPrint, { useReactToPrint } from "react-to-print";
-
+import salary from "../../images/salary.png";
+import store from "../../images/store.png";
+import dollar from "../../images/dollar.png";
+import fee from "../../images/fee.png";
+import schedule from "../../images/schedule.png";
 import { GetColumnSearchProps } from "../../includes/external";
 
 import { DatePicker, Table, Button, message, Select } from "antd";
@@ -202,7 +206,7 @@ function ViewDailyShop() {
       title: <strong>ID</strong>,
       dataIndex: "package_id",
       key: "id",
-      // defaultSortOrder: "ascend",
+
       ...GetColumnSearchProps("product_id"),
       sorter: (a, b) => a.package_id - b.package_id,
     },
@@ -213,44 +217,9 @@ function ViewDailyShop() {
     },
 
     {
-      title: <strong>COD</strong>,
+      title: <strong>Total</strong>,
       dataIndex: "service_paid_by",
       key: "service_paid_by",
-    },
-
-    {
-      title: <strong>Receiver</strong>,
-      dataIndex: "cust_name",
-      key: "cust_name",
-    },
-    {
-      title: <strong>STATUS</strong>,
-      dataIndex: "status",
-      key: "status",
-      render: (status) => (
-        <>
-          {(() => {
-            if (status === "UNSUCCESS")
-              return <span style={{ color: "#ff4d4f" }}>UNSUCCESS</span>;
-            if (status === "ON GOING")
-              return <span style={{ color: "#1890ff" }}>ON GOING</span>;
-            if (status === "SUCCESS")
-              return <span style={{ color: "#52c41a" }}>SUCCESS</span>;
-            return <span style={{ color: "#bdc3c7" }}>PENDING</span>;
-          })()}
-        </>
-      ),
-    },
-    {
-      title: <strong>Date</strong>,
-      dataIndex: "delivered_at",
-      key: "date",
-    },
-
-    {
-      title: <strong>Delivery By</strong>,
-      dataIndex: "delivery_man_name",
-      key: "delivery_man_name",
     },
   ];
   return (
@@ -270,74 +239,68 @@ function ViewDailyShop() {
     >
       {/* Header */}
       <div>
-        <div className="total-container-report">
-          <p>
-            TOTAL AMOUNT:{}
-            <span
-              style={{ color: "#e74c3c", fontSize: "1.25rem" }}
-              ref={clearRef}
-            >
-              {" "}
-              ${status.total_amount}{" "}
-            </span>{" "}
-          </p>
-          {/* <Button type="primary" size="default" className="total-button">
-          Submit
-        </Button>
-        <Button>Cancel</Button> */}
-        </div>
-        <div className="header-reportShop">
-          <DatePicker
+        <div className="dailyShop-container">
+          {/* <DatePicker
             defaultValue={moment()}
             format={dateFormat}
             onChange={onChange}
-            //   className="date"
-          />
-          {/* shop */}
-          <Select
-            icon={<ShopOutlined />}
-            defaultValue="Shop"
-            style={{ width: 160 }}
-            onChange={handleChange}
-            size="default"
-          >
-            {options.map((option) => (
-              <Option key={option.shop_owner} value={option.value}>
-                {option.shop_owner}
-              </Option>
-            ))}
-          </Select>
+          /> */}
+          <div class="shop-box">
+            <span className="image">
+              <img src={store} alt="shop" style={{ width: "30px" }} />
+            </span>
+            <div className="shop-box-container">
+              <h4>100$</h4>
+              <span>Total Stores</span>
+            </div>
+          </div>
 
-          {/* Download */}
-          <Button
-            type="primary"
-            size="default"
-            icon={<DownloadOutlined />}
-            onClick={() => {
-              setProductList(initialValue);
-              handlePrint();
-            }}
-          ></Button>
+          <div class="shop-box">
+            <span className="image">
+              <img src={salary} alt="Logo" style={{ width: "30px" }} />
+            </span>
+            <div className="shop-box-container">
+              <h4>100$</h4>
+              <span>Send Amount</span>
+            </div>
+          </div>
+
+          <div class="shop-box">
+            <span className="image">
+              <img src={dollar} alt="Logo" style={{ width: "30px" }} />
+            </span>
+            <div className="shop-box-container">
+              <h4>100$</h4>
+              <span>Left Amount</span>
+            </div>
+          </div>
+
+          <div class="shop-box">
+            <span className="image">
+              <img src={fee} alt="Logo" style={{ width: "30px" }} />
+            </span>
+            <div className="shop-box-container">
+              <h4>100$</h4>
+              <span>Profit </span>
+            </div>
+          </div>
+
+          <div class="shop-box">
+            <span className="image">
+              <img src={schedule} alt="Logo" style={{ width: "30px" }} />
+            </span>
+            <div className="shop-box-container">
+              <h4>Date</h4>
+              <DatePicker
+                defaultValue={moment()}
+                format={dateFormat}
+                onChange={onChange}
+              />
+            </div>
+          </div>
+          {/* Table */}
         </div>
-        {/* Table */}
-        <Table columns={columns} dataSource={initialValue} />
-        {/* <PDFShop
-          ref={refPrint}
-          productList={productList}
-          date={date}
-          shop={shop}
-        /> */}
-        {/* Amount is dynamic value */}
-        {/* Amount is dynamic value */}
-        {/* <div className="total-container-report">
-          <p>
-            TOTAL AMOUNT:{}
-            <span style={{ color: "#e74c3c", fontSize: "1.25rem" }}>
-              100{" "}
-            </span>{" "}
-          </p>
-          
-        </div> */}
+        <Table columns={columns} dataSource={initialValue} pagination={false} />
       </div>
     </ProductContext.Provider>
   );
