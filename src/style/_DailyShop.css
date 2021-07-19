@@ -26,7 +26,7 @@
   border-radius: 100%;
   color: #ff9b44;
   display: inline-block;
-  float: left;
+
   font-size: 30px;
   height: 60px;
   line-height: 60px;
@@ -41,4 +41,7 @@
 
 .shop-box-container span {
   font-weight: bold;
+}
+.viewDailyShop-column {
+  width: 340px;
 }

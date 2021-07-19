@@ -88,17 +88,20 @@ const PDF = ({ productData, package_id }) => {
               </h3>
               {/* <h3 className="price">$ {productData.service_fee} <span className="product_paid_by">({productData.service_paid_by})</span> </h3> */}
             </div>
-            <div className="pdf-cod">
+
+            {/* Start តម្លៃដឹកជញ្ជួន */}
+            {/* <div className="pdf-cod">
               <p className="pdf-cod-title">តម្លៃដឹកជញ្ជួន</p>
               <p className="product_payment">
                 ${productData.service_fee}{" "}
               </p>{" "}
               <p className="product_price"> ({productData.service_paid_by})</p>
-            </div>
+            </div> */}
+            {/* End តម្លៃដឹកជញ្ជួន */}
             <figure>
               <QRCode
                 value={`https://powergdelivery.com/qr/${package_id}`}
-                size={140}
+                size={192}
                 className="qrcode"
               />
               <figcaption className="scan">Scan me</figcaption>

@@ -51,7 +51,7 @@ function ContentProduct() {
   useEffect(() => {
     const fetchItem = async () => {
       const tgai = moment().format("YYYY/M/D");
-      // console.log(tgai);
+      //console.log(tgai);
       const result = await axios(
         `${process.env.REACT_APP_DOMAIN}/package/getAllPackageByDate`,
 

@@ -41,18 +41,24 @@ function ViewDailyShop() {
   const [shopPhone, setShopPhone] = useState();
   const [receiverPhone, setReceiverPhone] = useState();
   const [options, setOptions] = useState([]);
+  const [plus, setPlus] = useState("");
+  const [minus, setMinus] = useState("");
+  const [serviceFee, setServiceFee] = useState("");
   const [count, setCount] = useState(0);
+  const [countStore, setCountStore] = useState(0);
   //Ref
   const clearRef = useRef("");
   const refPrint = useRef();
 
   //UseEffect
-  //get shop name
+  //get data from 2 endpoints
   useEffect(() => {
     const fetchItem = async () => {
       const tgai = await moment().format("YYYY/M/D");
+      //get data all stores and total
+
       const result = await axios.get(
-        `${process.env.REACT_APP_DOMAIN}/shop/getShopByDate`,
+        `${process.env.REACT_APP_DOMAIN}/total/totalEachShop`,
         {
           params: {
             date: tgai,
@@ -60,12 +66,35 @@ function ViewDailyShop() {
           headers: { "auth-token": localStorage.getItem("token") },
         }
       );
+
+      //get total fee
+
+      const result_fee = await axios.get(
+        `${process.env.REACT_APP_DOMAIN}/total/totalServiceFee`,
+        {
+          params: {
+            date: tgai,
+          },
+          headers: { "auth-token": localStorage.getItem("token") },
+        }
+      );
+
       setDate(tgai);
-      const allData = result.data.data;
-
+      const allData = result.data.data.all;
+      //loop to print ID N.O
+      var i = 1;
+      allData.map((ele) => {
+        ele.id = i++;
+      });
+      //
+      console.log(result_fee);
+      console.log(result);
       if (allData === undefined) return;
-
-      setOptions(allData);
+      setCountStore(allData.length);
+      setPlus(result.data.data.plusShop.total);
+      setMinus(result.data.data.minusShop.total);
+      setServiceFee(result_fee.data.totalServiceFee);
+      setInitialValue(allData);
     };
     fetchItem();
   }, []);
@@ -73,7 +102,7 @@ function ViewDailyShop() {
   useEffect(() => {
     const fetchItem = async () => {
       const result = await axios.get(
-        `${process.env.REACT_APP_DOMAIN}/shop/getShopByDate`,
+        `${process.env.REACT_APP_DOMAIN}/total/totalEachShop`,
         {
           params: {
             date: date,
@@ -81,20 +110,45 @@ function ViewDailyShop() {
           headers: { "auth-token": localStorage.getItem("token") },
         }
       );
-
-      const allData = result.data.data;
-      console.log("clg", allData);
+      const allData = result.data.data.all;
+      console.log("all", result);
       if (allData === undefined) {
         // clearRef.current.innerText = status.total_amount;
         setOptions([]);
         setInitialValue([]);
         return;
       }
+      //get total fee
 
-      setOptions(allData);
-      setProductList(initialValue);
-      setDate(date);
-      setShop(shop);
+      const result_fee = await axios.get(
+        `${process.env.REACT_APP_DOMAIN}/total/totalServiceFee`,
+        {
+          params: {
+            date: date,
+          },
+          headers: { "auth-token": localStorage.getItem("token") },
+        }
+      );
+      //loop to print ID N.O
+      var i = 1;
+
+      allData.map((ele) => {
+        ele.id = i++;
+      });
+      //
+
+      console.log(result_fee);
+      console.log(result);
+      setCountStore(allData.length);
+      setPlus(result.data.data.plusShop.total);
+      setMinus(result.data.data.minusShop.total);
+      setServiceFee(result_fee.data.totalServiceFee);
+      setInitialValue(allData);
+
+      // setOptions(allData);
+      // setProductList(initialValue);
+      // setDate(date);
+      // setShop(shop);
     };
 
     // Run fetch data
@@ -108,17 +162,16 @@ function ViewDailyShop() {
   useEffect(() => {
     const fetchItem = async () => {
       const result = await axios.get(
-        `${process.env.REACT_APP_DOMAIN}/shop/packageOfShopByDate`,
+        `${process.env.REACT_APP_DOMAIN}/total/totalEachShop`,
         {
           params: {
             date: date,
-            shop: shop,
           },
           headers: { "auth-token": localStorage.getItem("token") },
         }
       );
       const allData = result.data.data;
-      console.log(allData);
+      console.log("clg", allData);
       setInitialValue(allData);
       setProductList(allData);
       const daily = await axios.get(
@@ -201,25 +254,27 @@ function ViewDailyShop() {
   // Data
   const columns = [
     {
-      //title is display on coulmn
-      //dataIndex to match with datasouce to display
-      title: <strong>ID</strong>,
-      dataIndex: "package_id",
+      title: <strong>N.O</strong>,
+      dataIndex: "id",
       key: "id",
-
-      ...GetColumnSearchProps("product_id"),
-      sorter: (a, b) => a.package_id - b.package_id,
     },
+
     {
       title: <strong>SHOP's Name</strong>,
       dataIndex: "shop_owner",
       key: "shop_owner",
+      className: "viewDailyShop-column",
     },
 
     {
       title: <strong>Total</strong>,
-      dataIndex: "service_paid_by",
-      key: "service_paid_by",
+      dataIndex: "total",
+      key: "total",
+      ...GetColumnSearchProps("product_id"),
+      sorter: (a, b) => a.total - b.total,
+      render: (text) => {
+        return <span style={{ fontWeight: "bold" }}>${text}</span>;
+      },
     },
   ];
   return (
@@ -250,7 +305,7 @@ function ViewDailyShop() {
               <img src={store} alt="shop" style={{ width: "30px" }} />
             </span>
             <div className="shop-box-container">
-              <h4>100$</h4>
+              <h4>{countStore}</h4>
               <span>Total Stores</span>
             </div>
           </div>
@@ -260,7 +315,7 @@ function ViewDailyShop() {
               <img src={salary} alt="Logo" style={{ width: "30px" }} />
             </span>
             <div className="shop-box-container">
-              <h4>100$</h4>
+              <h4>{plus}$</h4>
               <span>Send Amount</span>
             </div>
           </div>
@@ -270,7 +325,7 @@ function ViewDailyShop() {
               <img src={dollar} alt="Logo" style={{ width: "30px" }} />
             </span>
             <div className="shop-box-container">
-              <h4>100$</h4>
+              <h4>{minus}$</h4>
               <span>Left Amount</span>
             </div>
           </div>
@@ -280,7 +335,7 @@ function ViewDailyShop() {
               <img src={fee} alt="Logo" style={{ width: "30px" }} />
             </span>
             <div className="shop-box-container">
-              <h4>100$</h4>
+              <h4>{serviceFee}$</h4>
               <span>Profit </span>
             </div>
           </div>
@@ -300,7 +355,12 @@ function ViewDailyShop() {
           </div>
           {/* Table */}
         </div>
-        <Table columns={columns} dataSource={initialValue} pagination={false} />
+        <Table
+          columns={columns}
+          dataSource={initialValue}
+          pagination={false}
+          scroll={{ x: "max-content", y: 540 }}
+        />
       </div>
     </ProductContext.Provider>
   );

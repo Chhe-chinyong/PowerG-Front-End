@@ -62,15 +62,22 @@
 }
 
 .pdf-price {
+  /* height: 215px; old */
   height: 215px;
   display: flex;
   align-items: center;
   font-size: 100%;
   /* border: 2px solid black; */
 }
+.qrcode {
+  margin-top: 1.2rem;
+  margin-left: 1.5rem;
+}
 
 .pdf-priceTag {
-  width: 54%;
+  /* width: 54%; */
+
+  width: 64%;
   border: 1px solid rgb(199, 197, 197);
   text-align: center;
   border: 2px solid black;
@@ -85,6 +92,11 @@ figure {
   text-align: center;
   margin-left: 2.5rem;
   margin-top: 2.5rem;
+}
+
+figure svg {
+  width: 300px;
+  height: 300px;
 }
 figcaption {
   margin-top: 0.2rem;
@@ -125,7 +137,7 @@ figcaption {
 }
 
 .product_paid_by {
-  font-size: 1.3rem;
+  font-size: 2rem;
   font-weight: bold;
 }
 
