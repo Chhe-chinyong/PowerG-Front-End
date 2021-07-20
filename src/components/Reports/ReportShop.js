@@ -214,14 +214,14 @@ function ReportShop() {
 
     {
       title: <strong>COD</strong>,
-      dataIndex: "service_paid_by",
-      key: "service_paid_by",
+      dataIndex: "payment_method",
+      key: "payment_method",
     },
 
     {
       title: <strong>Receiver</strong>,
-      dataIndex: "cust_name",
-      key: "cust_name",
+      dataIndex: "service_paid_by",
+      key: "service_paid_by",
     },
     {
       title: <strong>STATUS</strong>,
